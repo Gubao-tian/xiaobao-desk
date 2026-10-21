@@ -19,7 +19,7 @@ body {
 /* ============ 页面规则：页眉页脚与页码（封面页留白） ============ */
 @page {
   @top-center    { content: "产品需求文档 PRD"; font-family: "SimSun","宋体","Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif; font-size: 9pt; color: #4a5260; }
-  @bottom-left   { content: "小宝工作台 v1.0 · 2026-10-21"; font-family: "SimSun","宋体","Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif; font-size: 9pt; color: #4a5260; }
+  @bottom-left   { content: "小宝工作台 v1.1 · 2026-10-21"; font-family: "SimSun","宋体","Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif; font-size: 9pt; color: #4a5260; }
   @bottom-center { content: "第 " counter(page) " 页"; font-family: "SimSun","宋体","Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif; font-size: 9pt; color: #4a5260; }
 }
 @page cover {
@@ -162,10 +162,10 @@ code.ic {
 <tbody>
 <tr><td class="ct-k">文档类型</td><td class="ct-v">PRD（产品需求文档）</td></tr>
 <tr><td class="ct-k">产品名称</td><td class="ct-v">小宝工作台｜MY COZY DESK</td></tr>
-<tr><td class="ct-k">文档版本</td><td class="ct-v">v1.0</td></tr>
+<tr><td class="ct-k">文档版本</td><td class="ct-v">v1.1</td></tr>
 <tr><td class="ct-k">撰写日期</td><td class="ct-v">2026 年 10 月 21 日</td></tr>
-<tr><td class="ct-k">当前产品版本</td><td class="ct-v">微信小程序 v1.5.0 ｜ Web / PWA v1.6.0</td></tr>
-<tr><td class="ct-k">产品形态</td><td class="ct-v">微信小程序 + 单文件 Web 应用（可安装为 PWA）</td></tr>
+<tr><td class="ct-k">当前产品版本</td><td class="ct-v">微信小程序 v1.5.0（已停止迭代）｜ Web / PWA <strong>v1.7.0</strong></td></tr>
+<tr><td class="ct-k">产品形态</td><td class="ct-v">以单文件 Web 应用（可安装为 PWA）为主，手机与电脑浏览器均可用；小程序源码保留但不再迭代</td></tr>
 <tr><td class="ct-k">目标读者</td><td class="ct-v">产品、设计、研发、测试及项目决策者</td></tr>
 <tr><td class="ct-k">文档状态</td><td class="ct-v">已实现部分按现状登记；未实现部分统一标注「规划中」</td></tr>
 </tbody></table>
@@ -188,6 +188,12 @@ code.ic {
 <td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">2026-10-21</td>
 <td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">产品负责人</td>
 <td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">首次成文，覆盖 M1 至 M4 已交付能力及 M5 规划</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">v1.1</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">2026-10-21</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">产品负责人</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">新增 M5「阴阳历日历」章节与 FR-117、FR-204 至 FR-206；产品形态调整为 Web / PWA 优先，小程序停止迭代；同步验收与风险清单</td>
 </tr>
 </tbody></table>
 <p class="cover-foot">本文档为产品权威需求说明，未经许可不得外传。</p>
@@ -260,9 +266,9 @@ code.ic {
 
 <section role="body" data-page-restart="1">
 <h1 id="chapter-1" class="doc-h1">1. 摘要</h1>
-<p class="doc-p">小宝工作台是一款面向个人用户的「全记录 + 轻回顾」效率工具，以微信小程序与单文件 Web 应用（PWA）双端形态交付。产品将计划、课程、运动、备考、理财、自媒体、阅读、技能、便签、复盘等 15 类日常记录收敛到同一个入口，并通过日历热力图、日历时间轴、自动成长报告与全局搜索，把「记下来」变成「看得见」，最终形成可持续的自我管理闭环。</p>
-<p class="doc-p">本文为产品的权威需求说明，包含 5 项产品目标、33 条功能需求（FR-001 至 FR-014、FR-101 至 FR-116、FR-201 至 FR-203）、7 类非功能要求、交互与视觉规范、数据模型、技术架构约束、里程碑状态、验收标准与风险清单。</p>
-<p class="doc-p"><strong>当前状态</strong>：核心记录层、组织层、回顾层、激励层、智能层、数据层均已交付；提醒层本地能力已交付、微信订阅消息后台推送待配置；小程序与 Web 双端数据互通列为 M5 规划项。</p>
+<p class="doc-p">小宝工作台是一款面向个人用户的「全记录 + 轻回顾」效率工具，<strong>自 v1.7.0 起以单文件 Web 应用（PWA）为主要交付形态</strong>，手机浏览器与电脑浏览器均可使用，并可添加到主屏幕或桌面、离线运行。产品将计划、课程、运动、备考、理财、自媒体、阅读、技能、便签、复盘、阴阳历日历等 16 类日常记录收敛到同一个入口，并通过日历热力图、日历时间轴、自动成长报告与全局搜索，把「记下来」变成「看得见」，最终形成可持续的自我管理闭环。</p>
+<p class="doc-p">本文为产品的权威需求说明，包含 5 项产品目标、37 条功能需求（FR-001 至 FR-014、FR-101 至 FR-117、FR-201 至 FR-206）、7 类非功能要求、交互与视觉规范、数据模型、技术架构约束、里程碑状态、验收标准与风险清单。</p>
+<p class="doc-p"><strong>当前状态</strong>：核心记录层、组织层、回顾层、激励层、智能层、数据层均已交付，M1 至 M5 里程碑全部完成；提醒层本地能力已交付、微信订阅消息后台推送待配置；小程序端自 v1.5.0 起停止迭代；小程序与 Web 双端数据互通列为后续规划项。</p>
 <h1 id="chapter-2" class="doc-h1">2. 背景与问题陈述</h1>
 <h2 id="sec-2-1" class="doc-h2">2.1 现状</h2>
 <p class="doc-p">个人日常管理的数据天然是分散的：计划写在便签里，花销记在记账应用中，读书进度靠记忆，备考与课程进度靠心算，运动打卡靠自觉。市面上并不缺少单点优秀的工具，但缺少一个「今天所有事都在一处」的容器。</p>
@@ -379,7 +385,7 @@ code.ic {
 </tr>
 </tbody></table>
 <h2 id="sec-3-3" class="doc-h2">3.3 非目标（本期明确不做）</h2>
-<ul class="doc-list"><li>多人协作与团队看板</li><li>强社交功能，如排行榜、好友 PK</li><li>依赖服务端常驻的实时推送（当前采用本地提醒，订阅消息为可选增强）</li><li>跨端自动同步（当前采用本地存储加手动备份搬运）</li></ul>
+<ul class="doc-list"><li>多人协作与团队看板</li><li>强社交功能，如排行榜、好友 PK</li><li>依赖服务端常驻的实时推送（当前采用本地提醒，订阅消息为可选增强）</li><li>跨端自动同步（当前采用本地存储加手动备份搬运）</li><li><strong>微信小程序端继续迭代</strong>（自 v1.7.0 起停止，源码保留便于查阅；新功能只在 Web / PWA 端提供）</li><li>黄历宜忌、运势、命理等玄学内容（阴阳历日历只提供历法与节气节日信息）</li></ul>
 <h1 id="chapter-4" class="doc-h1">4. 用户与场景</h1>
 <h2 id="sec-4-1" class="doc-h2">4.1 目标用户</h2>
 <p class="doc-p">注重自我管理的个人用户，以手机为主要使用端，偏好轻量、可爱、无学习成本的界面；对数据隐私敏感，不希望个人数据被强制上传云端。</p>
@@ -440,7 +446,7 @@ code.ic {
 </tr></thead><tbody>
 <tr>
 <td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">记录层</td>
-<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">15 个功能模块（计划、课程、运动、备考、理财、自媒体、阅读、技能、便签、复盘等）</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">16 个功能模块（计划、课程、运动、备考、理财、自媒体、阅读、技能、便签、复盘、阴阳历日历等）</td>
 <td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">已实现</td>
 </tr>
 <tr>
@@ -469,14 +475,19 @@ code.ic {
 <td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">已实现</td>
 </tr>
 <tr>
-<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">数据层</td>
-<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">本地存储、导出与恢复备份、云端同步（可选）</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">历法层</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">阴阳历日历：农历 1900-2100、二十四节气、传统节日与公历节日</td>
 <td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">已实现</td>
 </tr>
 <tr>
-<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">互通层</td>
-<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">小程序与 Web 数据互通</td>
-<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">规划中</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">数据层</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">本地存储、导出与恢复备份、云端同步（可选）</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">已实现</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">互通层</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">小程序与 Web 数据互通</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">规划中</td>
 </tr>
 </tbody></table>
 <h1 id="chapter-6" class="doc-h1">6. 功能需求</h1>
@@ -708,6 +719,13 @@ code.ic {
 <td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">计划与锻炼开关加时间点；喝水开关加间隔</td>
 <td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">设置持久化；到点触发提醒</td>
 </tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">FR-117</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">日历（阴阳历）</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">P0</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">月视图网格，格内同时显示公历日期与农历日期；今日高亮；打卡日与有记录日分级着色</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">当天格子高亮且可辨识；翻月（上月 / 下月 / 回到本月）正常；手机与桌面宽度均不横向溢出</td>
+</tr>
 </tbody></table>
 <h2 id="sec-6-3" class="doc-h2">6.3 日历与回顾</h2>
 <table class="data-table">
@@ -740,6 +758,24 @@ code.ic {
 <td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">P1</td>
 <td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">自动成长报告</td>
 <td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">汇总本周数据、对比上周升降，生成中文总结，可一键写入本周复盘</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">FR-204</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">P0</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">农历换算（阴历）</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">覆盖 1900 至 2100 年，含闰月；支持显示干支纪年与生肖。纯本地算法，不依赖网络与第三方库<br />已知日期对照正确：2026-02-17 为正月初一、2025-10-06 为八月十五、2023-03-22 为闰二月初一</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">FR-205</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">P0</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">二十四节气</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">用太阳视黄经天文算法计算，按北京时间取值；不得使用会整体偏移的经验公式<br />闰年不偏移：2024 年立春 2 月 4 日、清明 4 月 4 日、冬至 12 月 21 日；2026 年立春 2 月 4 日</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">FR-206</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">P1</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">节日与节气展示规则</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">优先级为：农历节日 &gt; 节气 &gt; 公历节日 &gt; 农历日（初一显示月份名）；页面底部列出本月节气与节日<br />2026-10-01 显示国庆节；2026-02-17 显示春节；2026-10-08 显示寒露</td>
 </tr>
 </tbody></table>
 <h1 id="chapter-7" class="doc-h1">7. 非功能需求</h1>
@@ -779,6 +815,10 @@ code.ic {
 <tr>
 <td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">可维护性</td>
 <td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">双端共享同一套领域逻辑命名（如 searchAll、dayLevel、tlNodes），便于同步演进</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">算法可靠性</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">历法换算与节气计算全部本地完成、无网络依赖；算法需有单测覆盖并按权威万年历逐条比对</td>
 </tr>
 </tbody></table>
 <h1 id="chapter-8" class="doc-h1">8. 交互与视觉规范</h1>
@@ -906,6 +946,14 @@ code.ic {
 <td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">滚轮选择器在部分环境不可交互</td>
 <td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">改为内联可选按钮组（分类、优先级、状态、平台）</td>
 </tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">节气经验公式（寿星公式）在闰年整体偏移一天</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">改用太阳视黄经天文算法，二分求交点后按北京时间取值</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">农历日「初十以上」名称拼接易错</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">三十天名称改为查表，不再按位拼接</td>
+</tr>
 </tbody></table>
 <h1 id="chapter-11" class="doc-h1">11. 里程碑与状态</h1>
 <table class="data-table">
@@ -940,14 +988,19 @@ code.ic {
 <td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">已完成</td>
 </tr>
 <tr>
-<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">M5 推送与互通</td>
-<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">微信订阅消息后台推送、小程序与 Web 数据互通</td>
-<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">规划中</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">M5 阴阳历日历</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">农历换算、二十四节气、传统节日与公历节日、点某天看记录</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">已完成</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">M6 推送与互通</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">微信订阅消息后台推送、小程序与 Web 数据互通</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">规划中</td>
 </tr>
 </tbody></table>
 <h1 id="chapter-12" class="doc-h1">12. 验收标准</h1>
 <h2 id="sec-12-1" class="doc-h2">12.1 功能验收（已通过）</h2>
-<ul class="doc-list"><li>工程静态校验 0 问题，覆盖 16 个页面的结构、约定与单位检查。</li><li>小程序侧：表单提交 16 项、编辑删除 19 项、遮罩点击 20 项、选择器降级 33 项、真机时序 8 项，全部通过。</li><li>Web 侧：真实 Chrome 移动端视口全模块 42 项；搜索 14 项、日历详情 10 项、健壮性 10 项、导航按钮 7 项，全部通过。</li><li>合计 29 个测试脚本、350 条以上断言全部通过。</li></ul>
+<ul class="doc-list"><li>工程静态校验 0 问题，覆盖 16 个页面的结构、约定与单位检查。</li><li>小程序侧：表单提交 16 项、编辑删除 19 项、遮罩点击 20 项、选择器降级 33 项、真机时序 8 项，全部通过。</li><li>Web 侧：真实 Chrome 移动端视口全模块 42 项；日历页 24 项、搜索 14 项、日历详情 10 项、健壮性 10 项、档案 16 项，全部通过。</li><li>历法算法单测 45 项：农历（含闰月）、干支、生肖、节气、节日逐条比对权威万年历，全部通过。</li><li>合计 31 个测试脚本、470 条以上断言全部通过。</li></ul>
 <h2 id="sec-12-2" class="doc-h2">12.2 真机验收清单（需人工确认）</h2>
 <table class="data-table">
 <colgroup>
@@ -986,6 +1039,14 @@ code.ic {
 <td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">7</td>
 <td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">我的 → 数据备份，可复制或导出 JSON</td>
 </tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">8</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">日历页：农历小字显示正确，今日高亮，翻月正常，点某天能弹出当天记录</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">9</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">我的 → 「添加到桌面 / 主屏幕」：手机可加到主屏，电脑可安装为桌面应用</td>
+</tr>
 </tbody></table>
 <h1 id="chapter-13" class="doc-h1">13. 风险与待办</h1>
 <table class="data-table">
@@ -1022,7 +1083,17 @@ code.ic {
 <tr>
 <td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">Web 端 AI 无云端模型</td>
 <td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">智能建议较简单</td>
-<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">已在页面标注，完整体验在小程序端</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">已在页面标注，完整体验见小程序端历史版本</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">小程序停止迭代</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">老用户换端需重新录入</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">提供备份 JSON 导入导出；新功能统一在 Web / PWA 端</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">历法算法维护</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">农历表覆盖至 2100 年，之后需扩展</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">已单测锁定边界（1900 与 2100 年返回安全值），到期前扩展年表即可</td>
 </tr>
 </tbody></table>
 <h1 id="chapter-14" class="doc-h1">14. 附录</h1>
@@ -1057,8 +1128,20 @@ code.ic {
 <td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">阅读进度以「本次读了几页」叠加，而非直接覆盖</td>
 </tr>
 <tr>
-<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">PWA</td>
-<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">可安装到设备、离线可用的 Web 应用形态</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">农历（阴历）</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">以月相周期纪日的传统历法，本项目覆盖 1900 至 2100 年，含闰月</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">节气</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">按太阳视黄经每 15 度划分的二十四个时间点，如立春、清明、冬至</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">干支</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">天干地支纪年，本项目随农历年显示，如丙午年（马年）</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">PWA</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">可安装到设备、离线可用的 Web 应用形态</td>
 </tr>
 </tbody></table>
 <h2 id="sec-14-2" class="doc-h2">14.2 相关文档</h2>
