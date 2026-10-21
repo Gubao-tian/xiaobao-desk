@@ -27,11 +27,11 @@ function check(ok, msg) { console.log((ok ? '  PASS ' : '  FAIL ') + msg); ok ? 
   const fb = await page.evaluate(() => (document.querySelector('#page-templates') || { innerHTML: '' }).innerHTML);
   check(fb.includes('这个页面暂时打不开'), '出错页显示兜底提示卡片');
   check(fb.includes('模拟渲染故障'), '兜底卡片展示错误信息（方便反馈定位）');
-  check(fb.includes('Web v1.6.0'), '兜底卡片带版本号');
+  check(fb.includes('Web v1.7.0'), '兜底卡片带版本号');
 
   console.log('=== A/3 侧边栏显示版本号 ===');
   const ver = await page.evaluate(() => (document.querySelector('#webVer') || {}).textContent);
-  check(ver === '1.6.0', '侧边栏底部显示 Web v1.6.0');
+  check(ver === '1.7.0', '侧边栏底部显示 Web v1.7.0');
 
   console.log('=== B/1 恢复后模板页内容完整 ===');
   await page.reload({ waitUntil: 'networkidle0' });

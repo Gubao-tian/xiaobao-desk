@@ -39,7 +39,7 @@ const server = http.createServer((req, res) => {
 
   // 1. 导航应有 12 项（含「我的」）
   const navCount = await page.$$eval('#nav .nav-item', els => els.length);
-  t('导航 15 项（含日历时间轴/AI 小宝/模板库）', navCount === 15, '实际 ' + navCount);
+  t('导航 16 项（含日历/日历时间轴/AI 小宝/模板库）', navCount === 16, '实际 ' + navCount);
   const hasProfile = await page.$$eval('#nav .nav-item', els => els.some(e => e.dataset.go === 'profile'));
   t('导航含「我的」', hasProfile);
 

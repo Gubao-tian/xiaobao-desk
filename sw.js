@@ -1,7 +1,7 @@
 /* 小宝工作台 Service Worker
    策略：预缓存核心资源；请求时 cache-first + 后台更新（stale-while-revalidate），
    离线时直接读取缓存，保证断网也能正常使用全部功能。 */
-const VERSION = 'xiaobao-desk-v1.6.0';
+const VERSION = 'xiaobao-desk-v1.7.0';
 const CORE = [
   './',
   './index.html',
