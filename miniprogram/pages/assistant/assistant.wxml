@@ -1,0 +1,49 @@
+<side-nav active="assistant" bind:navigate="onNav" />
+
+<view class="page" style="{{pageStyle}}">
+  <view class="ai-head">
+    <view class="ai-title">🤖 AI 小宝助理</view>
+    <view class="ai-sub">{{tip}}</view>
+  </view>
+
+  <view class="card">
+    <view class="row wrap" style="gap:14rpx">
+      <view class="chipq" wx:for="{{quick}}" wx:key="k" data-k="{{item.k}}" bindtap="onQuick">{{item.t}}</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="row between" style="margin-bottom:14rpx">
+      <view class="sec-title" style="margin:0"><view class="dot"></view>对话</view>
+      <text class="tiny" wx:if="{{messages.length}}" bindtap="onClear">清空</text>
+    </view>
+
+    <view wx:if="{{!messages.length}}" class="ai-empty">
+      <text class="emo">💬</text>
+      <text>点上面的快捷问题，或者直接输入你想问的</text>
+    </view>
+
+    <view wx:for="{{messages}}" wx:key="index" class="bubble-row {{item.role}}">
+      <view class="bubble {{item.role}}">
+        <text>{{item.text}}</text>
+        <text wx:if="{{item.role === 'ai' && !item.text}}" class="dot-typing">…</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="row" style="gap:14rpx">
+      <input
+        class="inp"
+        value="{{input}}"
+        placeholder="问问小宝，比如：我今天先做什么？"
+        maxlength="200"
+        bindinput="onInput"
+        bindblur="onInputBlur"
+        bindconfirm="onSend"
+      />
+      <button class="btn primary sm" bindtap="onSend" disabled="{{sending}}">{{sending ? '思考中' : '发送'}}</button>
+    </view>
+    <view class="tiny mt8">回答基于你工作台里的数据，只做建议，最终决定权在你 💗</view>
+  </view>
+</view>

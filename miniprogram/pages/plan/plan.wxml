@@ -1,0 +1,114 @@
+<side-nav active="plan" bind:navigate="onNav" />
+
+<view class="page" style="{{pageStyle}}">
+  <!-- 添加任务 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>添加任务</view>
+    <view class="row">
+      <input
+        class="inp"
+        value="{{form.name}}"
+        placeholder="今天要做什么呢？回车快速添加"
+        bindinput="onFormName" bindblur="onFormNameBlur"
+        bindconfirm="onAddPlan"
+      />
+    </view>
+    <view class="row mt12" style="gap:16rpx">
+      <view class="opt-grid grow" style="align-items:center">
+        <view
+          wx:for="{{prioLabels}}"
+          wx:key="index"
+          class="opt sm {{prioIdx === index ? 'on' : ''}}"
+          data-i="{{index}}"
+          bindtap="onPrioChange"
+        >{{item}}</view>
+      </view>
+      <button class="btn primary" bindtap="onAddPlan">{{editId ? '保存修改' : '＋ 添加'}}</button>
+      <button wx:if="{{editId}}" class="btn ghost" bindtap="onCancelEdit">取消</button>
+    </view>
+  </view>
+
+  <!-- 今日进度 -->
+  <view class="card">
+    <view class="row between" style="margin-bottom:18rpx">
+      <view class="sec-title" style="margin:0"><view class="dot"></view>今日进度</view>
+      <text class="tiny">{{doneN}} / {{plans.length}} 已完成</text>
+    </view>
+    <view class="row" style="gap:18rpx">
+      <view class="bar grow"><view style="width: {{pct}}%"></view></view>
+      <text class="pct">{{pct}}%</text>
+    </view>
+    <view class="grid4 mt12">
+      <view class="stat">
+        <view class="lbl">已完成</view>
+        <view class="val">{{doneN}}<small>项</small></view>
+        <view class="ico">✅</view>
+      </view>
+      <view class="stat">
+        <view class="lbl">待完成</view>
+        <view class="val">{{todoN}}<small>项</small></view>
+        <view class="ico">📝</view>
+      </view>
+    </view>
+    <view class="mt12">
+      <view class="tiny" style="font-weight:700;margin-bottom:6rpx">优先级分布</view>
+      <view wx:for="{{prioDist}}" wx:key="key" class="dist-row">
+        <view class="dt-c" style="background:{{item.dot}}"></view>
+        <text class="dt-name">{{item.label}}</text>
+        <view class="bar thin grow"><view style="width: {{item.pct}}%"></view></view>
+        <text class="dt-n">{{item.n}} 项</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 任务清单 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>任务清单</view>
+    <block wx:if="{{plans.length}}">
+      <view wx:for="{{plans}}" wx:key="id" class="titem {{item.done ? 'done' : ''}}">
+        <view class="check {{item.done ? 'done' : ''}}" data-id="{{item.id}}" bindtap="onToggle">
+          <block wx:if="{{item.done}}">✓</block>
+        </view>
+        <view class="grow">
+          <view class="tname">{{item.name}}</view>
+          <view class="tmeta">
+            <text class="pill {{item.prio === 'high' ? '' : item.prio === 'low' ? 'mint' : 'sky'}}">
+              {{item.prio === 'high' ? '重要' : item.prio === 'low' ? '简单' : '普通'}}
+            </text>
+          </view>
+        </view>
+        <view class="row" style="gap:10rpx">
+          <view class="edit" data-id="{{item.id}}" bindtap="onEditPlan">✎</view>
+          <view class="del" data-id="{{item.id}}" bindtap="onDel">🗑</view>
+        </view>
+      </view>
+    </block>
+    <view wx:else class="empty">
+      <text class="emo">🌷</text>
+      今天还没有待办，去添加第一件小事吧
+    </view>
+  </view>
+
+  <!-- 今日时间轴 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>今日时间轴</view>
+    <block wx:if="{{timeline.length}}">
+      <view wx:for="{{timeline}}" wx:key="id" class="tl {{item.done ? 'done' : ''}}">
+        <text class="tl-time">{{item.time}}</text>
+        <view class="tl-dot"></view>
+        <text class="tl-name grow">{{item.name}}</text>
+        <text wx:if="{{item.done}}" class="tl-ck">✓ 已完成</text>
+      </view>
+    </block>
+    <view wx:else class="empty">
+      <text class="emo">⏰</text>
+      添加任务后，这里会生成今日时间安排
+    </view>
+  </view>
+
+  <!-- 底部操作 -->
+  <view class="row" style="gap:16rpx">
+    <button class="btn ghost grow" bindtap="onClearDone">🧹 清除已完成</button>
+    <button class="btn primary grow" bindtap="onMoveTomorrow">📅 搬到明天</button>
+  </view>
+</view>

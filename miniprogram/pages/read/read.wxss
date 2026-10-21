@@ -1,0 +1,25 @@
+/* 弹层补充样式（app.wxss 未定义部分，按规范补齐） */
+.mask { position: fixed; top: 0; left: 0; right: 0; bottom: 0; inset: 0; background: rgba(92, 68, 80, 0.32); z-index: 200; display: flex; align-items: flex-end; }
+.sheet-title { font-size: 32rpx; font-weight: 800; text-align: center; margin-bottom: 24rpx; }
+.fl { display: block; font-size: 22rpx; font-weight: 700; color: var(--text-2); margin-bottom: 8rpx; }
+
+.pct { font-size: 26rpx; font-weight: 800; color: var(--pink-deep); }
+
+.ta {
+  font-family: inherit; font-size: 26rpx; color: var(--text); line-height: 1.6;
+  border: 2rpx solid var(--line); border-radius: 26rpx;
+  padding: 18rpx 24rpx; background: var(--card-soft);
+  width: 100%; min-height: 160rpx;
+}
+
+.book { padding: 22rpx; border-radius: 22rpx; background: var(--card-soft); margin-bottom: 14rpx; }
+.bname { font-size: 28rpx; font-weight: 800; word-break: break-all; }
+
+.del-btn { color: var(--pink-deep); }
+
+.qitem {
+  display: flex; align-items: flex-start; gap: 16rpx;
+  padding: 20rpx 22rpx; border-radius: 22rpx;
+  background: var(--card-soft); margin-bottom: 14rpx;
+}
+.qtext { font-size: 26rpx; line-height: 1.6; word-break: break-all; white-space: pre-wrap; }

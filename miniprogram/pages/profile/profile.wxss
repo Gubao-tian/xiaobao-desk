@@ -1,0 +1,78 @@
+.me-card { background: linear-gradient(150deg, #FFFFFF, #FFF9FC 60%, #FDF5FF); }
+.me-avatar {
+  width: 116rpx; height: 116rpx; flex: 0 0 116rpx; border-radius: 38rpx;
+  background: linear-gradient(145deg, #FFB6D2, #F2689A);
+  display: flex; align-items: center; justify-content: center; font-size: 60rpx;
+  box-shadow: 0 10rpx 24rpx rgba(242, 104, 154, 0.3);
+}
+.me-name { font-size: 36rpx; font-weight: 800; line-height: 1.3; }
+.me-sign { font-size: 24rpx; color: var(--text-2); margin-top: 4rpx; }
+
+/* 云同步卡片 */
+.sync-row { display: flex; align-items: center; gap: 16rpx; }
+.sync-dot {
+  width: 18rpx; height: 18rpx; border-radius: 50%; flex: 0 0 18rpx;
+  background: #D8D2DC;
+}
+.sync-dot.on { background: #4FBF8B; box-shadow: 0 0 0 6rpx rgba(79, 191, 139, 0.16); }
+.sync-status { font-size: 27rpx; font-weight: 800; }
+.tiny.warn { color: #D9622F; }
+
+.tag {
+  padding: 8rpx 20rpx; border-radius: 30rpx;
+  background: var(--pink-pale); color: var(--pink-deep);
+  font-size: 22rpx; font-weight: 700;
+}
+.tag.del { background: #fff; box-shadow: inset 0 0 0 2rpx var(--pink-soft); }
+.tag.add { background: var(--card-soft); color: var(--text-2); box-shadow: inset 0 0 0 2rpx var(--line); }
+
+.av-row { display: flex; flex-wrap: wrap; gap: 14rpx; }
+.av {
+  width: 82rpx; height: 82rpx; border-radius: 26rpx;
+  background: var(--card-soft); box-shadow: inset 0 0 0 2rpx var(--line);
+  display: flex; align-items: center; justify-content: center; font-size: 42rpx;
+}
+.av.on { background: var(--pink-pale); box-shadow: 0 0 0 4rpx var(--pink-deep); transform: scale(1.04); }
+
+.theme-grid { display: flex; flex-wrap: wrap; gap: 16rpx; }
+.theme {
+  width: calc(33.333% - 11rpx); border-radius: 22rpx; overflow: hidden;
+  background: var(--card-soft); box-shadow: inset 0 0 0 2rpx var(--line);
+  position: relative;
+}
+.theme.on { box-shadow: 0 0 0 4rpx var(--pink-deep); }
+.th-prev { height: 96rpx; display: flex; align-items: center; justify-content: center; }
+.th-dot { width: 34rpx; height: 34rpx; border-radius: 50%; box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.12); }
+.th-name { font-size: 21rpx; font-weight: 700; text-align: center; padding: 12rpx 6rpx; color: var(--text-2); }
+.theme.on .th-name { color: var(--pink-deep); }
+.th-flag {
+  position: absolute; right: 8rpx; top: 8rpx;
+  background: rgba(255, 255, 255, 0.92); color: var(--pink-deep);
+  font-size: 17rpx; font-weight: 800; padding: 3rpx 12rpx; border-radius: 20rpx;
+}
+
+.custom-prev {
+  height: 120rpx; border-radius: 24rpx; margin-bottom: 18rpx;
+  display: flex; align-items: flex-end; justify-content: flex-end; padding: 14rpx 18rpx;
+  box-shadow: inset 0 0 0 2rpx var(--line);
+}
+.cp-hex {
+  background: rgba(255, 255, 255, 0.9); color: var(--text);
+  font-size: 21rpx; font-weight: 800; padding: 4rpx 14rpx; border-radius: 16rpx;
+  font-family: monospace;
+}
+.slider-row { display: flex; align-items: center; gap: 14rpx; margin-bottom: 6rpx; }
+.sl { width: 30rpx; font-size: 22rpx; font-weight: 800; color: var(--text-2); }
+.slider-row slider { flex: 1; }
+.sv { width: 56rpx; font-size: 21rpx; font-weight: 700; color: var(--text-3); text-align: right; font-variant-numeric: tabular-nums; }
+
+/* 提醒与通知入口卡片 */
+.remind-entry { background: linear-gradient(150deg, #FFFFFF, #FFF4F8 60%, #FDF5FF); box-shadow: 0 8rpx 24rpx rgba(242, 104, 154, 0.1); }
+.re-ico { width: 72rpx; height: 72rpx; flex: 0 0 72rpx; border-radius: 24rpx; background: var(--pink-pale); display: flex; align-items: center; justify-content: center; font-size: 38rpx; }
+.re-t { font-size: 30rpx; font-weight: 800; color: #2b2330; }
+.re-s { font-size: 23rpx; color: var(--text-2); margin-top: 4rpx; }
+.re-arrow { font-size: 44rpx; color: var(--pink-deep); line-height: 1; }
+
+/* 战绩卡片 */
+.share-canvas { width: 600rpx; height: 820rpx; margin: 0 auto; display: block; border-radius: 24rpx; }
+.card-preview { width: 100%; margin-top: 18rpx; border-radius: 24rpx; box-shadow: 0 8rpx 24rpx rgba(242,104,154,.14); }

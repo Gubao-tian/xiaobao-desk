@@ -1,0 +1,5 @@
+{
+  "navigationBarTitleText": "备考计划",
+  "enablePullDownRefresh": true,
+  "usingComponents": { "side-nav": "/components/side-nav/side-nav" }
+}

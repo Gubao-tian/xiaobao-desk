@@ -1,0 +1,125 @@
+<side-nav active="course" bind:navigate="onNav" />
+
+<view class="page" style="{{pageStyle}}">
+  <!-- 顶部统计 -->
+  <view class="grid4">
+    <view class="stat">
+      <view class="lbl">课程总数</view>
+      <view class="val">{{courseN}}<small>门</small></view>
+      <view class="ico">📚</view>
+    </view>
+    <view class="stat">
+      <view class="lbl">今日学习</view>
+      <view class="val">{{todayMin}}<small>分钟</small></view>
+      <view class="ico">⏱️</view>
+    </view>
+    <view class="stat">
+      <view class="lbl">累计投入</view>
+      <view class="val">{{totalHour}}<small>小时</small></view>
+      <view class="ico">🏆</view>
+    </view>
+    <view class="stat">
+      <view class="lbl">平均进度</view>
+      <view class="val">{{avgProg}}<small>%</small></view>
+      <view class="ico">📈</view>
+    </view>
+  </view>
+
+  <!-- 记录学习时长 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>记录学习</view>
+    <view class="row" style="gap:16rpx">
+      <input
+        class="inp"
+        type="number"
+        value="{{form.min}}"
+        placeholder="输入本次学习分钟数"
+        bindinput="onFormMin" bindblur="onFormMinBlur"
+        bindconfirm="onLogStudy"
+      />
+      <button class="btn primary" bindtap="onLogStudy">记录</button>
+    </view>
+    <view class="tiny mt12">记录后会累计到今日学习时长与连续天数 📖</view>
+  </view>
+
+  <!-- 课程列表 -->
+  <view class="card">
+    <view class="row between" style="margin-bottom:12rpx">
+      <view class="sec-title" style="margin:0"><view class="dot"></view>我的课程</view>
+      <button class="btn sm primary" bindtap="openModal">＋ 添加课程</button>
+    </view>
+    <block wx:if="{{courses.length}}">
+      <view wx:for="{{courses}}" wx:key="id" class="citem">
+        <view class="row" style="gap:18rpx">
+          <view class="avatar" style="background:{{item.color}}">{{item.initial}}</view>
+          <view class="grow">
+            <view class="row between">
+              <text class="cname">{{item.name}}</text>
+              <text class="cprog-n">{{item.progress}}%</text>
+            </view>
+            <view class="bar thin mt8"><view style="width: {{item.progress}}%"></view></view>
+            <view class="tiny mt8">共 {{item.total}} 节{{item.noteText}}</view>
+          </view>
+        </view>
+        <view class="row mt12" style="gap:12rpx">
+          <button class="btn sm ghost" data-id="{{item.id}}" data-dir="-1" bindtap="onStep">− 减一节</button>
+          <button class="btn sm" data-id="{{item.id}}" data-dir="1" bindtap="onStep">＋ 加一节</button>
+          <view class="grow"></view>
+          <button class="btn sm ghost" data-id="{{item.id}}" bindtap="onEditCourse">✎ 编辑</button>
+          <button class="btn sm ghost cdel" data-id="{{item.id}}" bindtap="onDel">🗑 删除</button>
+        </view>
+      </view>
+    </block>
+    <view wx:else class="empty">
+      <text class="emo">📚</text>
+      还没有课程，去添加第一门课吧
+    </view>
+  </view>
+
+  <!-- 近 7 天学习时长 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>近 7 天学习时长</view>
+    <view class="chart">
+      <view class="cbar" wx:for="{{bars}}" wx:key="index" style="height:{{item.h}}%;background:{{item.bg}}">
+        <text class="cv">{{item.v}}</text>
+      </view>
+    </view>
+    <view class="crow">
+      <text wx:for="{{bars}}" wx:key="index" class="cw {{item.today ? 'td' : ''}}">{{item.w}}</text>
+    </view>
+    <view class="grid4 mt12">
+      <view class="stat">
+        <view class="lbl">本周累计</view>
+        <view class="val">{{weekMin}}<small>分钟</small></view>
+        <view class="ico">📅</view>
+      </view>
+      <view class="stat">
+        <view class="lbl">连续学习</view>
+        <view class="val">{{streak}}<small>天</small></view>
+        <view class="ico">🔥</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加课程弹层 -->
+  <view class="mask" wx:if="{{showModal}}" bindtap="onMaskTap" data-key="showModal">
+    <view class="sheet" catchtap="">
+      <view class="sheet-title">{{modalTitle}}</view>
+      <form bindsubmit="submitModal" report-submit>
+        <view class="field"><text class="fl">课程名称</text><input class="inp" name="name" value="{{form.name}}" placeholder="请输入课程名称" bindinput="onFormName" bindblur="onFormNameBlur" /></view>
+        <view class="field"><text class="fl">总节数</text><input class="inp" type="number" name="total" value="{{form.total}}" placeholder="请输入总节数" bindinput="onFormTotal" bindblur="onFormTotalBlur" /></view>
+        <view class="field"><text class="fl">备注</text><input class="inp" name="note" value="{{form.note}}" placeholder="选填，如：每周三上课" bindinput="onFormNote" bindblur="onFormNoteBlur" /></view>
+        <view class="field">
+          <text class="fl">课程颜色</text>
+          <view class="row wrap" style="gap:20rpx">
+            <view wx:for="{{colors}}" wx:key="index" class="cdot {{colorIdx === index ? 'on' : ''}}" style="background:{{item}}" data-idx="{{index}}" bindtap="onPickColor"></view>
+          </view>
+        </view>
+        <view class="row" style="gap:16rpx;margin-top:24rpx">
+          <button class="btn ghost" style="flex:1" bindtap="closeModal">取消</button>
+          <button class="btn primary" style="flex:1" form-type="submit">保存</button>
+        </view>
+      </form>
+    </view>
+  </view>
+</view>

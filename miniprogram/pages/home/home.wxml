@@ -1,0 +1,201 @@
+<side-nav active="home" bind:navigate="onNav" />
+
+<view class="page" style="{{pageStyle}}">
+  <!-- 时钟 + 激励 -->
+  <view class="hero">
+    <view class="clock-card">
+      <view class="clock-time">{{hms}}</view>
+      <view class="clock-date">{{dateLine}}</view>
+      <view class="clock-greet">{{greet}}</view>
+      <view class="row wrap" style="gap:12rpx;margin-top:22rpx">
+        <view class="pill">累计打卡 {{totalCheck}} 天</view>
+        <view class="pill purple">连续 {{streak}} 天</view>
+        <view class="pill mint">今日任务 {{doneN}}/{{plans.length}}</view>
+      </view>
+    </view>
+    <view class="card quote-card">
+      <view class="tiny" style="font-weight:700;letter-spacing:3rpx;margin-bottom:10rpx">DAILY · 每日一句</view>
+      <view class="quote-cn">{{quoteCn}}</view>
+      <view class="quote-en">{{quoteEn}}</view>
+      <view style="margin-top:16rpx"><view class="pill">每天自动更新</view></view>
+    </view>
+  </view>
+
+  <!-- 全局搜索 -->
+  <view class="card search-card">
+    <view class="row" style="gap:14rpx">
+      <input
+        class="inp search-inp"
+        value="{{searchQuery}}"
+        placeholder="🔍 搜计划 / 课程 / 书籍 / 便签…"
+        maxlength="30"
+        bindinput="onSearchInput"
+        bindblur="onSearchInputBlur"
+      />
+    </view>
+    <block wx:if="{{searchQuery}}">
+      <view wx:if="{{searchResults.length}}" class="sr-list">
+        <view
+          wx:for="{{searchResults}}"
+          wx:key="index"
+          class="sr-item"
+          data-go="{{item.mod}}"
+          bindtap="onSearchGo"
+        >
+          <view class="sr-body">
+            <view class="sr-t">{{item.text}}</view>
+            <view class="sr-s">{{item.sub}}</view>
+          </view>
+          <view class="pill">{{item.modName}}</view>
+        </view>
+      </view>
+      <view wx:else class="sr-empty">🫧 没有找到相关内容</view>
+    </block>
+  </view>
+
+  <!-- 个人名片 -->
+  <view class="card" bindtap="onGoProfile">
+    <view class="row" style="gap:22rpx">
+      <view class="avatar-lg">{{profile.avatar}}</view>
+      <view class="grow">
+        <view class="pname">{{profile.name || '点击设置我的名字'}}</view>
+        <view class="psign">{{profile.sign || '写一句喜欢的话当签名吧～'}}</view>
+      </view>
+      <view class="tiny" style="font-size:34rpx">✏️</view>
+    </view>
+    <view wx:if="{{profile.tags.length}}" class="row wrap" style="gap:12rpx;margin-top:18rpx">
+      <text wx:for="{{profile.tags}}" wx:key="index" class="pill">{{item}}</text>
+    </view>
+    <view wx:else class="tiny mt12">在「我的」里添加个人标签，让大家更懂你 💗</view>
+  </view>
+
+  <!-- 打卡 + 今日目标 -->
+  <view class="card">
+    <view class="row between" style="margin-bottom:18rpx">
+      <view class="sec-title" style="margin:0"><view class="dot"></view>今日目标</view>
+      <text class="tiny">{{doneN}} / {{plans.length}} 已完成</text>
+    </view>
+    <view class="row" style="gap:18rpx">
+      <view class="bar grow"><view style="width: {{pct}}%"></view></view>
+      <text class="pct">{{pct}}%</text>
+    </view>
+    <view class="mt">
+      <block wx:if="{{plans.length}}">
+        <view wx:for="{{plans}}" wx:key="id" class="titem {{item.done ? 'done' : ''}}">
+          <view class="check {{item.done ? 'done' : ''}}" data-id="{{item.id}}" bindtap="onTogglePlan">
+            <block wx:if="{{item.done}}">✓</block>
+          </view>
+          <view class="grow">
+            <view class="tname">{{item.name}}</view>
+            <view class="tmeta">
+              <text class="pill {{item.prio === 'high' ? '' : item.prio === 'low' ? 'mint' : 'sky'}}">
+                {{item.prio === 'high' ? '重要' : item.prio === 'low' ? '简单' : '普通'}}
+              </text>
+            </view>
+          </view>
+        </view>
+      </block>
+      <view wx:else class="empty">
+        <text class="emo">🌷</text>
+        今天还没有待办，去添加第一件小事吧
+      </view>
+    </view>
+    <view class="mt12"><button class="btn sm primary" bindtap="onGoPlan">去安排今天</button></view>
+  </view>
+
+  <!-- 打卡 -->
+  <view class="card">
+    <view class="row between" style="margin-bottom:20rpx">
+      <view class="sec-title" style="margin:0"><view class="dot"></view>每日打卡</view>
+      <text wx:if="{{streak > 0}}" class="flame">🔥 {{streak}} 天</text>
+    </view>
+    <view class="checkin-row">
+      <view class="ring">
+        <view class="ring-core">
+          <text class="ring-b">{{checked ? '✓' : '—'}}</text>
+          <text class="ring-s">{{checked ? checkTime : '今日未打卡'}}</text>
+        </view>
+      </view>
+      <view class="grow">
+        <button class="big-check {{checked ? 'done' : ''}}" bindtap="onCheckin">
+          {{checked ? '✓ 今日已打卡，明天见啦' : '💗 立即打卡'}}
+        </button>
+        <view class="tiny mt12">每天点亮一次，连续记录会累积成火焰 🔥</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 今日数据 -->
+  <view class="grid4">
+    <view class="stat">
+      <view class="lbl">学习时长</view>
+      <view class="val">{{studyMin}}<small>分钟</small></view>
+      <view class="ico">📚</view>
+    </view>
+    <view class="stat">
+      <view class="lbl">运动消耗</view>
+      <view class="val">{{burn}}<small>千卡</small></view>
+      <view class="ico">🔥</view>
+    </view>
+    <view class="stat">
+      <view class="lbl">阅读</view>
+      <view class="val">{{readMin}}<small>分钟</small></view>
+      <view class="ico">📖</view>
+    </view>
+    <view class="stat">
+      <view class="lbl">待办完成</view>
+      <view class="val">{{doneN}}<small>/{{plans.length}}</small></view>
+      <view class="ico">✅</view>
+    </view>
+  </view>
+
+  <!-- 近 15 天 -->
+  <view class="card">
+    <view class="row between" style="margin-bottom:14rpx">
+      <view class="sec-title" style="margin:0"><view class="dot"></view>近 15 天</view>
+      <text class="tiny">累计 {{totalCheck}} 天</text>
+    </view>
+    <view class="wk-row">
+      <view wx:for="{{recent}}" wx:key="index" class="wk {{item.on ? 'on' : ''}} {{item.today ? 'td' : ''}}">{{item.d}}</view>
+    </view>
+  </view>
+
+  <!-- 月历 -->
+  <view class="card">
+    <view class="row between" style="margin-bottom:14rpx">
+      <view class="sec-title" style="margin:0"><view class="dot"></view>打卡日历 · {{monthLabel}}</view>
+    </view>
+    <view class="cal">
+      <view class="wd" wx:for="{{['一','二','三','四','五','六','日']}}" wx:key="*this">{{item}}</view>
+      <view
+        wx:for="{{calCells}}"
+        wx:key="index"
+        class="cal-day {{item.out ? 'out' : ''}} {{item.full ? 'full' : ''}} {{item.today ? 'td' : ''}} {{item.lv ? 'lv' + item.lv : ''}}"
+        data-ds="{{item.ds || ''}}"
+        bindtap="onDayDetail"
+      >
+        <text>{{item.d}}</text>
+        <view wx:if="{{item.full}}" class="mk"></view>
+      </view>
+    </view>
+    <view class="tiny" style="margin-top:10rpx">点某一天可查看当天的全部记录</view>
+    <view class="row wrap" style="gap:18rpx;margin-top:16rpx">
+      <text class="tiny" style="display:flex;align-items:center;gap:8rpx">
+        <view class="sw sw-soft"></view>空白
+      </text>
+      <text class="tiny" style="display:flex;align-items:center;gap:8rpx">
+        <view class="sw sw-lv1"></view>有一点
+      </text>
+      <text class="tiny" style="display:flex;align-items:center;gap:8rpx">
+        <view class="sw sw-lv2"></view>还行
+      </text>
+      <text class="tiny" style="display:flex;align-items:center;gap:8rpx">
+        <view class="sw sw-lv3"></view>很充实
+      </text>
+      <text class="tiny" style="display:flex;align-items:center;gap:8rpx">
+        <view class="sw sw-pink"></view>已打卡
+      </text>
+    </view>
+    <view class="tiny" style="margin-top:10rpx">颜色越粉 = 那天任务/运动/学习/阅读越丰富</view>
+  </view>
+</view>

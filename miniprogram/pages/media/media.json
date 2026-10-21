@@ -1,0 +1,5 @@
+{
+  "navigationBarTitleText": "自媒体",
+  "enablePullDownRefresh": true,
+  "usingComponents": { "side-nav": "/components/side-nav/side-nav" }
+}

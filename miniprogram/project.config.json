@@ -1,0 +1,20 @@
+{
+  "compileType": "miniprogram",
+  "libVersion": "3.4.10",
+  "appid": "touristappid",
+  "projectname": "小宝工作台",
+  "description": "小宝工作台",
+  "setting": {
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true,
+    "urlCheck": false,
+    "coverView": true,
+    "autoAudits": false
+  },
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  }
+}

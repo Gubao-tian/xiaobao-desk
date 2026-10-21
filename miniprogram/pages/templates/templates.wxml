@@ -1,0 +1,41 @@
+<side-nav active="templates" bind:navigate="onNav" />
+
+<view class="page" style="{{pageStyle}}">
+  <view class="tpl-head">
+    <view class="th-title">📋 模板库</view>
+    <view class="th-sub">选一个模板一键套用：计划加进今天，复盘填进本周，便签直接新建</view>
+  </view>
+
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>计划模板</view>
+    <view class="tpl-item" wx:for="{{planTpl}}" wx:key="id" data-tpl="{{item.id}}" bindtap="onApply">
+      <view class="grow">
+        <view class="tpl-t">{{item.emoji}} {{item.name}}</view>
+        <view class="tpl-d">{{item.desc}}</view>
+      </view>
+      <button class="btn primary sm">套用</button>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>复盘模板</view>
+    <view class="tpl-item" wx:for="{{reviewTpl}}" wx:key="id" data-tpl="{{item.id}}" bindtap="onApply">
+      <view class="grow">
+        <view class="tpl-t">{{item.emoji}} {{item.name}}</view>
+        <view class="tpl-d">{{item.desc}}</view>
+      </view>
+      <button class="btn primary sm">套用</button>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>便签模板</view>
+    <view class="tpl-item" wx:for="{{memoTpl}}" wx:key="id" data-tpl="{{item.id}}" bindtap="onApply">
+      <view class="grow">
+        <view class="tpl-t">{{item.emoji}} {{item.name}}</view>
+        <view class="tpl-d">{{item.desc}}</view>
+      </view>
+      <button class="btn primary sm">套用</button>
+    </view>
+  </view>
+</view>

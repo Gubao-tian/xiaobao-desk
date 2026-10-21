@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "AI 小宝助理",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "side-nav": "/components/side-nav/side-nav"
+  }
+}

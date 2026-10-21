@@ -1,0 +1,24 @@
+.pct { font-size: 29rpx; font-weight: 800; color: var(--pink-deep); }
+
+/* 优先级分布 */
+.dist-row { display: flex; align-items: center; gap: 14rpx; padding: 10rpx 0; }
+.dt-c { width: 16rpx; height: 16rpx; border-radius: 50%; flex: 0 0 16rpx; }
+.dt-name { font-size: 24rpx; font-weight: 700; width: 72rpx; }
+.dt-n { font-size: 21rpx; color: var(--text-2); font-weight: 700; width: 76rpx; text-align: right; }
+
+/* 删除小按钮 */
+.del {
+  flex: 0 0 52rpx; width: 52rpx; height: 52rpx; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--pink-pale); font-size: 24rpx;
+}
+
+/* 时间轴 */
+.tl { display: flex; align-items: center; gap: 16rpx; padding: 16rpx 4rpx; border-bottom: 2rpx solid var(--line-2); }
+.tl:last-child { border-bottom: none; }
+.tl-time { font-size: 22rpx; font-weight: 800; color: var(--pink-deep); width: 88rpx; font-variant-numeric: tabular-nums; }
+.tl-dot { width: 14rpx; height: 14rpx; border-radius: 50%; background: var(--pink-soft); flex: 0 0 14rpx; }
+.tl-name { font-size: 25rpx; font-weight: 600; }
+.tl.done .tl-name { text-decoration: line-through; text-decoration-color: var(--pink); color: var(--text-3); }
+.tl.done .tl-dot { background: var(--mint); }
+.tl-ck { font-size: 20rpx; color: #3FA98A; font-weight: 700; }

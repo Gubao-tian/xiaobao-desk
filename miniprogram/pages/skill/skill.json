@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "技能训练",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "side-nav": "/components/side-nav/side-nav"
+  }
+}

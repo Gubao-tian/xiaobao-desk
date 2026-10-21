@@ -1,0 +1,33 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/plan/plan",
+    "pages/course/course",
+    "pages/workout/workout",
+    "pages/exam/exam",
+    "pages/finance/finance",
+    "pages/media/media",
+    "pages/read/read",
+    "pages/skill/skill",
+    "pages/memo/memo",
+    "pages/review/review",
+    "pages/timeline/timeline",
+    "pages/assistant/assistant",
+    "pages/templates/templates",
+    "pages/profile/profile",
+    "pages/remind/remind"
+  ],
+  "window": {
+    "navigationBarTitleText": "小宝工作台",
+    "navigationBarBackgroundColor": "#FFF4F8",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#FFF4F8",
+    "backgroundTextStyle": "light",
+    "navigationStyle": "default"
+  },
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents",
+  "requiredPrivateInfos": [],
+  "permission": {},
+  "usingComponents": {}
+}

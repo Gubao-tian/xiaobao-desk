@@ -1,0 +1,35 @@
+.sheet-title { font-size: 32rpx; font-weight: 800; text-align: center; margin-bottom: 24rpx; }
+.fl { display: block; font-size: 22rpx; font-weight: 700; color: var(--text-2); margin-bottom: 8rpx; }
+
+/* 倒计时强调 pill */
+.pill.urgent { background: linear-gradient(135deg, #FFA6C8, #F2689A); color: #fff; }
+
+/* 科目列表 */
+.eitem { padding: 22rpx 0; border-bottom: 2rpx solid var(--line-2); }
+.eitem:last-child { border-bottom: none; padding-bottom: 0; }
+.ename { font-size: 28rpx; font-weight: 800; }
+.edel { color: var(--pink-deep); }
+
+/* 总完成度环形 */
+.ring-wrap { flex: 0 0 180rpx; }
+.ring {
+  width: 180rpx; height: 180rpx; border-radius: 50%;
+  background: conic-gradient(#F2689A {{pctAll}}%, #FFEFF6 0);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.6s ease;
+}
+.ring-core {
+  width: 144rpx; height: 144rpx; border-radius: 50%; background: #fff;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rpx;
+}
+.ring-b { font-size: 40rpx; font-weight: 800; line-height: 1.1; color: var(--pink-deep); }
+.ring-s { font-size: 19rpx; color: var(--text-3); font-weight: 700; }
+
+/* 倒计时列表 */
+.cd-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12rpx 0; border-bottom: 2rpx dashed var(--line-2);
+}
+.cd-item:last-child { border-bottom: none; }
+.cd-name { font-size: 25rpx; font-weight: 700; }
+.cd-num { font-size: 34rpx; font-weight: 800; color: var(--pink-deep); }

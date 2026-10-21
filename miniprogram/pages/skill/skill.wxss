@@ -1,0 +1,43 @@
+/* 弹层补充样式（app.wxss 未定义部分，按规范补齐） */
+.mask { position: fixed; top: 0; left: 0; right: 0; bottom: 0; inset: 0; background: rgba(92, 68, 80, 0.32); z-index: 200; display: flex; align-items: flex-end; }
+.sheet-title { font-size: 32rpx; font-weight: 800; text-align: center; margin-bottom: 24rpx; }
+.fl { display: block; font-size: 22rpx; font-weight: 700; color: var(--text-2); margin-bottom: 8rpx; }
+
+.tip-card { background: linear-gradient(150deg, #FFFFFF, #FFF7FB 60%, #FCF1FF); }
+
+/* 技能卡片两列网格（grid2 语义 + flex wrap） */
+.sgrid { display: flex; flex-wrap: wrap; gap: 16rpx; }
+.sgrid > view { width: calc(50% - 8rpx); }
+
+.scard {
+  padding: 22rpx; border-radius: 22rpx; background: var(--card-soft);
+  border: 2rpx solid var(--line-2);
+}
+.sname { font-size: 28rpx; font-weight: 800; word-break: break-all; }
+
+/* 10 个小格进度 */
+.cells { display: flex; gap: 6rpx; }
+.cell {
+  flex: 1; height: 16rpx; border-radius: 6rpx;
+  background: var(--pink-pale);
+}
+.cell.on { background: linear-gradient(135deg, #FFA6C8, #F2689A); }
+
+.del-btn { color: var(--pink-deep); }
+
+/* emoji 选择 */
+.emo-grid { display: flex; flex-wrap: wrap; gap: 12rpx; }
+.emo-cell {
+  width: calc(25% - 9rpx); aspect-ratio: 1; border-radius: 20rpx;
+  background: var(--card-soft); border: 2rpx solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40rpx;
+}
+.emo-cell.on { background: var(--pink-pale); border-color: var(--pink-deep); }
+
+/* 练习日志 */
+.lrow {
+  display: flex; align-items: center;
+  padding: 18rpx 22rpx; border-radius: 22rpx;
+  background: var(--card-soft); margin-bottom: 12rpx;
+}

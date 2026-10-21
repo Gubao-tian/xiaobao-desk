@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<title>小宝工作台｜MY COZY DESK 产品需求文档 PRD</title>
+<style>
+
+/* ============ 基础与字体 ============ */
+html { }
+body {
+  font-family: "SimSun","宋体","Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif;
+  font-size: 12pt;             /* 小四 */
+  line-height: 1.75;
+  color: #1f2328;
+  background-color: #ffffff;
+  margin: 0;
+}
+
+/* ============ 页面规则：页眉页脚与页码（封面页留白） ============ */
+@page {
+  @top-center    { content: "产品需求文档 PRD"; font-family: "SimSun","宋体","Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif; font-size: 9pt; color: #4a5260; }
+  @bottom-left   { content: "小宝工作台 v1.0 · 2026-10-21"; font-family: "SimSun","宋体","Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif; font-size: 9pt; color: #4a5260; }
+  @bottom-center { content: "第 " counter(page) " 页"; font-family: "SimSun","宋体","Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif; font-size: 9pt; color: #4a5260; }
+}
+@page cover {
+  @top-center    { content: none; }
+  @bottom-left   { content: none; }
+  @bottom-center { content: none; }
+}
+section[role="cover"] { page: cover; }
+
+/* ============ 封面 ============ */
+section.cover-page { padding-top: 90px; }
+p.cover-brand {
+  font-family: "SimSun","宋体","Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif; font-size: 11pt; letter-spacing: 4px;
+  color: #1a4d8f; text-align: center; margin: 0 0 30px 0; text-indent: 0;
+}
+p.cover-title {
+  font-family: "SimSun","宋体","Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif; font-size: 30pt; font-weight: bold;
+  color: #123a6e; text-align: center; margin: 0 0 14px 0; text-indent: 0;
+  line-height: 1.35;
+}
+p.cover-sub {
+  font-family: "SimSun","宋体","Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif; font-size: 16pt; color: #4a5260;
+  text-align: center; margin: 0 0 10px 0; text-indent: 0;
+}
+p.cover-rule {
+  border-top: 2px solid #1a4d8f; width: 42%; margin: 0 auto 34px auto;
+  text-indent: 0; height: 0; padding: 0;
+}
+p.cover-label {
+  font-family: "SimSun","宋体","Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif; font-size: 12pt; font-weight: bold; color: #123a6e;
+  margin: 26px 0 8px 0; text-indent: 0;
+  border-left: 4px solid #1a4d8f; padding-left: 8px;
+}
+p.cover-foot {
+  font-family: "SimSun","宋体","Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif; font-size: 9.5pt; color: #4a5260;
+  text-align: center; margin: 46px 0 0 0; text-indent: 0;
+}
+table.cover-table {
+  width: 100%; border-collapse: collapse; table-layout: fixed;
+  font-family: "SimSun","宋体","Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif; font-size: 10.5pt;
+}
+table.cover-table td {
+  border: 1px solid #c8d3e0; padding: 6px 10px; vertical-align: top;
+}
+table.cover-table td.ct-k {
+  background-color: #e8eef6; color: #123a6e; font-weight: bold; width: 26%;
+}
+
+/* ============ 目录 ============ */
+nav.doc-toc { font-family: "SimSun","宋体","Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif; }
+p.toc-title {
+  font-size: 18pt; font-weight: bold; color: #123a6e;
+  text-align: center; letter-spacing: 6px; margin: 0 0 26px 0; text-indent: 0;
+}
+ol.toc-list, ol.toc-list ol, ol.toc-list ul { list-style: none; }
+ol.toc-list { margin: 0; padding: 0; }
+ol.toc-list > li {
+  font-size: 12pt; color: #1f2328; margin: 0 0 9px 0; padding-left: 2px;
+}
+ol.toc-list > li > ol { margin: 6px 0 10px 0; padding-left: 26px; }
+ol.toc-list > li > ol > li { font-size: 10.5pt; color: #4a5260; margin: 0 0 5px 0; }
+ol.toc-list a { color: #1f2328; text-decoration: none; }
+
+/* ============ 正文段落 ============ */
+p.doc-p {
+  font-family: "SimSun","宋体","Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif; font-size: 12pt; line-height: 1.8;
+  color: #1f2328; text-indent: 2em; text-align: justify; margin: 0 0 9px 0;
+}
+
+/* ============ 标题层级 ============ */
+h1.doc-h1 {
+  font-family: "SimSun","宋体","Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif; font-size: 16pt; font-weight: bold;
+  color: #123a6e; margin: 24px 0 12px 0; padding: 0 0 6px 0;
+  border-bottom: 1.5px solid #1a4d8f; text-indent: 0; line-height: 1.45;
+}
+h2.doc-h2 {
+  font-family: "SimSun","宋体","Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif; font-size: 13.5pt; font-weight: bold;
+  color: #1a4d8f; margin: 18px 0 8px 0; padding-left: 9px;
+  border-left: 4px solid #1a4d8f; text-indent: 0; line-height: 1.5;
+}
+h3.doc-h3 {
+  font-family: "SimSun","宋体","Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif; font-size: 12pt; font-weight: bold;
+  color: #1f2328; margin: 14px 0 6px 0; text-indent: 0;
+}
+
+/* ============ 表格 ============ */
+table.data-table {
+  width: 100%; border-collapse: collapse; table-layout: fixed;
+  font-family: "SimSun","宋体","Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif; font-size: 10.5pt; margin: 10px 0 16px 0;
+}
+table.data-table th {
+  border: 1px solid #1a4d8f; padding: 7px 9px;
+  background-color: #1a4d8f; color: #ffffff; font-weight: bold; text-align: left;
+}
+table.data-table td {
+  border: 1px solid #c8d3e0; padding: 6px 9px; vertical-align: top;
+  word-break: break-word; overflow-wrap: break-word; line-height: 1.6;
+}
+
+/* ============ 提示引用 ============ */
+blockquote.doc-note {
+  margin: 12px 0 16px 0; padding: 10px 14px 4px 14px;
+  background-color: #f4f7fb; border-left: 4px solid #1a4d8f;
+}
+blockquote.doc-note p.doc-p { font-size: 10.5pt; color: #4a5260; text-indent: 0; margin: 0 0 6px 0; }
+
+/* ============ 代码块 ============ */
+pre.doc-code {
+  font-family: "Consolas","Courier New","SimSun","宋体",monospace; font-size: 9.5pt; line-height: 1.6;
+  background-color: #f4f6f8; border: 1px solid #c8d3e0;
+  border-left: 4px solid #1a4d8f; border-radius: 3px;
+  padding: 12px 14px; margin: 12px 0 16px 0;
+  white-space: pre-wrap; word-break: break-word; color: #1f2328;
+}
+pre.doc-code code { font-family: inherit; font-size: inherit; background: none; padding: 0; }
+
+/* ============ 列表 ============ */
+ul.doc-list, ol.doc-list-ol {
+  font-family: "SimSun","宋体","Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif; font-size: 12pt; color: #1f2328;
+  margin: 6px 0 12px 0; padding-left: 30px; line-height: 1.8;
+}
+ul.doc-list li, ol.doc-list-ol li { margin-bottom: 5px; text-align: justify; }
+code.ic {
+  font-family: "Consolas","Courier New","SimSun","宋体",monospace; font-size: 10.5pt; background-color: #e8eef6;
+  color: #123a6e; padding: 1px 4px; border-radius: 2px;
+}
+
+</style>
+</head>
+<body>
+
+<section role="cover" class="cover-page">
+<p class="cover-brand">MY COZY DESK</p>
+<p class="cover-title">小宝工作台｜MY COZY DESK</p>
+<p class="cover-sub">产品需求文档 PRD</p>
+<p class="cover-rule"></p>
+<p class="cover-label">文档信息</p>
+<table class="cover-table">
+<colgroup><col style="width:26%" /><col style="width:74%" /></colgroup>
+<tbody>
+<tr><td class="ct-k">文档类型</td><td class="ct-v">PRD（产品需求文档）</td></tr>
+<tr><td class="ct-k">产品名称</td><td class="ct-v">小宝工作台｜MY COZY DESK</td></tr>
+<tr><td class="ct-k">文档版本</td><td class="ct-v">v1.0</td></tr>
+<tr><td class="ct-k">撰写日期</td><td class="ct-v">2026 年 10 月 21 日</td></tr>
+<tr><td class="ct-k">当前产品版本</td><td class="ct-v">微信小程序 v1.5.0 ｜ Web / PWA v1.6.0</td></tr>
+<tr><td class="ct-k">产品形态</td><td class="ct-v">微信小程序 + 单文件 Web 应用（可安装为 PWA）</td></tr>
+<tr><td class="ct-k">目标读者</td><td class="ct-v">产品、设计、研发、测试及项目决策者</td></tr>
+<tr><td class="ct-k">文档状态</td><td class="ct-v">已实现部分按现状登记；未实现部分统一标注「规划中」</td></tr>
+</tbody></table>
+<p class="cover-label">修订记录</p>
+<table class="data-table">
+<colgroup>
+<col style="width:14.00%" />
+<col style="width:28.67%" />
+<col style="width:28.67%" />
+<col style="width:28.67%" />
+</colgroup>
+<thead><tr>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">版本</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">日期</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">修订人</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">说明</th>
+</tr></thead><tbody>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">v1.0</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">2026-10-21</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">产品负责人</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">首次成文，覆盖 M1 至 M4 已交付能力及 M5 规划</td>
+</tr>
+</tbody></table>
+<p class="cover-foot">本文档为产品权威需求说明，未经许可不得外传。</p>
+</section>
+
+<section role="cover">
+<nav class="doc-toc" aria-label="文档目录">
+<p class="toc-title">目录</p>
+<ol class="toc-list">
+<li><a href="#chapter-1">1. 摘要</a>
+</li>
+<li><a href="#chapter-2">2. 背景与问题陈述</a>
+<ol>
+<li><a href="#sec-2-1">2.1 现状</a></li>
+<li><a href="#sec-2-2">2.2 三个具体问题</a></li>
+<li><a href="#sec-2-3">2.3 机会</a></li>
+</ol>
+</li>
+<li><a href="#chapter-3">3. 目标与非目标</a>
+<ol>
+<li><a href="#sec-3-1">3.1 产品目标</a></li>
+<li><a href="#sec-3-2">3.2 成功指标（建议追踪）</a></li>
+<li><a href="#sec-3-3">3.3 非目标（本期明确不做）</a></li>
+</ol>
+</li>
+<li><a href="#chapter-4">4. 用户与场景</a>
+<ol>
+<li><a href="#sec-4-1">4.1 目标用户</a></li>
+<li><a href="#sec-4-2">4.2 典型场景</a></li>
+</ol>
+</li>
+<li><a href="#chapter-5">5. 产品范围总览</a>
+</li>
+<li><a href="#chapter-6">6. 功能需求</a>
+<ol>
+<li><a href="#sec-6-1">6.1 通用能力</a></li>
+<li><a href="#sec-6-2">6.2 模块需求</a></li>
+<li><a href="#sec-6-3">6.3 日历与回顾</a></li>
+</ol>
+</li>
+<li><a href="#chapter-7">7. 非功能需求</a>
+</li>
+<li><a href="#chapter-8">8. 交互与视觉规范</a>
+</li>
+<li><a href="#chapter-9">9. 数据模型（摘要）</a>
+</li>
+<li><a href="#chapter-10">10. 技术架构与约束</a>
+<ol>
+<li><a href="#sec-10-1">10.1 关键约束与已定方案</a></li>
+</ol>
+</li>
+<li><a href="#chapter-11">11. 里程碑与状态</a>
+</li>
+<li><a href="#chapter-12">12. 验收标准</a>
+<ol>
+<li><a href="#sec-12-1">12.1 功能验收（已通过）</a></li>
+<li><a href="#sec-12-2">12.2 真机验收清单（需人工确认）</a></li>
+</ol>
+</li>
+<li><a href="#chapter-13">13. 风险与待办</a>
+</li>
+<li><a href="#chapter-14">14. 附录</a>
+<ol>
+<li><a href="#sec-14-1">14.1 术语表</a></li>
+<li><a href="#sec-14-2">14.2 相关文档</a></li>
+</ol>
+</li>
+</ol></nav>
+</section>
+
+<section role="body" data-page-restart="1">
+<h1 id="chapter-1" class="doc-h1">1. 摘要</h1>
+<p class="doc-p">小宝工作台是一款面向个人用户的「全记录 + 轻回顾」效率工具，以微信小程序与单文件 Web 应用（PWA）双端形态交付。产品将计划、课程、运动、备考、理财、自媒体、阅读、技能、便签、复盘等 15 类日常记录收敛到同一个入口，并通过日历热力图、日历时间轴、自动成长报告与全局搜索，把「记下来」变成「看得见」，最终形成可持续的自我管理闭环。</p>
+<p class="doc-p">本文为产品的权威需求说明，包含 5 项产品目标、33 条功能需求（FR-001 至 FR-014、FR-101 至 FR-116、FR-201 至 FR-203）、7 类非功能要求、交互与视觉规范、数据模型、技术架构约束、里程碑状态、验收标准与风险清单。</p>
+<p class="doc-p"><strong>当前状态</strong>：核心记录层、组织层、回顾层、激励层、智能层、数据层均已交付；提醒层本地能力已交付、微信订阅消息后台推送待配置；小程序与 Web 双端数据互通列为 M5 规划项。</p>
+<h1 id="chapter-2" class="doc-h1">2. 背景与问题陈述</h1>
+<h2 id="sec-2-1" class="doc-h2">2.1 现状</h2>
+<p class="doc-p">个人日常管理的数据天然是分散的：计划写在便签里，花销记在记账应用中，读书进度靠记忆，备考与课程进度靠心算，运动打卡靠自觉。市面上并不缺少单点优秀的工具，但缺少一个「今天所有事都在一处」的容器。</p>
+<h2 id="sec-2-2" class="doc-h2">2.2 三个具体问题</h2>
+<table class="data-table">
+<colgroup>
+<col style="width:14.00%" />
+<col style="width:28.67%" />
+<col style="width:28.67%" />
+<col style="width:28.67%" />
+</colgroup>
+<thead><tr>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">编号</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">问题</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">表现</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">后果</th>
+</tr></thead><tbody>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">P1</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">记录入口分散</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">想记一件事之前，先要判断「该打开哪个应用」</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">记录成本高，最终演变为「干脆不记」</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">P2</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">缺少反馈闭环</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">记完之后没有任何可视化回馈</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">无法形成习惯，用户质疑「记了又怎样」</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">P3</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">回顾成本过高</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">想知道上周做了什么，需要翻多个地方</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">周复盘几乎不可能坚持</td>
+</tr>
+</tbody></table>
+<h2 id="sec-2-3" class="doc-h2">2.3 机会</h2>
+<p class="doc-p">若能把记录入口收敛为一处、把记录结果即时可视化、把回顾动作压缩为一次点击，则个人管理工具的使用频次与留存均有显著改善空间。这正是本产品切入的位置。</p>
+<h1 id="chapter-3" class="doc-h1">3. 目标与非目标</h1>
+<h2 id="sec-3-1" class="doc-h2">3.1 产品目标</h2>
+<table class="data-table">
+<colgroup>
+<col style="width:14.00%" />
+<col style="width:43.00%" />
+<col style="width:43.00%" />
+</colgroup>
+<thead><tr>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">编号</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">目标</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">衡量方式</th>
+</tr></thead><tbody>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">G1</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">一个入口完成全天 15 类记录</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">15 个模块全部可用；单模块完成一次记录不超过 3 次点击</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">G2</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">降低单次记录成本</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">提供模板库、快速添加入口、表单默认值与快捷按钮</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">G3</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">建立正反馈闭环</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">打卡连续天数、日历热力图、自动成长报告、战绩卡片</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">G4</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">让回顾变得简单</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">日历时间轴（任意一天全记录）、全局搜索、周复盘自动汇总</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">G5</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">数据自主可控</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">本地优先存储；支持一键导出与恢复备份</td>
+</tr>
+</tbody></table>
+<h2 id="sec-3-2" class="doc-h2">3.2 成功指标（建议追踪）</h2>
+<table class="data-table">
+<colgroup>
+<col style="width:16.00%" />
+<col style="width:42.00%" />
+<col style="width:42.00%" />
+</colgroup>
+<thead><tr>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">指标</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">定义</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">目标值</th>
+</tr></thead><tbody>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">日均记录条数</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">每日新增记录总条数 / 活跃天数</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">不低于 5 条</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">模块覆盖度</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">周内有记录的模块数 / 15</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">不低于 6 个</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">打卡连续性</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">月度最长连续打卡天数</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">不低于 21 天</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">周复盘完成率</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">已提交周复盘的周数 / 总周数</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">不低于 60%</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">单次记录耗时</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">从进入应用到保存成功的中位耗时</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">不超过 20 秒</td>
+</tr>
+</tbody></table>
+<h2 id="sec-3-3" class="doc-h2">3.3 非目标（本期明确不做）</h2>
+<ul class="doc-list"><li>多人协作与团队看板</li><li>强社交功能，如排行榜、好友 PK</li><li>依赖服务端常驻的实时推送（当前采用本地提醒，订阅消息为可选增强）</li><li>跨端自动同步（当前采用本地存储加手动备份搬运）</li></ul>
+<h1 id="chapter-4" class="doc-h1">4. 用户与场景</h1>
+<h2 id="sec-4-1" class="doc-h2">4.1 目标用户</h2>
+<p class="doc-p">注重自我管理的个人用户，以手机为主要使用端，偏好轻量、可爱、无学习成本的界面；对数据隐私敏感，不希望个人数据被强制上传云端。</p>
+<h2 id="sec-4-2" class="doc-h2">4.2 典型场景</h2>
+<table class="data-table">
+<colgroup>
+<col style="width:16.00%" />
+<col style="width:42.00%" />
+<col style="width:42.00%" />
+</colgroup>
+<thead><tr>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">场景</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">用户行为</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">产品支撑</th>
+</tr></thead><tbody>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">早上到公司</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">想快速知道今天要做什么，并打个卡</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">桌面页：问候卡、今日日程、打卡按钮</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">读了一会儿书</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">想记下本次读了多少页</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">阅读 → 书架 → 输入本次页数 → 自动累加</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">临时记一件事</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">想快速把想法塞进便签</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">顶栏「+ 快速添加」或模板库一键套用</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">周末回顾</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">想看这一周到底做了什么</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">周复盘 → 自动生成成长报告 → 一键写入「做得好」</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">想知道某天干了什么</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">查看历史某一天的全部记录</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">桌面日历点选那一天 → 当天全记录时间轴</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">换手机或担心丢数据</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">需要导出备份</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">我的 → 数据备份 → 导出或导入 JSON</td>
+</tr>
+</tbody></table>
+<h1 id="chapter-5" class="doc-h1">5. 产品范围总览</h1>
+<table class="data-table">
+<colgroup>
+<col style="width:16.00%" />
+<col style="width:42.00%" />
+<col style="width:42.00%" />
+</colgroup>
+<thead><tr>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">层级</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">能力</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">状态</th>
+</tr></thead><tbody>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">记录层</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">15 个功能模块（计划、课程、运动、备考、理财、自媒体、阅读、技能、便签、复盘等）</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">已实现</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">组织层</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">全模块编辑与删除、模板库、优先级与状态管理</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">已实现</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">回顾层</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">日历热力图、日历时间轴、自动成长报告、全局搜索</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">已实现</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">激励层</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">打卡连续天数、战绩卡片、彩带动效</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">已实现</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">提醒层</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">计划、锻炼、喝水提醒（本地）；微信订阅消息</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">本地已实现，订阅消息待配置</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">智能层</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">AI 小宝助理（小程序云端大模型 / Web 本地规则）</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">已实现</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">数据层</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">本地存储、导出与恢复备份、云端同步（可选）</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">已实现</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">互通层</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">小程序与 Web 数据互通</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">规划中</td>
+</tr>
+</tbody></table>
+<h1 id="chapter-6" class="doc-h1">6. 功能需求</h1>
+<blockquote class="doc-note"><p class="doc-p">优先级定义：P0 为核心必须具备；P1 为体验提升；P2 为锦上添花。</p><p class="doc-p">每条需求包含描述、规则与验收标准三部分。</p></blockquote>
+<h2 id="sec-6-1" class="doc-h2">6.1 通用能力</h2>
+<table class="data-table">
+<colgroup>
+<col style="width:14.00%" />
+<col style="width:28.67%" />
+<col style="width:28.67%" />
+<col style="width:28.67%" />
+</colgroup>
+<thead><tr>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">ID</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">优先级</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">需求</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">规则与验收</th>
+</tr></thead><tbody>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">FR-001</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">P0</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">统一数据模型</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">所有模块数据落在单一 DB 结构；缺失字段自动以默认值补齐，老数据升级不丢失</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">FR-002</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">P0</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">全模块增删改</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">每个模块支持新增、编辑、删除；编辑不得产生重复条目</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">FR-003</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">P0</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">表单可靠提交</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">小程序侧一律使用 form 提交，规避真机输入、失焦、点击时序不确定导致的丢值</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">FR-004</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">P0</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">弹层交互</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">小程序弹层为不透明全屏面板；点击遮罩背景才关闭（目标元素判定），点击输入框绝不关闭</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">FR-005</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">P0</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">空状态</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">每个列表必须具备友好空状态文案与表情</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">FR-006</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">P0</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">操作反馈</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">保存与删除后必须有提示；达成里程碑（读完一本书、任务全部完成）播放彩带动效</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">FR-007</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">P1</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">数据备份</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">Web 端导出与导入整库 JSON；小程序端复制 JSON 并生成文件分享</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">FR-008</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">P1</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">全局搜索</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">跨多类数据检索，结果可跳转至所属模块；Web 支持快捷键唤起</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">FR-009</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">P1</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">提醒通知</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">计划与锻炼按时间点、喝水按间隔触发；小程序本地弹窗，Web 浏览器通知</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">FR-010</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">P2</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">模板库</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">提供计划、复盘、便签三类模板一键套用</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">FR-011</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">P2</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">AI 助理</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">小程序接入云端大模型，支持流式输出并携带用户数据上下文；Web 降级为本地规则建议</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">FR-012</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">P2</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">战绩卡片</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">绘制数据卡片，小程序保存至相册，Web 下载为图片</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">FR-013</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">P1</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">渲染健壮性</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">任一模块渲染异常时显示兜底提示卡（含错误信息与版本号），禁止静默空白</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">FR-014</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">P1</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">版本可见</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">小程序抽屉底部与 Web 侧边栏底部显示版本号，便于确认当前所运行构建</td>
+</tr>
+</tbody></table>
+<h2 id="sec-6-2" class="doc-h2">6.2 模块需求</h2>
+<table class="data-table">
+<colgroup>
+<col style="width:14.00%" />
+<col style="width:21.50%" />
+<col style="width:21.50%" />
+<col style="width:21.50%" />
+<col style="width:21.50%" />
+</colgroup>
+<thead><tr>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">ID</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">模块</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">优先级</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">关键规则</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">验收标准</th>
+</tr></thead><tbody>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">FR-101</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">桌面</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">P0</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">打卡签到、连续天数、当月日历、今日日程、时钟问候与每日一句</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">打卡写入当日签到记录；日历按活跃度着色</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">FR-102</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">每日计划</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">P0</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">计划项含名称与优先级（重要、普通、简单），可勾选完成</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">勾选后进度更新；全部完成时给出祝贺提示</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">FR-103</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">课程学习</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">P0</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">课程名、颜色、总章节、当前进度，支持记录学习分钟</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">进度条与百分比同步更新</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">FR-104</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">锻炼身体</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">P0</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">内置运动类型并支持自定义；记录时长自动换算消耗</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">运动记录写入当日；支持删除</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">FR-105</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">备考计划</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">P0</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">科目、考试日期、单元总数与已完成数</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">显示距考试剩余天数</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">FR-106</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">理财</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">P0</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">收入与支出、分类（支出 9 项、收入 5 项）、月度环形图、储蓄目标</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">分类使用内联按钮组选择，不使用滚轮选择器；目标显示已存与目标金额</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">FR-107</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">自媒体</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">P0</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">灵感池（待创作、已创作）与发布登记（平台、标题、曝光）</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">灵感可标记完成；发布可登记曝光量</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">FR-108</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">阅读</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">P0</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">书架、阅读时长、摘抄本</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">页码为累加语义：输入本次阅读页数叠加到当前进度，封顶总页数，达顶自动标记已读完</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">FR-109</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">技能训练</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">P0</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">技能名、练习打卡与次数</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">每练习一次计数加一</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">FR-110</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">备忘录</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">P0</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">便签、置顶、颜色</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">置顶项在侧边导航显示角标</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">FR-111</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">周复盘</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">P0</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">三段式：做得好、待改进、下周计划</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">保存按周起始日归档</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">FR-112</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">日历时间轴</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">P1</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">选定某一天，聚合当天全部模块记录</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">可前后翻天，不可翻到未来</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">FR-113</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">AI 小宝</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">P2</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">快捷问题与自由追问</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">未连接云端时给出降级提示而非报错</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">FR-114</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">模板库</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">P2</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">5 个计划模板、1 个复盘模板、3 个便签模板</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">套用后落到对应模块并即时刷新</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">FR-115</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">我的</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">P0</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">名片（昵称、签名、头像、标签）、主题与自定义背景、备份、战绩卡、云同步</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">主题切换即时生效并持久化</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">FR-116</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">提醒设置</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">P1</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">计划与锻炼开关加时间点；喝水开关加间隔</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">设置持久化；到点触发提醒</td>
+</tr>
+</tbody></table>
+<h2 id="sec-6-3" class="doc-h2">6.3 日历与回顾</h2>
+<table class="data-table">
+<colgroup>
+<col style="width:14.00%" />
+<col style="width:28.67%" />
+<col style="width:28.67%" />
+<col style="width:28.67%" />
+</colgroup>
+<thead><tr>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">ID</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">优先级</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">需求</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">规则与验收</th>
+</tr></thead><tbody>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">FR-201</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">P1</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">日历热力图</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">未打卡但有记录的日子按活跃度着色（lv1 至 lv3），打卡日以强色高亮；提供图例与悬停提示</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">FR-202</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">P1</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">点一天看当天</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">点击日历任意一天，弹出当天全部记录（打卡、计划、运动、学习、阅读、理财、发布、灵感、技能、便签、摘抄）与 4 项统计；空日显示「这一天还没有记录」</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">FR-203</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">P1</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">自动成长报告</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">汇总本周数据、对比上周升降，生成中文总结，可一键写入本周复盘</td>
+</tr>
+</tbody></table>
+<h1 id="chapter-7" class="doc-h1">7. 非功能需求</h1>
+<table class="data-table">
+<colgroup>
+<col style="width:26.00%" />
+<col style="width:74.00%" />
+</colgroup>
+<thead><tr>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">类别</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">要求</th>
+</tr></thead><tbody>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">性能</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">Web 单文件、无构建依赖，首屏秒开；小程序页面切换无白屏；列表渲染无卡顿</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">兼容性</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">Web 支持现代 Chrome、Safari、Edge，支持 PWA 安装与离线访问；小程序覆盖微信主流版本，兼容 iOS 与 Android</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">视觉</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">移动端优先；小程序统一使用 rpx 单位（WXML 与 WXSS 中禁用 px）；支持日间与夜间模式及自定义背景</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">数据</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">本地优先（Web 存储键 gubao_desk_v1，小程序使用 Storage）；加载时补齐缺失字段；离线可用</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">隐私</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">默认不上传任何数据；云端同步必须由用户主动登录触发</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">健壮性</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">渲染异常具备兜底展示；旧缓存可被识别（版本号加 Service Worker 版本号双重校验）</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">可维护性</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">双端共享同一套领域逻辑命名（如 searchAll、dayLevel、tlNodes），便于同步演进</td>
+</tr>
+</tbody></table>
+<h1 id="chapter-8" class="doc-h1">8. 交互与视觉规范</h1>
+<ol class="doc-list-ol"><li><strong>导航</strong>：移动端由左上角轻量卡片按钮唤起抽屉；抽屉打开时该按钮隐藏，点击抽屉外空白区域关闭。按钮样式与页面卡片体系保持一致，避免视觉突兀。</li><li><strong>列表项</strong>：左侧为图标与标题，右侧为操作区（编辑、删除）；删除需二次确认。</li><li><strong>弹层</strong>：小程序采用不透明全屏面板，避免出现「透过遮罩看到上一层」的错觉；Web 采用半透明模糊遮罩。弹层内按钮不得重复（如只读弹窗仅保留「关闭」）。</li><li><strong>表单</strong>：小程序统一使用 form 提交；枚举型选择使用内联按钮组而非滚轮选择器；日期仍使用原生选择器。</li><li><strong>反馈</strong>：保存后提示，达成后彩带，出错后给出明确文案，不允许静默失败。</li><li><strong>文案</strong>：轻松可爱、口语化，例如「书架空空的，添加第一本书吧」。</li><li><strong>搜索</strong>：结果覆盖标题、正文与附属字段（如便签正文、储蓄目标名、课程笔记），避免用户「明明有却搜不到」。</li></ol>
+<h1 id="chapter-9" class="doc-h1">9. 数据模型（摘要）</h1>
+<p class="doc-p">双端共用单一 DB 结构；Web 存储键为 gubao_desk_v1，小程序使用同构结构。</p>
+<table class="data-table">
+<colgroup>
+<col style="width:16.00%" />
+<col style="width:42.00%" />
+<col style="width:42.00%" />
+</colgroup>
+<thead><tr>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">字段</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">类型</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">说明</th>
+</tr></thead><tbody>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">profile</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">object</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">昵称、签名、头像、标签</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">checkins</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">map</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">日期到签到时间的映射</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">plans</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">map</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">日期到计划项数组的映射，计划项含 id、名称、完成状态、优先级</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">courses / exam</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">array</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">课程列表与备考科目列表</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">studyLog / readLog</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">map</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">日期到学习或阅读分钟的映射</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">workout</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">map</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">日期到运动记录数组的映射，记录含 id、类型、时长、消耗</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">finance</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">array</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">收支流水，含类型、金额、分类、备注、日期</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">goals</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">array</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">储蓄目标，含名称、目标金额、已存金额</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">ideas / pubs</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">array</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">自媒体灵感与发布登记</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">books / quotes</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">array</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">书架条目与摘抄</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">skills / skillLog</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">array</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">技能定义与练习记录</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">memos</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">array</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">便签，正文参与全局搜索</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">reviews</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">map</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">周起始日到复盘内容的映射，含做得好、待改进、下周计划、时间</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">reminders</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">object</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">计划与锻炼提醒（时间点）、喝水提醒（间隔）</td>
+</tr>
+</tbody></table>
+<h1 id="chapter-10" class="doc-h1">10. 技术架构与约束</h1>
+<p class="doc-p">整体分为三层：UI 层（小程序页面与 Web 单页）、逻辑层（领域函数与工具模块）、数据层（本地存储与可选云端同步）。双端在逻辑层保持同名函数，以降低同步演进成本。</p>
+<pre class="doc-code"><code>UI 层      小程序页面(WXML/WXSS)   |   Web 单页(index.html)
+逻辑层     统一领域函数：searchAll / tlNodes / dayLevel / report ...
+数据层     本地存储(localStorage 或 Storage)  &lt;-&gt;  云端同步(可选)</code></pre>
+<h2 id="sec-10-1" class="doc-h2">10.1 关键约束与已定方案</h2>
+<table class="data-table">
+<colgroup>
+<col style="width:26.00%" />
+<col style="width:74.00%" />
+</colgroup>
+<thead><tr>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">约束</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">方案</th>
+</tr></thead><tbody>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">真机数据更新异步，且失焦与点击时序不确定</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">弹层全面采用 form 提交</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">点击输入框导致弹层消失（点击事件冒泡）</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">遮罩关闭采用目标元素与当前元素一致性判定</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">半透明遮罩被感知为界面重叠</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">小程序弹层遮罩改为完全不透明</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">旧缓存让用户看到过期界面</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">版本号可见，并升级 Service Worker 版本号</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">小程序无法直接打开外部浏览器</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">「联网搜书」改为复制关键词到剪贴板</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">滚轮选择器在部分环境不可交互</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">改为内联可选按钮组（分类、优先级、状态、平台）</td>
+</tr>
+</tbody></table>
+<h1 id="chapter-11" class="doc-h1">11. 里程碑与状态</h1>
+<table class="data-table">
+<colgroup>
+<col style="width:20.00%" />
+<col style="width:40.00%" />
+<col style="width:40.00%" />
+</colgroup>
+<thead><tr>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">里程碑</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">内容</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">状态</th>
+</tr></thead><tbody>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">M1 基础记录</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">12 个核心模块可用</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">已完成</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">M2 组织与可靠</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">全模块编辑与删除、表单可靠提交、弹层交互统一</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">已完成</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">M3 回顾洞察</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">日历热力图、日历时间轴、自动成长报告、全局搜索</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">已完成</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">M4 激励与智能</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">提醒通知、数据备份、AI 助理、模板库、战绩卡片</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">已完成</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">M5 推送与互通</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">微信订阅消息后台推送、小程序与 Web 数据互通</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">规划中</td>
+</tr>
+</tbody></table>
+<h1 id="chapter-12" class="doc-h1">12. 验收标准</h1>
+<h2 id="sec-12-1" class="doc-h2">12.1 功能验收（已通过）</h2>
+<ul class="doc-list"><li>工程静态校验 0 问题，覆盖 16 个页面的结构、约定与单位检查。</li><li>小程序侧：表单提交 16 项、编辑删除 19 项、遮罩点击 20 项、选择器降级 33 项、真机时序 8 项，全部通过。</li><li>Web 侧：真实 Chrome 移动端视口全模块 42 项；搜索 14 项、日历详情 10 项、健壮性 10 项、导航按钮 7 项，全部通过。</li><li>合计 29 个测试脚本、350 条以上断言全部通过。</li></ul>
+<h2 id="sec-12-2" class="doc-h2">12.2 真机验收清单（需人工确认）</h2>
+<table class="data-table">
+<colgroup>
+<col style="width:24.00%" />
+<col style="width:76.00%" />
+</colgroup>
+<thead><tr>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">序号</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">检查项</th>
+</tr></thead><tbody>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">1</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">小程序侧边抽屉底部显示 v1.5.0，确认运行的是新构建</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">2</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">每个模块点击添加后，弹层全屏覆盖、点击输入框不消失、保存后正确入库</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">3</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">书架输入本次页数后页码累加而非覆盖</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">4</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">桌面日历点击某一天，弹出当天全部记录</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">5</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">全局搜索能够搜到便签正文与储蓄目标</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">6</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">左上角导航按钮：关闭时可见，抽屉打开时隐藏</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">7</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">我的 → 数据备份，可复制或导出 JSON</td>
+</tr>
+</tbody></table>
+<h1 id="chapter-13" class="doc-h1">13. 风险与待办</h1>
+<table class="data-table">
+<colgroup>
+<col style="width:20.00%" />
+<col style="width:40.00%" />
+<col style="width:40.00%" />
+</colgroup>
+<thead><tr>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">风险或待办</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">影响</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">应对</th>
+</tr></thead><tbody>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">微信订阅消息模板未配置</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">后台推送不可用</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">已提供本地提醒兜底；需申请模板并完成云函数部署</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">小程序与 Web 数据不互通</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">换端需重新录入</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">提供备份 JSON 导入导出；后续考虑云同步打通</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">本机无微信开发者工具</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">小程序界面无法自测</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">以冒烟测试覆盖逻辑，界面部分由真机验收清单确认</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">用户浏览器缓存旧构建</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">反馈「问题没改」</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">版本号可见、PWA 缓存版本升级，并提示强制刷新</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">Web 端 AI 无云端模型</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">智能建议较简单</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">已在页面标注，完整体验在小程序端</td>
+</tr>
+</tbody></table>
+<h1 id="chapter-14" class="doc-h1">14. 附录</h1>
+<h2 id="sec-14-1" class="doc-h2">14.1 术语表</h2>
+<table class="data-table">
+<colgroup>
+<col style="width:26.00%" />
+<col style="width:74.00%" />
+</colgroup>
+<thead><tr>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">术语</th>
+<th style="border:1px solid #1a4d8f;padding:7px 9px;background-color:#1a4d8f;color:#ffffff;font-weight:bold;text-align:left;">含义</th>
+</tr></thead><tbody>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">模块</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">侧边导航中的一个功能单元，如「阅读」「理财」</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">弹层</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">添加或编辑数据时弹出的面板</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">热力图</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">日历中按当日活跃度着色的格子</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">时间轴</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">某一天跨模块记录的聚合视图</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">累加页数</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;">阅读进度以「本次读了几页」叠加，而非直接覆盖</td>
+</tr>
+<tr>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">PWA</td>
+<td style="border:1px solid #c8d3e0;padding:6px 9px;vertical-align:top;background-color:#f5f7fa;">可安装到设备、离线可用的 Web 应用形态</td>
+</tr>
+</tbody></table>
+<h2 id="sec-14-2" class="doc-h2">14.2 相关文档</h2>
+<ul class="doc-list"><li>docs/README.md：项目总览与使用说明</li><li>docs/项目总览.html：可视化总览页</li><li>.spec/PAGES_SPEC.md：页面规格说明</li><li>.workbuddy/memory/：按日期归档的开发日志</li></ul>
+</section>
+
+</body>
+</html>

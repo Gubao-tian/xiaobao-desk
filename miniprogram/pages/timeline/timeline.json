@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "日历时间轴",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "side-nav": "/components/side-nav/side-nav"
+  }
+}

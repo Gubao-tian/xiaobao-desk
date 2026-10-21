@@ -1,0 +1,18 @@
+.ai-head { padding: 24rpx 8rpx 26rpx; }
+.ai-title { font-size: 40rpx; font-weight: 800; color: #2b2330; }
+.ai-sub { font-size: 24rpx; color: #8a8290; margin-top: 8rpx; }
+.chipq {
+  padding: 14rpx 24rpx; border-radius: 30rpx; font-size: 24rpx; font-weight: 700;
+  background: var(--pink-pale); color: var(--pink-deep);
+}
+.bubble-row { display: flex; margin-bottom: 18rpx; }
+.bubble-row.me { justify-content: flex-end; }
+.bubble {
+  max-width: 78%; padding: 20rpx 24rpx; border-radius: 24rpx;
+  font-size: 26rpx; line-height: 1.65; white-space: pre-wrap; word-break: break-all;
+}
+.bubble.ai { background: var(--card-soft); color: var(--text-1); border-bottom-left-radius: 8rpx; }
+.bubble.me { background: linear-gradient(140deg, #FFC2D8, #F2689A); color: #fff; border-bottom-right-radius: 8rpx; }
+.dot-typing { color: var(--text-3); }
+.ai-empty { text-align: center; padding: 46rpx 0; color: var(--text-3); font-size: 24rpx; }
+.ai-empty .emo { display: block; font-size: 58rpx; margin-bottom: 14rpx; }

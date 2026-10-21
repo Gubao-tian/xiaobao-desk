@@ -1,0 +1,42 @@
+/* 表单补充样式（app.wxss 未定义部分，按规范补齐） */
+.fl { display: block; font-size: 22rpx; font-weight: 700; color: var(--text-2); margin-bottom: 8rpx; }
+.ta {
+  font-family: inherit; font-size: 26rpx; color: var(--text); line-height: 1.6;
+  border: 2rpx solid var(--line); border-radius: 26rpx;
+  padding: 18rpx 24rpx; background: var(--card-soft);
+  width: 100%; min-height: 180rpx;
+}
+.pct { font-size: 29rpx; font-weight: 800; color: var(--pink-deep); }
+
+/* 每日任务完成数柱状图（view + 高度百分比） */
+.chart { display: flex; align-items: flex-end; gap: 10rpx; height: 240rpx; padding-top: 20rpx; }
+.cbar {
+  flex: 1; display: flex; align-items: flex-start; justify-content: center;
+  border-radius: 12rpx 12rpx 6rpx 6rpx; min-height: 8rpx; position: relative;
+}
+.cv { font-size: 18rpx; color: #fff; font-weight: 700; margin-top: 6rpx; }
+.crow { display: flex; gap: 10rpx; margin-top: 10rpx; }
+.cw { flex: 1; text-align: center; font-size: 19rpx; color: var(--text-3); font-weight: 700; }
+.cw.td { color: var(--pink-deep); }
+
+/* 历史复盘列表 */
+.rw { font-size: 26rpx; font-weight: 800; }
+.rsec { margin-top: 16rpx; }
+.rk { display: block; font-size: 22rpx; font-weight: 700; color: var(--pink-deep); }
+.rv {
+  display: block; font-size: 24rpx; color: var(--text-2); line-height: 1.6;
+  margin-top: 4rpx; word-break: break-all; white-space: pre-wrap;
+}
+.del-ico {
+  width: 40rpx; height: 40rpx; flex: 0 0 40rpx; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255, 255, 255, 0.7); color: var(--text-2);
+  font-size: 20rpx; font-weight: 700;
+}
+
+/* 自动成长报告 */
+.report-text {
+  background: var(--card-soft); border-radius: 18rpx; padding: 20rpx 22rpx;
+  font-size: 24rpx; line-height: 1.7; color: var(--text-1);
+}
+.trend { color: var(--pink-deep); font-weight: 800; }

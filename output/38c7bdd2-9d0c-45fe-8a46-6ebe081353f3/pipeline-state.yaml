@@ -1,0 +1,68 @@
+schema_version: 1
+request_id: 38c7bdd2-9d0c-45fe-8a46-6ebe081353f3
+created_at: 2026-10-21T14:52:00+08:00
+updated_at: 2026-10-21T14:52:00+08:00
+
+entry_type: full_pipeline
+stage_chain: [1, 2, 3]
+
+output_docx_path: "E:\\work  buddy\\2026-10-20-18-11-03\\output\\38c7bdd2-9d0c-45fe-8a46-6ebe081353f3\\stage3\\小宝工作台产品需求文档PRD.docx"
+output_docx_user_specified: false
+
+current_stage: 3
+
+stages:
+  stage_0:
+    status: completed
+    completed_at: 2026-10-21T14:52:00+08:00
+    decision: full_pipeline
+
+  stage_1:
+    status: completed
+    started_at: 2026-10-21T14:52:00+08:00
+    completed_at: 2026-10-21T15:20:00+08:00
+    output_path: "E:\\work  buddy\\2026-10-20-18-11-03\\output\\38c7bdd2-9d0c-45fe-8a46-6ebe081353f3\\stage1\\final_draft.md"
+    genre: general
+    expert_used: general-writer
+    route_tag: general_writing
+
+  stage_2:
+    status: completed
+    started_at: 2026-10-21T15:30:00+08:00
+    completed_at: 2026-10-21T15:35:00+08:00
+    route: html
+    html_sub: template
+    output_path: "E:\\work  buddy\\2026-10-20-18-11-03\\output\\38c7bdd2-9d0c-45fe-8a46-6ebe081353f3\\stage2\\小宝工作台产品需求文档PRD.html"
+    output_format: html
+    genre: business-report
+    template_used: business-report
+    chapter_count: 14
+    table_count: 17
+    skills_invoked: ["design-token(inline)", "doc-typeset(inline)", "html-review(inline)"]
+    design_tokens_path: "E:\\work  buddy\\2026-10-20-18-11-03\\output\\38c7bdd2-9d0c-45fe-8a46-6ebe081353f3\\stage2\\design_tokens.json"
+    html_review_attempts: 1
+    fallback: false
+    fallback_reason: null
+
+  stage_3:
+    status: completed
+    started_at: 2026-10-21T14:58:00+08:00
+    completed_at: 2026-10-21T14:59:30+08:00
+    executor: doc-converter
+    input_format: html
+    output_path: "E:\\work  buddy\\2026-10-20-18-11-03\\output\\38c7bdd2-9d0c-45fe-8a46-6ebe081353f3\\stage3\\小宝工作台产品需求文档PRD.docx"
+    skill_used: ["html-to-doc"]
+    present_files_opened: true
+    fallback: false
+    fallback_used: false
+    fallback_reason: null
+    chunks: null
+    aigc_tag: true
+    preflight_passed: true
+    verify_passed: true
+
+consistency_check:
+  output_files_exist: true
+  stage_chain_complete: true
+  last_checked_at: 2026-10-21T14:59:30+08:00
+  errors: []

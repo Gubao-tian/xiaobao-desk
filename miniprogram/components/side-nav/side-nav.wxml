@@ -1,0 +1,30 @@
+<view class="nav-mask {{open ? 'on' : ''}}" bindtap="close"></view>
+
+<view class="nav {{open ? 'open' : ''}}">
+  <view class="brand">
+    <view class="brand-mark">💗</view>
+    <view class="brand-txt">
+      <text class="bt">小宝工作台</text>
+      <text class="bs">MY COZY DESK</text>
+    </view>
+  </view>
+
+  <scroll-view scroll-y class="nav-list">
+    <view
+      wx:for="{{modules}}"
+      wx:key="id"
+      class="nav-item {{active === item.id ? 'on' : ''}}"
+      data-id="{{item.id}}"
+      bindtap="onTap"
+    >
+      <view class="nav-ico">{{item.icon}}</view>
+      <text class="nav-label">{{item.name}}</text>
+      <text class="nav-badge" wx:if="{{badges[item.id]}}">{{badges[item.id]}}</text>
+    </view>
+  </scroll-view>
+  <view class="nav-foot">小宝工作台 · v{{version}}</view>
+</view>
+
+<view class="nav-fab {{open ? 'hide' : ''}}" bindtap="toggle" aria-label="打开侧边栏">
+  <text>☰</text>
+</view>

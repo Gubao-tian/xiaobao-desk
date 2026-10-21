@@ -1,0 +1,107 @@
+<side-nav active="workout" bind:navigate="onNav" />
+
+<view class="page" style="{{pageStyle}}">
+  <!-- 顶部统计 -->
+  <view class="grid4">
+    <view class="stat">
+      <view class="lbl">今日运动</view>
+      <view class="val">{{todayMin}}<small>分钟</small></view>
+      <view class="ico">🏃</view>
+    </view>
+    <view class="stat">
+      <view class="lbl">今日消耗</view>
+      <view class="val">{{todayBurn}}<small>千卡</small></view>
+      <view class="ico">🔥</view>
+    </view>
+    <view class="stat">
+      <view class="lbl">本周累计</view>
+      <view class="val">{{weekMin}}<small>分钟</small></view>
+      <view class="ico">📅</view>
+    </view>
+    <view class="stat">
+      <view class="lbl">连续运动</view>
+      <view class="val">{{streak}}<small>天</small></view>
+      <view class="ico">💪</view>
+    </view>
+  </view>
+
+  <!-- 运动类型九宫格 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>选择运动类型</view>
+    <view class="grid3">
+      <view wx:for="{{types}}" wx:key="key" class="tcell {{item.on ? 'on' : ''}}" data-key="{{item.key}}" bindtap="onPickType">
+        <text class="temoji">{{item.emoji}}</text>
+        <text class="tname">{{item.name}}</text>
+        <text class="tk">×{{item.k}} 千卡/分</text>
+        <text wx:if="{{item.n > 0}}" class="tbadge">今日 {{item.n}} 次</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 记录一次运动 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>记录一次运动</view>
+    <view class="row" style="gap:16rpx">
+      <input
+        class="inp"
+        type="digit"
+        value="{{form.min}}"
+        placeholder="输入运动分钟数"
+        bindinput="onFormMin" bindblur="onFormMinBlur"
+        bindconfirm="onRecord"
+      />
+      <button class="btn primary" bindtap="onRecord">记录</button>
+    </view>
+    <view class="tiny mt12">消耗千卡 = 分钟 × 系数，当前选中：{{selName}}</view>
+    <view class="mt12"><button class="btn ghost block" bindtap="openModal">✨ 自定义运动</button></view>
+  </view>
+
+  <!-- 今日记录 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>今日记录</view>
+    <block wx:if="{{logs.length}}">
+      <view wx:for="{{logs}}" wx:key="id" class="titem">
+        <view class="lem">{{item.emoji}}</view>
+        <view class="grow">
+          <view class="tname">{{item.name}}</view>
+          <view class="tmeta"><text>{{item.min}} 分钟</text><text>·</text><text>{{item.burn}} 千卡</text></view>
+        </view>
+        <view class="row" style="gap:10rpx">
+          <view class="edit" data-id="{{item.id}}" bindtap="onEdit">✎</view>
+          <view class="del" data-id="{{item.id}}" bindtap="onDel">🗑</view>
+        </view>
+      </view>
+    </block>
+    <view wx:else class="empty">
+      <text class="emo">💪</text>
+      今天还没有运动记录，动起来吧
+    </view>
+  </view>
+
+  <!-- 近 30 天热力图 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>近 30 天运动热力图</view>
+    <view class="heat">
+      <view wx:for="{{heat}}" wx:key="index" class="hcell {{item.today ? 'td' : ''}}" style="background:{{item.bg}}">{{item.day}}</view>
+    </view>
+    <view class="row wrap" style="gap:14rpx;margin-top:16rpx">
+      <text class="tiny">少</text>
+      <view wx:for="{{heatColors}}" wx:key="index" class="hsw" style="background:{{item}}"></view>
+      <text class="tiny">多</text>
+    </view>
+  </view>
+
+  <!-- 自定义运动弹层 -->
+  <view class="mask" wx:if="{{showModal}}" bindtap="onMaskTap" data-key="showModal">
+    <view class="sheet" catchtap="">
+      <view class="sheet-title">{{editId ? '编辑运动' : '自定义运动'}}</view>
+      <view class="field"><text class="fl">运动名称</text><input class="inp" value="{{form.cname}}" placeholder="如：打球、徒步" bindinput="onFormCName" bindblur="onFormCNameBlur" /></view>
+      <view class="field"><text class="fl">运动分钟</text><input class="inp" type="number" value="{{form.cmin}}" placeholder="请输入分钟数" bindinput="onFormCMin" bindblur="onFormCMinBlur" /></view>
+      <view class="tiny">自定义运动按 5 千卡/分钟估算消耗</view>
+      <view class="row" style="gap:16rpx;margin-top:24rpx">
+        <button class="btn ghost" style="flex:1" bindtap="closeModal">取消</button>
+        <button class="btn primary" style="flex:1" bindtap="submitModal">保存</button>
+      </view>
+    </view>
+  </view>
+</view>

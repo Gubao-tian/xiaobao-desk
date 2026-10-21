@@ -1,0 +1,5 @@
+{
+  "navigationBarTitleText": "课程学习",
+  "enablePullDownRefresh": true,
+  "usingComponents": { "side-nav": "/components/side-nav/side-nav" }
+}

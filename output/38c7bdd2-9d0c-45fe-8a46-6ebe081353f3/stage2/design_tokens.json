@@ -1,0 +1,15 @@
+{
+  "request_id": "38c7bdd2-9d0c-45fe-8a46-6ebe081353f3",
+  "stage": 2,
+  "route": "html",
+  "html_sub": "template",
+  "genre": "business-report",
+  "skills_invoked": ["design-token(inline)", "doc-typeset(inline)", "html-review(inline)"],
+  "template_used": "business-report",
+  "html_review_attempts": 1,
+  "fallback": false,
+  "fallback_reason": null,
+  "duration_ms": 0,
+  "timestamp": "2026-10-21T15:35:00+08:00",
+  "notes": "内置 design-token/doc-typeset/html-review 未在当前环境注册，改为按同一套版式契约内联实现；产物已通过结构与完整性静态校验（14 章节 / 17 表格 / 0 未闭合标签 / 0 断链）。"
+}

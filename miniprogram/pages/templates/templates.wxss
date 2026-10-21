@@ -1,0 +1,10 @@
+.tpl-head { padding: 24rpx 8rpx 26rpx; }
+.th-title { font-size: 40rpx; font-weight: 800; color: #2b2330; }
+.th-sub { font-size: 24rpx; color: #8a8290; margin-top: 8rpx; line-height: 1.6; }
+.tpl-item {
+  display: flex; align-items: center; gap: 18rpx;
+  padding: 18rpx 0; border-bottom: 2rpx dashed #f0e6ec;
+}
+.tpl-item:last-child { border-bottom: none; }
+.tpl-t { font-size: 28rpx; font-weight: 700; color: var(--text-1); }
+.tpl-d { font-size: 22rpx; color: var(--text-3); margin-top: 4rpx; }

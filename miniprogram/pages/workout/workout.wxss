@@ -1,0 +1,40 @@
+.sheet-title { font-size: 32rpx; font-weight: 800; text-align: center; margin-bottom: 24rpx; }
+.fl { display: block; font-size: 22rpx; font-weight: 700; color: var(--text-2); margin-bottom: 8rpx; }
+
+/* 运动类型九宫格 */
+.tcell {
+  background: var(--card-soft); border: 2rpx solid var(--line-2); border-radius: 22rpx;
+  padding: 20rpx 8rpx; display: flex; flex-direction: column; align-items: center; gap: 4rpx;
+}
+.tcell.on { border-color: var(--pink-deep); background: var(--pink-pale); }
+.temoji { font-size: 44rpx; line-height: 1.2; }
+.tname { font-size: 25rpx; font-weight: 800; }
+.tk { font-size: 18rpx; color: var(--text-3); font-weight: 700; }
+.tbadge {
+  font-size: 18rpx; color: var(--pink-deep); font-weight: 800;
+  background: #fff; border-radius: 20rpx; padding: 2rpx 12rpx; margin-top: 4rpx;
+}
+
+/* 今日记录 emoji 头像 */
+.lem {
+  width: 64rpx; height: 64rpx; flex: 0 0 64rpx; border-radius: 20rpx;
+  background: var(--pink-pale); display: flex; align-items: center; justify-content: center;
+  font-size: 34rpx;
+}
+
+/* 删除小按钮 */
+.del {
+  flex: 0 0 52rpx; width: 52rpx; height: 52rpx; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--pink-pale); font-size: 24rpx;
+}
+
+/* 近 30 天热力图 */
+.heat { display: flex; flex-wrap: wrap; gap: 8rpx; }
+.hcell {
+  width: calc((100% - 72rpx) / 10); aspect-ratio: 1; border-radius: 12rpx;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19rpx; font-weight: 700; color: var(--text-2);
+}
+.hcell.td { box-shadow: 0 0 0 3rpx var(--pink-deep); color: var(--pink-deep); }
+.hsw { width: 22rpx; height: 22rpx; border-radius: 6rpx; }

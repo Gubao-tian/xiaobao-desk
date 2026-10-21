@@ -1,0 +1,5 @@
+{
+  "navigationBarTitleText": "理财",
+  "enablePullDownRefresh": true,
+  "usingComponents": { "side-nav": "/components/side-nav/side-nav" }
+}

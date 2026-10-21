@@ -1,0 +1,147 @@
+<side-nav active="review" bind:navigate="onNav" />
+
+<view class="page" style="{{pageStyle}}">
+  <!-- 周标签 -->
+  <view class="card">
+    <view class="row between">
+      <view class="grow">
+        <view class="sec-title" style="margin:0"><view class="dot"></view>本周复盘</view>
+        <view class="tiny mt8">🌙 每周留一点时间，和自己好好对话</view>
+      </view>
+      <view class="pill purple">{{weekLabel}}</view>
+    </view>
+  </view>
+
+  <!-- 本周数据概览 -->
+  <view class="grid4">
+    <view class="stat">
+      <view class="lbl">打卡</view>
+      <view class="val">{{checkN}}<small>/7 天</small></view>
+      <view class="ico">✅</view>
+    </view>
+    <view class="stat">
+      <view class="lbl">完成任务</view>
+      <view class="val">{{planN}}<small>项</small></view>
+      <view class="ico">📋</view>
+    </view>
+    <view class="stat">
+      <view class="lbl">学习</view>
+      <view class="val">{{studyMin}}<small>分钟</small></view>
+      <view class="ico">📚</view>
+    </view>
+    <view class="stat">
+      <view class="lbl">运动</view>
+      <view class="val">{{workoutMin}}<small>分钟</small></view>
+      <view class="ico">🏃</view>
+    </view>
+  </view>
+
+  <!-- 本周打卡完成度 -->
+  <view class="card">
+    <view class="row between" style="margin-bottom:18rpx">
+      <view class="sec-title" style="margin:0"><view class="dot"></view>本周打卡完成度</view>
+      <text class="tiny">{{checkN}} / 7 天</text>
+    </view>
+    <view class="row" style="gap:18rpx">
+      <view class="bar grow"><view style="width: {{checkPct}}%"></view></view>
+      <text class="pct">{{checkPct}}%</text>
+    </view>
+  </view>
+
+  <!-- 本周每日任务完成数柱状图 -->
+  <view class="card">
+    <view class="row between" style="margin-bottom:14rpx">
+      <view class="sec-title" style="margin:0"><view class="dot"></view>每日任务完成数</view>
+      <text class="tiny">本周共 {{planN}} 项</text>
+    </view>
+    <view class="chart">
+      <view class="cbar" wx:for="{{bars}}" wx:key="d" style="height:{{item.h}}%;background:{{item.bg}}">
+        <text class="cv">{{item.v}}</text>
+      </view>
+    </view>
+    <view class="crow">
+      <text wx:for="{{bars}}" wx:key="d" class="cw {{item.today ? 'td' : ''}}">{{item.wk}}</text>
+    </view>
+  </view>
+
+  <!-- 自动成长报告 -->
+  <view class="card">
+    <view class="row between" style="margin-bottom:18rpx">
+      <view class="sec-title" style="margin:0"><view class="dot"></view>📊 自动成长报告</view>
+      <button class="btn primary sm" bindtap="onGenReport">生成报告</button>
+    </view>
+    <block wx:if="{{report}}">
+      <view class="grid4" style="margin-bottom:18rpx">
+        <view class="stat" wx:for="{{reportStats}}" wx:key="index">
+          <view class="val" style="font-size:28rpx">{{item.v}}<small>{{item.u}}</small></view>
+          <view class="lbl">{{item.l}}</view>
+          <view class="tiny {{item.d !== '—' ? 'trend' : ''}}">{{item.d}}</view>
+        </view>
+      </view>
+      <view class="report-text">{{reportText}}</view>
+      <button class="btn block mt12" bindtap="onFillReport">📝 写进「本周做得好」</button>
+      <view class="tiny mt8">↑↓ 是与上周的对比，报告只做汇总，不会替换你写的内容</view>
+    </block>
+    <view wx:else class="tiny">点「生成报告」自动汇总这一周的打卡、任务、学习、运动、发布等数据</view>
+  </view>
+
+  <!-- 复盘表单 -->
+  <view class="card">
+    <view class="row between" style="margin-bottom:18rpx">
+      <view class="sec-title" style="margin:0"><view class="dot"></view>写下本周复盘</view>
+      <text wx:if="{{saved}}" class="pill mint">已保存</text>
+    </view>
+    <view class="field">
+      <text class="fl">🌸 做得好的三件事</text>
+      <textarea class="ta" value="{{form.good}}" placeholder="这周做对了什么？值得表扬自己的地方…" bindinput="onFormGood" bindblur="onFormGoodBlur"></textarea>
+    </view>
+    <view class="field">
+      <text class="fl">🌱 可以改进的地方</text>
+      <textarea class="ta" value="{{form.bad}}" placeholder="哪里可以做得更好？下次怎么调整…" bindinput="onFormBad" bindblur="onFormBadBlur"></textarea>
+    </view>
+    <view class="field">
+      <text class="fl">🎯 下周的三个小目标</text>
+      <textarea class="ta" value="{{form.next}}" placeholder="下周想完成的三件小事…" bindinput="onFormNext" bindblur="onFormNextBlur"></textarea>
+    </view>
+    <button class="btn primary block" bindtap="onSave">💾 保存本周复盘</button>
+    <view wx:if="{{saved}}" class="tiny center mt12">本周已归档，再次保存会覆盖原内容</view>
+  </view>
+
+  <!-- 历史复盘 -->
+  <view class="card">
+    <view class="row between" style="margin-bottom:14rpx">
+      <view class="sec-title" style="margin:0"><view class="dot"></view>历史复盘</view>
+      <text class="tiny">共 {{history.length}} 周</text>
+    </view>
+    <block wx:if="{{history.length}}">
+      <view wx:for="{{history}}" wx:key="weekStart" class="titem">
+        <view class="grow">
+          <view class="row between">
+            <view class="row" style="gap:10rpx">
+              <text class="rw">{{item.weekLabel}}</text>
+              <text wx:if="{{item.isCur}}" class="pill">本周</text>
+            </view>
+            <view class="del-ico" data-id="{{item.weekStart}}" bindtap="onDel">✕</view>
+          </view>
+          <view wx:if="{{item.good}}" class="rsec">
+            <text class="rk">🌸 做得好的</text>
+            <text class="rv">{{item.good}}</text>
+          </view>
+          <view wx:if="{{item.bad}}" class="rsec">
+            <text class="rk">🌱 待改进</text>
+            <text class="rv">{{item.bad}}</text>
+          </view>
+          <view wx:if="{{item.next}}" class="rsec">
+            <text class="rk">🎯 小目标</text>
+            <text class="rv">{{item.next}}</text>
+          </view>
+          <view wx:if="{{item.atText}}" class="tiny mt8">保存于 {{item.atText}}</view>
+        </view>
+      </view>
+    </block>
+    <view wx:else class="empty">
+      <text class="emo">🌱</text>
+      还没有历史复盘，保存第一条开始积累吧
+    </view>
+  </view>
+</view>

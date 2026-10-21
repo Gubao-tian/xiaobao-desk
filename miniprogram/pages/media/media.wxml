@@ -1,0 +1,138 @@
+<side-nav active="media" bind:navigate="onNav" />
+
+<view class="page" style="{{pageStyle}}">
+  <!-- 顶部统计 -->
+  <view class="grid4">
+    <view class="stat">
+      <view class="lbl">累计发布</view>
+      <view class="val">{{pubN}}<small>条</small></view>
+      <view class="ico">🎬</view>
+    </view>
+    <view class="stat">
+      <view class="lbl">本月发布</view>
+      <view class="val">{{monthPub}}<small>条</small></view>
+      <view class="ico">📆</view>
+    </view>
+    <view class="stat">
+      <view class="lbl">灵感库存</view>
+      <view class="val">{{ideaTodo}}<small>个</small></view>
+      <view class="ico">💡</view>
+    </view>
+    <view class="stat">
+      <view class="lbl">累计曝光</view>
+      <view class="val">{{hitsText}}</view>
+      <view class="ico">👀</view>
+    </view>
+  </view>
+
+  <!-- 选题灵感库 -->
+  <view class="card">
+    <view class="row between" style="margin-bottom:12rpx">
+      <view class="sec-title" style="margin:0"><view class="dot"></view>选题灵感库</view>
+      <button class="btn sm primary" bindtap="openIdea">＋ 记录灵感</button>
+    </view>
+    <block wx:if="{{ideas.length}}">
+      <view wx:for="{{ideas}}" wx:key="id" class="titem {{item.done ? 'done' : ''}}">
+        <view class="check {{item.done ? 'done' : ''}}" data-id="{{item.id}}" bindtap="onToggleIdea">
+          <block wx:if="{{item.done}}">✓</block>
+        </view>
+        <view class="grow">
+          <view class="tname">{{item.title}}</view>
+          <view wx:if="{{item.note}}" class="tiny mt8 inote">{{item.note}}</view>
+          <view class="tmeta"><text class="pill {{item.pillCls}}">{{item.pill}}</text></view>
+        </view>
+        <button class="btn sm ghost" data-id="{{item.id}}" bindtap="onEditIdea">✎</button>
+        <button class="btn sm ghost idel" data-id="{{item.id}}" bindtap="onDelIdea">🗑</button>
+      </view>
+    </block>
+    <view wx:else class="empty">
+      <text class="emo">💡</text>
+      还没有灵感，快记录第一个选题吧
+    </view>
+  </view>
+
+  <!-- 发布记录 -->
+  <view class="card">
+    <view class="row between" style="margin-bottom:12rpx">
+      <view class="sec-title" style="margin:0"><view class="dot"></view>发布记录</view>
+      <button class="btn sm primary" bindtap="openPub">＋ 登记发布</button>
+    </view>
+    <block wx:if="{{pubs.length}}">
+      <view wx:for="{{pubs}}" wx:key="id" class="pitem">
+        <view class="grow">
+          <view class="row wrap" style="gap:10rpx">
+            <text class="pill">{{item.platform}}</text>
+            <text class="ptitle">{{item.title}}</text>
+          </view>
+          <view class="tiny mt8">{{item.date}} · 曝光 {{item.hits}}</view>
+        </view>
+        <button class="btn sm ghost" data-id="{{item.id}}" bindtap="onEditPub">✎</button>
+        <button class="btn sm ghost pdel" data-id="{{item.id}}" bindtap="onDelPub">🗑</button>
+      </view>
+    </block>
+    <view wx:else class="empty">
+      <text class="emo">🎬</text>
+      还没有发布记录，去登记第一条吧
+    </view>
+  </view>
+
+  <!-- 近 8 周发布量 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>近 8 周发布量</view>
+    <view class="chart">
+      <view class="cbar" wx:for="{{bars}}" wx:key="index" style="height:{{item.h}}%;background:{{item.bg}}">
+        <text class="cv">{{item.v}}</text>
+      </view>
+    </view>
+    <view class="crow">
+      <text wx:for="{{bars}}" wx:key="index" class="cw {{item.cur ? 'td' : ''}}">{{item.label}}</text>
+    </view>
+    <view class="tiny mt12">每周从周一开始统计，发布后记得来登记 📝</view>
+  </view>
+
+  <!-- 记录灵感弹层 -->
+  <view class="mask" wx:if="{{showIdea}}" bindtap="onMaskTap" data-key="showIdea">
+    <view class="sheet" catchtap="">
+      <view class="sheet-title">{{editIdIdea ? '编辑灵感' : '记录灵感'}}</view>
+      <form bindsubmit="submitIdea" report-submit>
+        <view class="field"><text class="fl">标题</text><input class="inp" name="title" value="{{form.title}}" placeholder="灵感标题，如：通勤妆教程" bindinput="onFormIdeaTitle" bindblur="onFormIdeaTitleBlur" /></view>
+        <view class="field"><text class="fl">想法补充</text><textarea class="inp ta" name="note" value="{{form.note}}" placeholder="补充你的想法（选填）" bindinput="onFormIdeaNote" bindblur="onFormIdeaNoteBlur"></textarea></view>
+        <view class="row" style="gap:16rpx;margin-top:24rpx">
+          <button class="btn ghost" style="flex:1" bindtap="closeIdea">取消</button>
+          <button class="btn primary" style="flex:1" form-type="submit">保存</button>
+        </view>
+      </form>
+    </view>
+  </view>
+
+  <!-- 登记发布弹层 -->
+  <view class="mask" wx:if="{{showPub}}" bindtap="onMaskTap" data-key="showPub">
+    <view class="sheet" catchtap="">
+      <view class="sheet-title">{{editIdPub ? '编辑发布' : '登记发布'}}</view>
+      <form bindsubmit="submitPub" report-submit>
+        <view class="field">
+          <text class="fl">平台</text>
+          <view class="opt-grid">
+            <view
+              wx:for="{{platforms}}"
+              wx:key="index"
+              class="opt {{form.pIdx === index ? 'on' : ''}}"
+              data-i="{{index}}"
+              bindtap="onPickPlat"
+            >{{item}}</view>
+          </view>
+        </view>
+        <view class="field"><text class="fl">标题</text><input class="inp" name="title" value="{{form.title}}" placeholder="发布标题" bindinput="onFormPubTitle" bindblur="onFormPubTitleBlur" /></view>
+        <view class="field">
+          <text class="fl">发布日期</text>
+          <picker mode="date" value="{{form.date}}" bindchange="onPickPubDate"><view class="picker">{{form.date}}</view></picker>
+        </view>
+        <view class="field"><text class="fl">曝光量</text><input class="inp" type="number" name="hits" value="{{form.hits}}" placeholder="选填，如：1200" bindinput="onFormPubHits" bindblur="onFormPubHitsBlur" /></view>
+        <view class="row" style="gap:16rpx;margin-top:24rpx">
+          <button class="btn ghost" style="flex:1" bindtap="closePub">取消</button>
+          <button class="btn primary" style="flex:1" form-type="submit">保存</button>
+        </view>
+      </form>
+    </view>
+  </view>
+</view>

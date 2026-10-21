@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小宝工作台 · 项目总览</title>
+<style>
+  :root{
+    --bg:#FFF4F8; --card:#fff; --pink:#F2689A; --pink-deep:#D94E82; --pink-soft:#FFC2D8;
+    --line:#F6DCE7; --text:#5C4450; --text-2:#A08A93; --text-3:#C4AEB6;
+    --mint:#8ED8C0; --purple:#B79BEF; --sky:#9BD3F0;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:linear-gradient(170deg,#FFF7FB 0%,#FFF4F8 45%,#FBEEFF 100%);
+    color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.75;padding:28px 16px 60px;
+  }
+  .wrap{max-width:960px;margin:0 auto}
+  .hero{
+    background:linear-gradient(140deg,#FFF0F7 0%,#FFE0EE 45%,#F4E8FF 100%);
+    border:1.5px solid #FFDDEB;border-radius:26px;padding:30px 28px;text-align:center;
+    box-shadow:0 10px 30px rgba(242,104,154,.12);
+  }
+  .hero h1{margin:0 0 6px;font-size:29px;letter-spacing:.5px}
+  .hero .sub{color:var(--pink-deep);font-weight:700;font-size:13px;letter-spacing:1.5px}
+  .hero .desc{color:var(--text-2);font-size:14px;margin-top:10px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
+  .chip{
+    background:#fff;border:1.5px solid var(--line);border-radius:999px;
+    padding:5px 13px;font-size:12.5px;font-weight:700;color:var(--pink-deep);
+  }
+  h2{
+    font-size:19px;margin:34px 0 12px;display:flex;align-items:center;gap:9px;
+  }
+  h2 .dot{width:9px;height:9px;border-radius:50%;background:linear-gradient(135deg,#FF8FB8,var(--pink))}
+  .card{
+    background:var(--card);border:1.5px solid var(--line);border-radius:18px;
+    padding:20px 22px;box-shadow:0 6px 18px rgba(242,104,154,.07);
+  }
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px dashed var(--line);vertical-align:top}
+  th{color:var(--pink-deep);font-weight:800;font-size:12.5px;letter-spacing:.3px;background:#FFF8FC}
+  tr:last-child td{border-bottom:none}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .mod{
+    background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:13px 15px;
+  }
+  .mod b{font-size:13.5px;display:block;margin-bottom:3px}
+  .mod .n{font-size:11.5px;color:var(--text-3);margin-bottom:5px}
+  .mod span{font-size:12px;color:var(--text-2);line-height:1.6}
+  .stat{
+    background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:14px;text-align:center;
+  }
+  .stat .v{font-size:22px;font-weight:800;background:linear-gradient(120deg,var(--pink),var(--purple));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat .l{font-size:11.5px;color:var(--text-3);margin-top:2px}
+  code{background:#FFF0F6;border:1px solid var(--line);border-radius:6px;padding:1px 5px;font-size:12px;color:var(--pink-deep)}
+  pre{background:#FFF8FC;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;overflow:auto;font-size:12px;line-height:1.7}
+  .ok{color:#3FA98A;font-weight:800}
+  .warn{color:#E08A5B;font-weight:800}
+  .todo{background:#FFF6F0}
+  .tree{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;line-height:1.85;color:var(--text-2);white-space:pre}
+  ul{margin:8px 0 0;padding-left:20px}
+  li{margin-bottom:6px;font-size:13.5px}
+  .tip{
+    background:linear-gradient(135deg,#FFF7FB,#FDF0FF);border:1.5px dashed var(--pink-soft);
+    border-radius:14px;padding:13px 16px;font-size:13px;color:var(--text-2);
+  }
+  footer{text-align:center;color:var(--text-3);font-size:12px;margin-top:36px}
+  @media (max-width:720px){
+    .grid2,.grid3{grid-template-columns:1fr}
+    table{font-size:12.5px}
+    th,td{padding:7px 6px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="sub">MY COZY DESK</div>
+    <h1>💗 小宝工作台 · 项目总览</h1>
+    <div class="desc">记录生活 + 自我管理的个人工作台 ｜ 微信小程序 &amp; Web / PWA 双端</div>
+    <div class="chips">
+      <span class="chip">小程序 v1.5.0</span>
+      <span class="chip">Web v1.6.0</span>
+      <span class="chip">16 个页面</span>
+      <span class="chip">15 个功能模块</span>
+      <span class="chip">29 个测试脚本</span>
+      <span class="chip">350+ 断言全绿</span>
+    </div>
+  </div>
+
+  <h2><span class="dot"></span>核心指标</h2>
+  <div class="grid3">
+    <div class="stat"><div class="v">15</div><div class="l">功能模块（双端一致）</div></div>
+    <div class="stat"><div class="v">3630</div><div class="l">Web 单文件行数</div></div>
+    <div class="stat"><div class="v">0</div><div class="l">静态校验问题数</div></div>
+  </div>
+
+  <h2><span class="dot"></span>功能模块</h2>
+  <div class="grid3">
+    <div class="mod"><b>🏠 桌面</b><div class="n">home</div><span>打卡签到、连续天数、日历热力图、今日日程、全局搜索、时钟问候</span></div>
+    <div class="mod"><b>📅 每日计划</b><div class="n">plan</div><span>计划项增删、优先级、勾选完成、今日进度</span></div>
+    <div class="mod"><b>📚 课程学习</b><div class="n">course</div><span>课程名称/颜色/章节进度、学习时长记录</span></div>
+    <div class="mod"><b>🏃 锻炼身体</b><div class="n">workout</div><span>内置 + 自定义运动、时长与消耗</span></div>
+    <div class="mod"><b>📖 备考计划</b><div class="n">exam</div><span>科目、考试倒计时、单元进度</span></div>
+    <div class="mod"><b>💰 理财</b><div class="n">finance</div><span>收支流水、分类环形图、月度支出、储蓄目标</span></div>
+    <div class="mod"><b>🎬 自媒体</b><div class="n">media</div><span>灵感池（待创作/已创作）、发布登记与曝光</span></div>
+    <div class="mod"><b>📖 阅读</b><div class="n">read</div><span>书架进度（累加页数）、联网搜书、时长、摘抄本</span></div>
+    <div class="mod"><b>⭐ 技能训练</b><div class="n">skill</div><span>技能列表、练习打卡与次数统计</span></div>
+    <div class="mod"><b>🗒️ 备忘录</b><div class="n">memo</div><span>便签创建、置顶、多颜色</span></div>
+    <div class="mod"><b>🌙 周复盘</b><div class="n">review</div><span>三段式复盘 + 自动成长报告</span></div>
+    <div class="mod"><b>🗓️ 日历时间轴</b><div class="n">timeline</div><span>选某一天，汇总当天全部记录</span></div>
+    <div class="mod"><b>🤖 AI 小宝</b><div class="n">assistant</div><span>快捷问题 + 自由追问（小程序走云端大模型）</span></div>
+    <div class="mod"><b>📋 模板库</b><div class="n">templates</div><span>9 个模板一键套用（计划/复盘/便签）</span></div>
+    <div class="mod"><b>🪄 我的</b><div class="n">profile</div><span>名片、主题、数据备份、战绩卡片、云同步</span></div>
+  </div>
+
+  <h2><span class="dot"></span>本轮新增 10 项能力</h2>
+  <div class="card">
+    <table>
+      <tr><th style="width:74px">编号</th><th style="width:130px">能力</th><th>实现要点</th></tr>
+      <tr><td><b>P0-1</b></td><td>全模块编辑 / 删除</td><td>通用 <code>updateItem/removeItem/updateDayItem/removeDayItem</code>，15 模块双端支持，编辑不产生重复条目</td></tr>
+      <tr><td><b>P0-2</b></td><td>提醒 / 通知</td><td>小程序本地弹窗兜底 + 订阅消息授权 + 云函数；Web 浏览器通知 + Service Worker</td></tr>
+      <tr><td><b>P0-3</b></td><td>数据导出 / 备份</td><td>Web 导出/导入整库 JSON；小程序复制 JSON 与生成文件分享</td></tr>
+      <tr><td><b>P1-4</b></td><td>全局搜索</td><td>跨 12 类数据检索（含便签正文、储蓄目标、课程备注），结果可跳转模块</td></tr>
+      <tr><td><b>P1-5</b></td><td>日历热力图</td><td>按当日任务/运动/学习/阅读活跃度着色 lv1~lv3</td></tr>
+      <tr><td><b>P1-6</b></td><td>日历时间轴</td><td>新增模块，任意一天的全部记录聚合视图</td></tr>
+      <tr><td><b>P1-7</b></td><td>自动成长报告</td><td>汇总本周数据、对比上周升降，一键写进复盘</td></tr>
+      <tr><td><b>P2-8</b></td><td>AI 小宝助理</td><td>小程序接云端大模型（流式），Web 本地规则建议</td></tr>
+      <tr><td><b>P2-9</b></td><td>模板库</td><td>5 计划 + 1 复盘 + 3 便签模板，一键套用</td></tr>
+      <tr><td><b>P2-10</b></td><td>战绩卡片</td><td>Canvas 绘制数据卡片，存相册 / 下载 PNG</td></tr>
+    </table>
+  </div>
+
+  <h2><span class="dot"></span>目录结构</h2>
+  <div class="card">
+    <div class="tree">项目根目录/
+├── index.html                  Web / PWA 全量应用（单文件）
+├── sw.js                       Service Worker（离线缓存）
+├── manifest.webmanifest        PWA 清单（可安装为 App）
+├── 证据报告.html                添加流程的可视化证据
+├── miniprogram/
+│   ├── pages/                  16 个页面
+│   ├── components/side-nav/    侧边导航抽屉 + 导航按钮
+│   ├── utils/                  11 个工具模块（store/search/report/remind/sync…）
+│   └── cloudfunctions/reminder/ 微信订阅消息云函数模板
+├── .spec/                      29 个测试与诊断脚本 + PAGES_SPEC.md
+├── docs/                       项目文档（本文档）
+└── .workbuddy/memory/          项目工作日志（按日期）</div>
+  </div>
+
+  <h2><span class="dot"></span>数据模型</h2>
+  <div class="card">
+    <div class="tip" style="margin-bottom:12px">
+      Web 端存储键：<code>gubao_desk_v1</code>；小程序同结构。加载时以默认结构补齐缺失字段，<b>老数据升级不会丢</b>。
+    </div>
+    <table>
+      <tr><th style="width:150px">字段</th><th>说明</th></tr>
+      <tr><td><code>checkins</code></td><td>日期 → <code>{at}</code> 打卡记录</td></tr>
+      <tr><td><code>plans</code></td><td>日期 → <code>[{id,name,done,prio}]</code></td></tr>
+      <tr><td><code>studyLog</code> / <code>readLog</code></td><td>日期 → 分钟数</td></tr>
+      <tr><td><code>workout</code></td><td>日期 → <code>[{id,type,min,burn}]</code></td></tr>
+      <tr><td><code>courses</code> / <code>exam</code></td><td>课程 / 备考科目</td></tr>
+      <tr><td><code>finance</code></td><td>收支流水 <code>{type,amount,cat,note,date}</code></td></tr>
+      <tr><td><code>goals</code></td><td>储蓄目标 <code>{name,target,saved}</code></td></tr>
+      <tr><td><code>ideas</code> / <code>pubs</code></td><td>自媒体灵感 / 发布记录</td></tr>
+      <tr><td><code>books</code> / <code>quotes</code></td><td>书架 / 摘抄</td></tr>
+      <tr><td><code>skills</code> / <code>skillLog</code></td><td>技能 / 练习记录</td></tr>
+      <tr><td><code>memos</code></td><td>便签（内容可被搜索）</td></tr>
+      <tr><td><code>reviews</code></td><td>周起始日 → <code>{good,bad,next,at}</code></td></tr>
+      <tr><td><code>reminders</code></td><td><code>plan/workout</code>（时间点）与 <code>water</code>（间隔）</td></tr>
+    </table>
+  </div>
+
+  <h2><span class="dot"></span>双端差异</h2>
+  <div class="card">
+    <table>
+      <tr><th style="width:110px">主题</th><th style="width:34%">小程序</th><th>Web / PWA</th></tr>
+      <tr><td>数据存放</td><td>微信本地 Storage</td><td>浏览器 localStorage</td></tr>
+      <tr><td>数据互通</td><td colspan="2" class="warn">⚠️ 两端不互通，需各自录入或用「备份 JSON」搬运</td></tr>
+      <tr><td>AI 助理</td><td>云端大模型（需登录）</td><td>本地规则建议（无网可用）</td></tr>
+      <tr><td>提醒</td><td>打开时弹窗；订阅消息需公众号模板</td><td>浏览器通知（需授权）</td></tr>
+      <tr><td>弹层遮罩</td><td>完全不透明（避免"看到上一层"）</td><td>半透明 + 模糊</td></tr>
+      <tr><td>表单</td><td><code>&lt;form bindsubmit&gt;</code>（规避真机时序问题）</td><td>原生 DOM 弹层</td></tr>
+      <tr><td>导航按钮</td><td colspan="2">均为左上角轻量卡片按钮，抽屉打开时自动隐藏</td></tr>
+      <tr><td>改版生效</td><td class="warn">需重新发布试用小程序</td><td>浏览器刷新（必要时 Ctrl+F5）</td></tr>
+    </table>
+  </div>
+
+  <h2><span class="dot"></span>测试体系（当前全绿）</h2>
+  <div class="card">
+    <table>
+      <tr><th style="width:44%">脚本</th><th style="width:110px">结果</th><th>覆盖内容</th></tr>
+      <tr><td><code>validate.js</code></td><td class="ok">0 问题</td><td>工程静态校验：16 页面 × 结构/约定/单位检查</td></tr>
+      <tr><td><code>test_all_form_submit.js</code></td><td class="ok">16/16</td><td>8 个弹层在极端时序下仍能入库</td></tr>
+      <tr><td><code>test_edit_delete.js</code></td><td class="ok">19/19</td><td>全模块编辑，验证不产生重复条目</td></tr>
+      <tr><td><code>test_mask_tap.js</code></td><td class="ok">20/20</td><td>点输入框不关闭弹层、点背景才关闭</td></tr>
+      <tr><td><code>test_picker_fallback.js</code></td><td class="ok">33/33</td><td>4 处枚举 picker 的内联按钮降级</td></tr>
+      <tr><td><code>test_real_timing.js</code></td><td class="ok">8/8</td><td>模拟真机 input/blur 时序</td></tr>
+      <tr><td><code>repro_read_skill.js</code></td><td class="ok">36/36</td><td>阅读与技能全链路</td></tr>
+      <tr><td><code>repro_finance_cat.js</code></td><td class="ok">24/24</td><td>理财分类全链路</td></tr>
+      <tr><td><code>test_web_all_modules_mobile.js</code></td><td class="ok">42/42</td><td>真实 Chrome 390×844，12 模块核心流程</td></tr>
+      <tr><td><code>test_web_search.js</code></td><td class="ok">14/14</td><td>搜索盲区：便签正文 / 储蓄目标 / 课程备注</td></tr>
+      <tr><td><code>test_web_daydetail.js</code></td><td class="ok">10/10</td><td>日历点一天查看当天记录</td></tr>
+      <tr><td><code>test_web_robust.js</code></td><td class="ok">10/10</td><td>老数据兼容 + 渲染兜底 + 版本号</td></tr>
+      <tr><td><code>probe_collapse.js</code></td><td class="ok">7/7</td><td>导航按钮位置与「开隐藏/关出现」</td></tr>
+      <tr><td><code>test_web_reminders / backup / timeline / report / assistant / templates / sharecard / booksearch / pageadd / profile / regress</code></td><td class="ok">全通过</td><td>P0-2 ~ P2-10 各能力专项</td></tr>
+    </table>
+    <div class="tip" style="margin-top:12px">
+      运行方式：<code>export NODE_PATH="C:/Users/GUBAO/.workbuddy/binaries/node/workspace/node_modules"</code>
+      然后 <code>node .spec/xxx.js</code>。
+      全模块测试中的 4 条 console 提示为 <code>file://</code> 下 manifest 的跨域警告，不影响功能。
+    </div>
+  </div>
+
+  <h2><span class="dot"></span>使用与部署</h2>
+  <div class="grid2">
+    <div class="card">
+      <b>Web / PWA</b>
+      <ul>
+        <li>双击 <code>index.html</code> 即用，数据保存在该浏览器</li>
+        <li>安装成 App：侧边栏「安装到手机（App）」</li>
+        <li>改版后 <b>Ctrl+F5</b> 强刷；侧边栏底部显示 <code>Web v1.6.0</code> 即最新</li>
+      </ul>
+    </div>
+    <div class="card">
+      <b>微信小程序</b>
+      <ul>
+        <li>开发者工具打开 <code>miniprogram/</code> → 上传 → 设为体验版</li>
+        <li>重新扫码后，抽屉底部显示 <code>v1.5.0</code> 即已更新</li>
+        <li>本机无开发者工具，UI 需在真机确认</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2><span class="dot"></span>待办与已知事项</h2>
+  <div class="card">
+    <table>
+      <tr><th style="width:180px">事项</th><th style="width:80px">状态</th><th>说明</th></tr>
+      <tr class="todo"><td>微信订阅消息后台推送</td><td class="warn">待配置</td><td>需在公众平台申请模板并填 <code>utils/subscribe.js</code> 的 <code>TMPL_IDS</code> + 部署云函数；未配置时本地提醒照常可用</td></tr>
+      <tr class="todo"><td>两端数据互通</td><td class="warn">暂不支持</td><td>跨端搬运请用「备份 JSON」</td></tr>
+      <tr><td>AI 助理（Web）</td><td>降级实现</td><td>Web 无云端 SDK，使用本地规则建议</td></tr>
+      <tr><td>小程序真机验证</td><td>需你操作</td><td>本机无开发者工具，靠冒烟测试覆盖，UI 需真机确认</td></tr>
+    </table>
+  </div>
+
+  <h2><span class="dot"></span>开发踩坑备忘</h2>
+  <div class="card">
+    <ul>
+      <li><b>测试注入数据后不要 reload</b>：<code>beforeunload</code> 会落盘覆盖注入，请直接操作内存 <code>DB</code>。</li>
+      <li><b><code>&lt;image&gt;</code> 必须自闭合</b>：写成成对标签会被校验判为不配平。</li>
+      <li><b>有 <code>bindinput</code> 的 input 必须配 <code>bindblur</code></b>：静态校验约定。</li>
+      <li><b>新页面进侧边导航</b>：需同时登记 <code>nav.js</code> 与 <code>app.json</code>，并遵循页面约定（side-nav / onNav / refresh / pageStyle / 无 px）。</li>
+      <li><b>只读聚合页与二级设置页</b>：加入 <code>READONLY_PAGES</code> / <code>SETTINGS_PAGES</code> 豁免检查项。</li>
+      <li><b>用户看到旧界面时</b>：先让他确认版本号（小程序抽屉底部 / Web 侧边栏底部）再排查。</li>
+    </ul>
+  </div>
+
+  <footer>小宝工作台 · 项目总览 ｜ 2026-10-21 生成 ｜ 配套文档见 docs/README.md</footer>
+</div>
+</body>
+</html>

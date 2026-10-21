@@ -1,0 +1,5 @@
+{
+  "navigationBarTitleText": "锻炼身体",
+  "enablePullDownRefresh": true,
+  "usingComponents": { "side-nav": "/components/side-nav/side-nav" }
+}

@@ -1,0 +1,104 @@
+<side-nav active="exam" bind:navigate="onNav" />
+
+<view class="page" style="{{pageStyle}}">
+  <!-- 顶部统计 -->
+  <view class="grid4">
+    <view class="stat">
+      <view class="lbl">备考科目</view>
+      <view class="val">{{examN}}<small>门</small></view>
+      <view class="ico">📖</view>
+    </view>
+    <view class="stat">
+      <view class="lbl">已学章节</view>
+      <view class="val">{{sumDone}}</view>
+      <view class="ico">✅</view>
+    </view>
+    <view class="stat">
+      <view class="lbl">章节总数</view>
+      <view class="val">{{sumTotal}}</view>
+      <view class="ico">📚</view>
+    </view>
+    <view class="stat">
+      <view class="lbl">总完成度</view>
+      <view class="val">{{pctAll}}<small>%</small></view>
+      <view class="ico">📈</view>
+    </view>
+  </view>
+
+  <!-- 总完成度环形 + 倒计时 -->
+  <view class="card">
+    <view class="row between" style="margin-bottom:20rpx">
+      <view class="sec-title" style="margin:0"><view class="dot"></view>备考总览</view>
+    </view>
+    <view class="row" style="gap:28rpx">
+      <view class="ring-wrap">
+        <view class="ring">
+          <view class="ring-core">
+            <text class="ring-b">{{pctAll}}%</text>
+            <text class="ring-s">总完成度</text>
+          </view>
+        </view>
+      </view>
+      <view class="grow">
+        <view class="tiny" style="font-weight:700;margin-bottom:6rpx">⏰ 考试倒计时</view>
+        <block wx:if="{{countdown.length}}">
+          <view wx:for="{{countdown}}" wx:key="id" class="cd-item">
+            <text class="cd-name">{{item.name}}</text>
+            <text class="cd-num">{{item.numText}}</text>
+          </view>
+        </block>
+        <view wx:else class="tiny">还没有考试安排，添加科目后显示倒计时</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 科目列表 -->
+  <view class="card">
+    <view class="row between" style="margin-bottom:12rpx">
+      <view class="sec-title" style="margin:0"><view class="dot"></view>我的科目</view>
+      <button class="btn sm primary" bindtap="openModal">＋ 添加科目</button>
+    </view>
+    <block wx:if="{{exams.length}}">
+      <view wx:for="{{exams}}" wx:key="id" class="eitem">
+        <view class="row between">
+          <text class="ename">{{item.name}}</text>
+          <text class="pill {{item.urgent ? 'urgent' : (item.left < 0 ? 'gray' : '')}}">{{item.leftText}}</text>
+        </view>
+        <view class="bar thin mt8"><view style="width: {{item.pct}}%"></view></view>
+        <view class="row between mt8">
+          <text class="tiny">已学 {{item.done}} / {{item.total}} {{item.unit}} · 考试 {{item.dateText}}</text>
+          <view class="row" style="gap:12rpx">
+            <button class="btn sm ghost" data-id="{{item.id}}" data-dir="-1" bindtap="onStep">−</button>
+            <button class="btn sm" data-id="{{item.id}}" data-dir="1" bindtap="onStep">＋</button>
+            <button class="btn sm ghost" data-id="{{item.id}}" bindtap="onEditExam">✎</button>
+            <button class="btn sm ghost edel" data-id="{{item.id}}" bindtap="onDel">🗑</button>
+          </view>
+        </view>
+      </view>
+    </block>
+    <view wx:else class="empty">
+      <text class="emo">📖</text>
+      还没有备考科目，去添加第一个吧
+    </view>
+  </view>
+
+  <!-- 添加科目弹层 -->
+  <view class="mask" wx:if="{{showModal}}" bindtap="onMaskTap" data-key="showModal">
+    <view class="sheet" catchtap="">
+      <view class="sheet-title">{{modalTitle}}</view>
+      <form bindsubmit="submitModal" report-submit>
+        <view class="field"><text class="fl">科目名称</text><input class="inp" name="name" value="{{form.name}}" placeholder="请输入科目名称" bindinput="onFormName" bindblur="onFormNameBlur" /></view>
+        <view class="field">
+          <text class="fl">考试日期</text>
+          <picker mode="date" value="{{form.date}}" bindchange="onPickDate"><view class="picker">{{form.date}}</view></picker>
+        </view>
+        <view class="field"><text class="fl">总章节数</text><input class="inp" type="number" name="total" value="{{form.total}}" placeholder="请输入总章节数" bindinput="onFormTotal" bindblur="onFormTotalBlur" /></view>
+        <view class="field"><text class="fl">单位</text><input class="inp" name="unit" value="{{form.unit}}" placeholder="默认「章」" bindinput="onFormUnit" bindblur="onFormUnitBlur" /></view>
+        <view class="row" style="gap:16rpx;margin-top:24rpx">
+          <button class="btn ghost" style="flex:1" bindtap="closeModal">取消</button>
+          <button class="btn primary" style="flex:1" form-type="submit">保存</button>
+        </view>
+      </form>
+    </view>
+  </view>
+</view>

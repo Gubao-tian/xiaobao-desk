@@ -1,0 +1,88 @@
+<side-nav active="skill" bind:navigate="onNav" />
+
+<view class="page" style="{{pageStyle}}">
+  <!-- 说明行 -->
+  <view class="card tip-card">
+    <view class="row">
+      <text style="font-size:44rpx">⭐</text>
+      <view class="grow" style="margin-left:16rpx">
+        <view style="font-size:28rpx;font-weight:800">每次练习 +1，满 10 次升级</view>
+        <view class="tiny mt8">日拱一卒，技能会慢慢长大 🌱</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 技能卡片 -->
+  <view class="card">
+    <view class="row between" style="margin-bottom:18rpx">
+      <view class="sec-title" style="margin:0"><view class="dot"></view>我的技能</view>
+      <button class="btn sm primary" bindtap="openAdd">+ 添加技能</button>
+    </view>
+    <block wx:if="{{skills.length}}">
+      <view class="sgrid">
+        <view wx:for="{{skills}}" wx:key="id" class="scard">
+          <view class="row between">
+            <text style="font-size:46rpx">{{item.emoji}}</text>
+            <text class="pill">Lv.{{item.lv}}</text>
+          </view>
+          <view class="sname mt8">{{item.name}}</view>
+          <view class="tiny">共 {{item.count}} 次</view>
+          <view class="cells mt12">
+            <view wx:for="{{item.cells}}" wx:key="index" class="cell {{item ? 'on' : ''}}"></view>
+          </view>
+          <view class="tiny mt8">上次：{{item.last || '还没练习'}}</view>
+          <view class="row mt12" style="gap:12rpx">
+            <button class="btn sm primary grow" data-id="{{item.id}}" bindtap="onPractice">练习 +1</button>
+            <button class="btn sm ghost" data-id="{{item.id}}" bindtap="onEditSkill">✎ 编辑</button>
+            <button class="btn sm ghost del-btn" data-id="{{item.id}}" bindtap="onDelSkill">删除</button>
+          </view>
+        </view>
+      </view>
+    </block>
+    <view wx:else class="empty">
+      <text class="emo">⭐</text>
+      还没有技能，添加一个开始练习吧
+    </view>
+  </view>
+
+  <!-- 练习日志 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>练习日志</view>
+    <block wx:if="{{logs.length}}">
+      <view wx:for="{{logs}}" wx:key="index" class="lrow">
+        <text class="pill purple">{{item.name}}</text>
+        <text class="tiny grow" style="margin-left:16rpx">{{item.date}}</text>
+      </view>
+    </block>
+    <view wx:else class="empty">
+      <text class="emo">📝</text>
+      还没有练习记录，从第一次 +1 开始
+    </view>
+  </view>
+</view>
+
+<!-- 添加技能弹层 -->
+<view class="mask" wx:if="{{showModal}}" bindtap="onMaskTap" data-key="showModal">
+  <view class="sheet" catchtap="">
+    <view class="sheet-title">{{modalTitle}}</view>
+    <form bindsubmit="submitModal" report-submit>
+      <view class="field"><text class="fl">名称</text><input class="inp" name="name" value="{{form.name}}" placeholder="给技能起个名字" bindinput="onFormName" bindblur="onFormNameBlur" /></view>
+      <view class="field">
+        <text class="fl">图标</text>
+        <view class="emo-grid">
+          <view
+            wx:for="{{emojis}}"
+            wx:key="*this"
+            class="emo-cell {{emoIdx === index ? 'on' : ''}}"
+            data-i="{{index}}"
+            bindtap="onPickEmo"
+          >{{item}}</view>
+        </view>
+      </view>
+      <view class="row" style="gap:16rpx;margin-top:24rpx">
+        <button class="btn ghost" style="flex:1" bindtap="closeModal">取消</button>
+        <button class="btn primary" style="flex:1" form-type="submit">保存</button>
+      </view>
+    </form>
+  </view>
+</view>

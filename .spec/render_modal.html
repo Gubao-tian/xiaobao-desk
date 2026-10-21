@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390, initial-scale=1">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(165deg,#FFF4F8 0%,#F5EEFF 100%);
+    color: #5C4450; font-size: 14px; line-height: 1.6;
+  }
+  .phone { width: 390px; height: 844px; position: relative; overflow: hidden; margin: 20px auto; box-shadow: 0 10px 40px rgba(0,0,0,.2); }
+  .page { padding: 10px 12px 71px; height: 100%; overflow-y: auto; }
+  .card { background:#fff; border-radius:13px; border:1px solid #FBE6F0; box-shadow:0 2px 10px rgba(242,104,154,.08); padding:13px; margin-bottom:10px; }
+  .sec-title { font-size:15px; font-weight:800; display:flex; align-items:center; gap:6px; margin-bottom:9px; }
+  .dot { width:7px; height:7px; border-radius:50%; background:#FF8FB8; box-shadow:0 0 0 4px #FFEFF6; }
+  .grid3 { display:flex; flex-wrap:wrap; gap:8px; }
+  .stat { background:#fff; border-radius:9px; padding:11px 12px; border:1px solid #FBE6F0; width:calc(33.333% - 6px); position:relative; }
+  .lbl { font-size:11px; color:#9C8590; font-weight:600; }
+  .val { font-size:23px; font-weight:800; }
+  .val small { font-size:11px; color:#C4B1BB; }
+  .row { display:flex; align-items:center; }
+  .between { justify-content:space-between; }
+  .btn { border:none; font-size:13px; font-weight:700; padding:9px 14px; border-radius:14px; background:#FFEFF6; color:#F2689A; display:inline-flex; align-items:center; justify-content:center; }
+  .btn.primary { background:linear-gradient(135deg,#FFA6C8,#F2689A); color:#fff; }
+  .inp { font-size:13px; color:#5C4450; border:1px solid #FFDCE9; border-radius:13px; padding:9px 12px; background:#FFF8FB; flex:1; min-width:0; }
+  .book { border:1px solid #FBE6F0; border-radius:11px; padding:11px; background:#FFF8FB; margin-bottom:8px; }
+  .bname { font-weight:700; font-size:14px; }
+  .tiny { font-size:11px; color:#C4B1BB; }
+  .pill { display:inline-flex; padding:2px 8px; border-radius:15px; font-size:10px; font-weight:700; background:#FFF8FB; color:#9C8590; }
+
+  /* ===== 弹层（v1.3.0：完全不透明遮罩，打开后只显示表单） ===== */
+  .mask {
+    position: fixed; top:0; left:0; right:0; bottom:0;
+    background:#FFF4F8; z-index:9999;
+    display:flex; align-items:flex-end; justify-content:center;
+  }
+  .sheet {
+    background:#fff; border-radius:19px 19px 0 0; width:100%;
+    padding:17px 15px 19px; max-height:86vh; overflow-y:auto;
+  }
+  .sheet-title { font-size:17px; font-weight:800; text-align:center; margin-bottom:13px; }
+  .field { margin-bottom:10px; }
+  .fl { display:block; font-size:11px; font-weight:700; color:#9C8590; margin-bottom:4px; }
+  .opt-grid { display:flex; flex-wrap:wrap; gap:6px; flex:1; min-width:0; }
+  .opt { font-size:12px; color:#9C8590; font-weight:600; padding:6px 11px; border-radius:11px; background:#FFF8FB; border:1px solid #FBE6F0; }
+  .opt.on { color:#fff; background:linear-gradient(135deg,#FFA6C8,#F2689A); border-color:transparent; }
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="page">
+    <div class="card">
+      <div class="sec-title"><span class="dot"></span>阅读统计</div>
+      <div class="grid3">
+        <div class="stat"><div class="lbl">已读完</div><div class="val">3<small>本</small></div></div>
+        <div class="stat"><div class="lbl">在读</div><div class="val">2<small>本</small></div></div>
+        <div class="stat"><div class="lbl">今日累计</div><div class="val">45<small>分钟</small></div></div>
+      </div>
+      <div class="row" style="gap:6px;margin-top:10px">
+        <button class="btn">+ 记录时长</button>
+        <input class="inp" placeholder="输入分钟数">
+        <button class="btn primary">快速+30</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row between" style="margin-bottom:9px">
+        <div class="sec-title" style="margin:0"><span class="dot"></span>我的书架</div>
+        <button class="btn primary">+ 添加书籍</button>
+      </div>
+      <div class="book">
+        <div class="row between"><div><div class="bname">小王子</div><div class="tiny">圣埃克苏佩里</div></div><span class="pill">在读</span></div>
+        <div class="tiny" style="margin-top:6px">120 / 200 页 · 60%</div>
+      </div>
+      <div class="book">
+        <div class="row between"><div><div class="bname">活着</div><div class="tiny">余华</div></div><span class="pill">已读完</span></div>
+        <div class="tiny" style="margin-top:6px">320 / 320 页 · 100%</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="sec-title"><span class="dot"></span>摘抄本</div>
+      <textarea class="inp" style="width:100%;height:60px" placeholder="摘抄一段打动你的文字…"></textarea>
+      <button class="btn primary" style="width:100%;margin-top:10px">收录摘抄</button>
+    </div>
+  </div>
+
+  <!-- 弹层打开状态 -->
+  <div class="mask">
+    <div class="sheet">
+      <div class="sheet-title">添加书籍</div>
+      <div class="field"><span class="fl">书名</span><input class="inp" placeholder="请输入书名"></div>
+      <div class="field"><span class="fl">作者</span><input class="inp" placeholder="请输入作者"></div>
+      <div class="field"><span class="fl">总页数</span><input class="inp" placeholder="请输入总页数"></div>
+      <div class="field">
+        <span class="fl">状态</span>
+        <div class="opt-grid">
+          <div class="opt on">在读</div><div class="opt">想读</div><div class="opt">已读完</div>
+        </div>
+      </div>
+      <div class="row" style="gap:8px;margin-top:12px">
+        <button class="btn" style="flex:1">取消</button>
+        <button class="btn primary" style="flex:1">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

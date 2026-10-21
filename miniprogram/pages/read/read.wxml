@@ -1,0 +1,147 @@
+<side-nav active="read" bind:navigate="onNav" />
+
+<view class="page" style="{{pageStyle}}">
+  <!-- 阅读统计 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>阅读统计</view>
+    <view class="grid3">
+      <view class="stat">
+        <view class="lbl">已读完</view>
+        <view class="val">{{doneN}}<small>本</small></view>
+        <view class="ico">✅</view>
+      </view>
+      <view class="stat">
+        <view class="lbl">在读</view>
+        <view class="val">{{readingN}}<small>本</small></view>
+        <view class="ico">📖</view>
+      </view>
+      <view class="stat">
+        <view class="lbl">今日累计</view>
+        <view class="val">{{todayMin}}<small>分钟</small></view>
+        <view class="ico">⏱️</view>
+      </view>
+    </view>
+    <view class="row mt" style="gap:12rpx">
+      <button class="btn sm" bindtap="onFocusLog">+ 记录时长</button>
+      <input
+        class="inp"
+        type="number"
+        value="{{form.minutes}}"
+        placeholder="输入分钟数"
+        bindinput="onMinInput" bindblur="onMinInputBlur"
+        bindconfirm="onLogConfirm"
+        focus="{{logFocus}}"
+      />
+      <button class="btn sm primary" bindtap="onQuick30">快速 +30 分钟</button>
+    </view>
+  </view>
+
+  <!-- 书架 -->
+  <view class="card">
+    <view class="row between" style="margin-bottom:18rpx">
+      <view class="sec-title" style="margin:0"><view class="dot"></view>我的书架</view>
+      <button class="btn sm primary" bindtap="openAdd">+ 添加书籍</button>
+    </view>
+    <block wx:if="{{books.length}}">
+      <view wx:for="{{books}}" wx:key="id" class="book">
+        <view class="row between">
+          <view class="grow">
+            <view class="bname">{{item.title}}</view>
+            <view class="tiny mt8">{{item.author || '佚名'}}</view>
+          </view>
+          <text class="pill {{item.pillCls}}">{{item.statusText}}</text>
+        </view>
+        <view class="row between mt12">
+          <text class="tiny">{{item.page}} / {{item.total}} 页</text>
+          <text class="pct">{{item.pct}}%</text>
+        </view>
+        <view class="bar thin mt8"><view style="width:{{item.pct}}%"></view></view>
+        <view class="row mt12" style="gap:12rpx">
+          <input
+            class="inp"
+            type="number"
+            value="{{form.pages[item.id]}}"
+            data-id="{{item.id}}"
+            placeholder="本次读了几页"
+            bindinput="onPageInput"
+            bindblur="onPageBlur"
+          />
+          <button class="btn sm" data-id="{{item.id}}" bindtap="onUpdatePage">累加</button>
+        </view>
+        <view class="row mt12" style="gap:12rpx">
+          <button class="btn sm ghost grow" data-id="{{item.id}}" bindtap="onEditBook">✎ 编辑</button>
+          <button class="btn sm ghost grow" data-id="{{item.id}}" bindtap="onToggleDone">
+            {{item.status === 'done' ? '标记未读' : '标记读完'}}
+          </button>
+          <button class="btn sm ghost del-btn" data-id="{{item.id}}" bindtap="onDelBook">删除</button>
+        </view>
+      </view>
+    </block>
+    <view wx:else class="empty">
+      <text class="emo">📚</text>
+      书架空空如也，先添加一本书吧
+    </view>
+  </view>
+
+  <!-- 摘抄本 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>摘抄本</view>
+    <textarea
+      class="ta"
+      value="{{form.quote}}"
+      placeholder="摘抄一段打动你的文字…"
+      bindinput="onQuoteInput" bindblur="onQuoteInputBlur"
+    ></textarea>
+    <button class="btn primary block mt12" bindtap="onAddQuote">收录摘抄</button>
+    <view class="mt">
+      <block wx:if="{{quotes.length}}">
+        <view wx:for="{{quotes}}" wx:key="id" class="qitem">
+          <view class="grow">
+            <view class="qtext">{{item.text}}</view>
+            <view class="tiny mt8">{{item.date}}</view>
+          </view>
+          <button class="btn sm ghost del-btn" data-id="{{item.id}}" bindtap="onDelQuote">删除</button>
+        </view>
+      </block>
+      <view wx:else class="empty">
+        <text class="emo">✍️</text>
+        还没有摘抄，去记录第一句吧
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 添加书籍弹层（用 form 组件确保提交时一次性拿到所有 input 当前值，规避 blur/tap 时序问题）-->
+<view class="mask" wx:if="{{showModal}}" bindtap="onMaskTap" data-key="showModal">
+  <view class="sheet" catchtap="">
+    <view class="sheet-title">{{modalTitle}}</view>
+    <form bindsubmit="submitModal" report-submit>
+      <view class="field">
+        <text class="fl">书名</text>
+        <view class="row" style="gap:12rpx">
+          <input class="inp" style="flex:1" name="title" value="{{form.title}}" placeholder="请输入书名" bindinput="onFormTitle" bindblur="onFormTitleBlur" />
+          <button class="btn sm" style="flex:0 0 auto" bindtap="onSearchBook">🔍 搜书</button>
+        </view>
+        <view class="tiny" style="margin-top:10rpx">点「搜书」复制书名关键词，去微信或浏览器粘贴搜索，照着填作者和页数</view>
+      </view>
+      <view class="field"><text class="fl">作者</text><input class="inp" name="author" value="{{form.author}}" placeholder="请输入作者" bindinput="onFormAuthor" bindblur="onFormAuthorBlur" /></view>
+      <view class="field"><text class="fl">总页数</text><input class="inp" type="number" name="total" value="{{form.total}}" placeholder="请输入总页数" bindinput="onFormTotal" bindblur="onFormTotalBlur" /></view>
+      <view class="field">
+        <text class="fl">状态</text>
+        <view class="opt-grid">
+          <view
+            wx:for="{{statusTexts}}"
+            wx:key="index"
+            class="opt {{statusIdx === index ? 'on' : ''}}"
+            data-i="{{index}}"
+            bindtap="onStatusChange"
+          >{{item}}</view>
+        </view>
+      </view>
+      <view class="row" style="gap:16rpx;margin-top:24rpx">
+        <button class="btn ghost" style="flex:1" bindtap="closeModal">取消</button>
+        <button class="btn primary" style="flex:1" form-type="submit">保存</button>
+      </view>
+    </form>
+  </view>
+</view>

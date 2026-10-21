@@ -1,0 +1,163 @@
+<side-nav active="finance" bind:navigate="onNav" />
+
+<view class="page" style="{{pageStyle}}">
+  <!-- 顶部统计 -->
+  <view class="grid4">
+    <view class="stat">
+      <view class="lbl">本月收入</view>
+      <view class="val in-amt">¥{{monthIn}}</view>
+      <view class="ico">💚</view>
+    </view>
+    <view class="stat">
+      <view class="lbl">本月支出</view>
+      <view class="val out-amt">¥{{monthOut}}</view>
+      <view class="ico">💸</view>
+    </view>
+    <view class="stat">
+      <view class="lbl">本月结余</view>
+      <view class="val {{netCls}}">{{netSign}}¥{{monthNet}}</view>
+      <view class="ico">⚖️</view>
+    </view>
+    <view class="stat">
+      <view class="lbl">累计结余</view>
+      <view class="val {{totalCls}}">{{totalSign}}¥{{totalNet}}</view>
+      <view class="ico">🏦</view>
+    </view>
+  </view>
+
+  <!-- 记一笔 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>记一笔</view>
+    <view class="row" style="gap:16rpx">
+      <button class="btn green grow" data-type="income" bindtap="onOpenRec">＋ 记收入</button>
+      <button class="btn primary grow" data-type="expense" bindtap="onOpenRec">＋ 记支出</button>
+    </view>
+    <view class="tiny mt12">收入记绿色、支出记粉色，数据只保存在本机 📒</view>
+  </view>
+
+  <!-- 收支明细 -->
+  <view class="card">
+    <view class="row between" style="margin-bottom:12rpx">
+      <view class="sec-title" style="margin:0"><view class="dot"></view>收支明细</view>
+      <text class="tiny">最近 30 条</text>
+    </view>
+    <block wx:if="{{list.length}}">
+      <view wx:for="{{list}}" wx:key="id" class="fitem">
+        <view class="avatar {{item.type}}">{{item.type === 'income' ? '入' : '出'}}</view>
+        <view class="grow">
+          <view class="row between">
+            <text class="fcat">{{item.cat}}</text>
+            <text class="famt {{item.type === 'income' ? 'in-amt' : 'out-amt'}}">{{item.sign}}¥{{item.amount}}</text>
+          </view>
+          <view class="tiny mt8">{{item.meta}}</view>
+        </view>
+        <button class="btn sm ghost" data-id="{{item.id}}" bindtap="onEditRec">✎</button>
+        <button class="btn sm ghost fdel" data-id="{{item.id}}" bindtap="onDel">🗑</button>
+      </view>
+    </block>
+    <view wx:else class="empty">
+      <text class="emo">💰</text>
+      还没有记账记录，从上面记第一笔吧
+    </view>
+  </view>
+
+  <!-- 本月支出分类占比 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>本月支出分类占比</view>
+    <view wx:if="{{monthOut > 0}}" class="center">
+      <view class="tiny">本月支出总额</view>
+      <view class="out-amt big-num">¥{{monthOut}}</view>
+    </view>
+    <block wx:if="{{catRows.length}}">
+      <view wx:for="{{catRows}}" wx:key="index" class="catrow mt12">
+        <view class="row between">
+          <text class="catname">{{item.cat}}</text>
+          <text class="tiny">¥{{item.amount}} · {{item.pct}}%</text>
+        </view>
+        <view class="bar thin mt8"><view style="width: {{item.pct}}%"></view></view>
+      </view>
+    </block>
+    <view wx:else class="empty mt12">
+      <text class="emo">🍰</text>
+      本月还没有支出，记得理性消费呀
+    </view>
+  </view>
+
+  <!-- 储蓄目标 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>储蓄目标</view>
+    <block wx:if="{{goals.length}}">
+      <view class="grid2 wrap">
+        <view wx:for="{{goals}}" wx:key="id" class="goal-card">
+          <view class="row between">
+            <text class="gname">{{item.name}}</text>
+            <text wx:if="{{item.done}}" class="pill mint">已达成</text>
+          </view>
+          <view class="tiny mt8">¥{{item.saved}} / ¥{{item.target}}</view>
+          <view class="bar thin mt8"><view class="mint" style="width: {{item.pct}}%"></view></view>
+          <view class="row between mt8">
+            <text class="tiny">{{item.pct}}%</text>
+            <view class="row" style="gap:10rpx">
+              <button class="btn sm" data-id="{{item.id}}" bindtap="onOpenDep">＋ 存入</button>
+              <button class="btn sm ghost gdel" data-id="{{item.id}}" bindtap="onDelGoal">🗑</button>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+    <view wx:else class="empty">
+      <text class="emo">🎯</text>
+      还没有储蓄目标，在下面添加一个吧
+    </view>
+    <view class="row wrap mt12" style="gap:12rpx">
+      <input class="inp" style="flex:1;min-width:200rpx" value="{{goalForm.name}}" placeholder="目标名称，如：旅行基金" bindinput="onFormGoalName" bindblur="onFormGoalNameBlur" />
+      <input class="inp" style="width:180rpx" type="digit" value="{{goalForm.target}}" placeholder="目标金额" bindinput="onFormGoalTarget" bindblur="onFormGoalTargetBlur" />
+      <button class="btn primary" bindtap="onAddGoal">添加</button>
+    </view>
+  </view>
+
+  <!-- 记收入/支出弹层 -->
+  <view class="mask" wx:if="{{showModal}}" bindtap="onMaskTap" data-key="showModal">
+    <view class="sheet" catchtap="">
+      <view class="sheet-title">{{modalType === 'income' ? '记收入' : '记支出'}}</view>
+      <form bindsubmit="submitModal" report-submit>
+        <view class="field"><text class="fl">金额（元）</text><input class="inp" type="digit" name="amount" value="{{form.amount}}" placeholder="请输入金额" bindinput="onFormAmount" bindblur="onFormAmountBlur" /></view>
+        <view class="field">
+          <text class="fl">分类</text>
+          <view class="opt-grid">
+            <view
+              wx:for="{{cats}}"
+              wx:key="index"
+              class="opt {{form.catIdx === index ? 'on' : ''}}"
+              data-i="{{index}}"
+              bindtap="onPickCat"
+            >{{item}}</view>
+          </view>
+        </view>
+        <view class="field">
+          <text class="fl">日期</text>
+          <picker mode="date" value="{{form.date}}" bindchange="onPickDate"><view class="picker">{{form.date}}</view></picker>
+        </view>
+        <view class="field"><text class="fl">备注</text><input class="inp" name="note" value="{{form.note}}" placeholder="选填，如：和宝宝一起" bindinput="onFormNote" bindblur="onFormNoteBlur" /></view>
+        <view class="row" style="gap:16rpx;margin-top:24rpx">
+          <button class="btn ghost" style="flex:1" bindtap="closeModal">取消</button>
+          <button class="btn primary" style="flex:1" form-type="submit">保存</button>
+        </view>
+      </form>
+    </view>
+  </view>
+
+  <!-- 存入弹层 -->
+  <view class="mask" wx:if="{{showDep}}" bindtap="onMaskTap" data-key="showDep">
+    <view class="sheet" catchtap="">
+      <view class="sheet-title">存入一笔</view>
+      <form bindsubmit="submitDep" report-submit>
+        <view class="field"><text class="fl">存入金额（元）</text><input class="inp" type="digit" name="amount" value="{{depForm.amount}}" placeholder="请输入存入金额" bindinput="onFormDepAmount" bindblur="onFormDepAmountBlur" /></view>
+        <view class="row" style="gap:16rpx;margin-top:24rpx">
+          <button class="btn ghost" style="flex:1" bindtap="closeDep">取消</button>
+          <button class="btn primary" style="flex:1" form-type="submit">存入</button>
+        </view>
+      </form>
+    </view>
+  </view>
+</view>

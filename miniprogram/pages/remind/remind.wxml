@@ -1,0 +1,61 @@
+<view class="page" style="{{pageStyle}}">
+  <view class="remind-head">
+    <view class="rh-title">🔔 提醒与通知</view>
+    <view class="rh-sub">到时间就提醒你，别让好习惯溜走</view>
+  </view>
+
+  <!-- 每日计划提醒 -->
+  <view class="card">
+    <view class="row between">
+      <view class="r-name">📅 每日计划提醒</view>
+      <switch checked="{{rPlanOn}}" bindchange="onTogglePlan" color="#F2689A" />
+    </view>
+    <view class="r-body" wx:if="{{rPlanOn}}">
+      <text class="tiny">每天这个时间点提醒你查看今日计划</text>
+      <picker mode="time" value="{{rPlanTime}}" bindchange="onTimePlan">
+        <view class="picker-val">⏰ {{rPlanTime}}</view>
+      </picker>
+    </view>
+  </view>
+
+  <!-- 锻炼提醒 -->
+  <view class="card">
+    <view class="row between">
+      <view class="r-name">🏃 锻炼提醒</view>
+      <switch checked="{{rWorkOn}}" bindchange="onToggleWork" color="#F2689A" />
+    </view>
+    <view class="r-body" wx:if="{{rWorkOn}}">
+      <text class="tiny">每天这个时间点提醒你动一动</text>
+      <picker mode="time" value="{{rWorkTime}}" bindchange="onTimeWork">
+        <view class="picker-val">⏰ {{rWorkTime}}</view>
+      </picker>
+    </view>
+  </view>
+
+  <!-- 喝水提醒 -->
+  <view class="card">
+    <view class="row between">
+      <view class="r-name">💧 喝水提醒</view>
+      <switch checked="{{rWaterOn}}" bindchange="onToggleWater" color="#F2689A" />
+    </view>
+    <view class="r-body" wx:if="{{rWaterOn}}">
+      <text class="tiny">每隔一段时间提醒你喝杯水</text>
+      <picker mode="selector" range="{{waterOpts}}" value="{{waterIdx}}" bindchange="onIntervalWater">
+        <view class="picker-val">⏱ 每 {{rWaterInterval}} 分钟</view>
+      </picker>
+    </view>
+  </view>
+
+  <!-- 微信订阅消息 -->
+  <view class="card sub-card">
+    <view class="sec-title"><view class="dot"></view>微信服务通知</view>
+    <view class="tiny" style="margin-bottom:12rpx">开启后，即使没打开小程序也能收到提醒推送（需微信授权一次）。</view>
+    <view class="row between">
+      <text class="sub-state">{{subText}}</text>
+      <button class="btn primary sm" bindtap="onEnableSubscribe">开启微信提醒</button>
+    </view>
+    <view wx:if="{{!subConfigured}}" class="tiny warn mt8">提示：当前未配置订阅消息模板，已自动使用「本地提醒」（打开小程序时弹窗）。</view>
+  </view>
+
+  <view class="tiny center" style="margin:18rpx 0 40rpx">所有提醒设置只保存在本机，不上传云端 💾</view>
+</view>

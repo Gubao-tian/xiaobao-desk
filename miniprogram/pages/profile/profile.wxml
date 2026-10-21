@@ -1,0 +1,172 @@
+<side-nav active="profile" bind:navigate="onNav" />
+
+<view class="page" style="{{pageStyle}}">
+  <!-- 个人名片 -->
+  <view class="card me-card">
+    <view class="row" style="gap:22rpx">
+      <view class="me-avatar">{{profile.avatar}}</view>
+      <view class="grow">
+        <view class="me-name">{{profile.name || '还没起名字'}}</view>
+        <view class="me-sign">{{profile.sign || '写一句自我介绍吧～'}}</view>
+        <view class="row wrap" style="gap:10rpx;margin-top:12rpx">
+          <block wx:if="{{profile.tags.length}}">
+            <view class="tag" wx:for="{{profile.tags}}" wx:key="index">{{item}}</view>
+          </block>
+          <text wx:else class="tiny">还没有个人标签</text>
+        </view>
+      </view>
+    </view>
+    <view class="grid4" style="margin-top:22rpx">
+      <view class="stat" wx:for="{{stats}}" wx:key="index">
+        <view class="val" style="font-size:34rpx">{{item.val}}<small>{{item.unit}}</small></view>
+        <view class="lbl">{{item.lbl}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 云同步 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>云端同步</view>
+    <view class="sync-row">
+      <view class="sync-dot {{cloud.loggedIn ? 'on' : ''}}"></view>
+      <view class="grow">
+        <view class="sync-status">{{cloud.statusText}}</view>
+        <view class="tiny" wx:if="{{cloud.lastSyncAt}}">上次同步：{{cloud.lastSyncAt}}</view>
+        <view class="tiny warn" wx:elif="{{cloud.lastError}}">{{cloud.lastError}}</view>
+        <view class="tiny" wx:else>每次保存都会自动同步到云端</view>
+      </view>
+      <button class="btn primary sm" bindtap="onSyncNow" disabled="{{cloud.syncing}}">{{cloud.syncing ? '同步中' : '立即同步'}}</button>
+    </view>
+    <view class="tiny mt8">数据存在手机里，也会同步到云端；换设备用同一微信登录就能找回</view>
+  </view>
+
+  <!-- 头像 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>选一个头像</view>
+    <view class="av-row">
+      <view
+        wx:for="{{avatars}}"
+        wx:key="index"
+        class="av {{profile.avatar === item ? 'on' : ''}}"
+        data-av="{{item}}"
+        bindtap="onPickAvatar"
+      >{{item}}</view>
+    </view>
+  </view>
+
+  <!-- 昵称与签名 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>昵称与签名</view>
+    <view class="field">
+      <text class="fl">我的名字</text>
+      <input class="inp" value="{{profile.name}}" placeholder="例如：小宝" maxlength="12" bindinput="onName" bindblur="onNameBlur" />
+    </view>
+    <view class="field">
+      <text class="fl">个性签名</text>
+      <input class="inp" value="{{profile.sign}}" placeholder="例如：慢慢来，比较快" maxlength="30" bindinput="onSign" bindblur="onSignBlur" />
+    </view>
+    <view class="tiny">输入即时保存，刷新不丢失</view>
+  </view>
+
+  <!-- 个人标签 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>个人标签</view>
+    <view class="row" style="gap:14rpx">
+      <input class="inp" value="{{tagInput}}" placeholder="输入标签，如：早起星人" maxlength="10" bindinput="onTagInput" bindblur="onTagInputBlur" bindconfirm="onAddTag" />
+      <button class="btn primary sm" bindtap="onAddTag">添加</button>
+    </view>
+    <view class="row wrap" style="gap:12rpx;margin-top:18rpx">
+      <block wx:if="{{profile.tags.length}}">
+        <view class="tag del" wx:for="{{profile.tags}}" wx:key="index" data-idx="{{index}}" bindtap="onDelTag">
+          {{item}} ✕
+        </view>
+      </block>
+      <text wx:else class="tiny">点击下方推荐快速添加，点标签可删除</text>
+    </view>
+    <view class="sec-title mt" style="font-size:25rpx"><view class="dot"></view>推荐标签</view>
+    <view class="row wrap" style="gap:12rpx">
+      <view class="tag add" wx:for="{{suggest}}" wx:key="index" data-tag="{{item}}" bindtap="onQuickTag">+ {{item}}</view>
+    </view>
+  </view>
+
+  <!-- 背景主题 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>背景主题</view>
+    <view class="tiny" style="margin-bottom:16rpx">选一个喜欢的背景，全部页面会一起换</view>
+    <view class="theme-grid">
+      <view
+        wx:for="{{themes}}"
+        wx:key="id"
+        class="theme {{activeThemeId === item.id ? 'on' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="onPickTheme"
+      >
+        <view class="th-prev" style="background:linear-gradient(160deg,{{item.bg}},{{item.bg2}})">
+          <view class="th-dot" style="background:{{item.accent}}"></view>
+        </view>
+        <view class="th-name">{{item.emoji}} {{item.name}}</view>
+        <view wx:if="{{activeThemeId === item.id}}" class="th-flag">使用中</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 自定义调色 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>自定义颜色</view>
+    <view class="tiny" style="margin-bottom:16rpx">拖动滑块调出你的专属背景色</view>
+    <view class="custom-prev" style="background:linear-gradient(165deg,{{customPreview}},{{customPreview}})">
+      <text class="cp-hex">{{customPreview}}</text>
+    </view>
+    <view class="slider-row">
+      <text class="sl">R</text>
+      <slider value="{{customR}}" min="0" max="255" activeColor="#F2689A" backgroundColor="#FFE3EF" block-size="22" data-k="customR" bindchanging="onSlider" bindchange="onSlider" />
+      <text class="sv">{{customR}}</text>
+    </view>
+    <view class="slider-row">
+      <text class="sl">G</text>
+      <slider value="{{customG}}" min="0" max="255" activeColor="#8ED8C0" backgroundColor="#DFF3EB" block-size="22" data-k="customG" bindchanging="onSlider" bindchange="onSlider" />
+      <text class="sv">{{customG}}</text>
+    </view>
+    <view class="slider-row">
+      <text class="sl">B</text>
+      <slider value="{{customB}}" min="0" max="255" activeColor="#9ECDF5" backgroundColor="#E3F0FC" block-size="22" data-k="customB" bindchanging="onSlider" bindchange="onSlider" />
+      <text class="sv">{{customB}}</text>
+    </view>
+    <button class="btn primary block mt" bindtap="onUseCustom">应用这个背景 🎨</button>
+    <view wx:if="{{customActive}}" class="tiny center mt8">当前正在使用自定义背景</view>
+  </view>
+
+  <!-- 战绩卡片 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>战绩卡片</view>
+    <view class="tiny" style="margin-bottom:16rpx">把这一阶段的成果画成一张图，保存后就能分享给朋友</view>
+    <canvas type="2d" id="shareCanvas" class="share-canvas"></canvas>
+    <image wx:if="{{cardPath}}" src="{{cardPath}}" class="card-preview" mode="widthFix" />
+    <view class="row" style="gap:14rpx;margin-top:18rpx">
+      <button class="btn primary block" bindtap="onGenCard">生成战绩卡片</button>
+      <button class="btn block" wx:if="{{cardPath}}" bindtap="onSaveCard">保存到相册</button>
+    </view>
+    <view class="tiny mt8">{{cardTip}}</view>
+  </view>
+
+  <!-- 数据备份 -->
+  <view class="card">
+    <view class="sec-title"><view class="dot"></view>数据备份</view>
+    <view class="tiny" style="margin-bottom:16rpx">把全部数据导出保存，换设备或误删时可恢复。也可去 Web 版（同一账号）做更完整的导入导出。</view>
+    <button class="btn primary block" bindtap="onBackupExport">⬇️ 导出整库备份</button>
+  </view>
+
+  <!-- 提醒与通知 -->
+  <view class="card remind-entry" bindtap="goRemind">
+    <view class="row between">
+      <view class="row" style="gap:16rpx">
+        <view class="re-ico">🔔</view>
+        <view>
+          <view class="re-t">提醒与通知</view>
+          <view class="re-s">计划 / 锻炼 / 喝水，按时提醒你</view>
+        </view>
+      </view>
+      <view class="re-arrow">›</view>
+    </view>
+  </view>
+</view>
