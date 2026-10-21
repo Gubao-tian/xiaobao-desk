@@ -103,6 +103,12 @@ node .spec/test_web_daydetail.js
 - [产品需求文档（PRD）](docs/PRD.md)
 - [项目总览](docs/README.md)
 
+## 在线体验
+
+- Web 版（PWA，可直接安装到手机桌面）：https://gubao-tian.github.io/xiaobao-desk/
+
+> 首次打开若显示旧界面，请强刷一次（`Ctrl/Cmd + Shift + R`）。Service Worker 会在后台更新缓存。
+
 ## License
 
-个人项目，未附开源协议。如需引用请先联系作者。
+[MIT](LICENSE) © 2026 Gubao-tian
