@@ -2906,7 +2906,6 @@ const LUNAR_INFO=[
 0x0d520//2100
 ];
 const LUNAR_MONTH_CN=['正','二','三','四','五','六','七','八','九','十','冬','腊'];
-const LUNAR_DAY_CN1=['初一','初二','初三','初四','初五','初六','初七','初八','初九','初十'];
 const GAN=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
 const ZHI=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
 const ZODIAC=['鼠','牛','虎','兔','龙','蛇','马','羊','猴','鸡','狗','猪'];
@@ -3046,8 +3045,8 @@ function renderCalendar(){
   for(let i=0;i<lead;i++) cells.push(null);
   for(let d=1;d<=daysInMonth;d++) cells.push(d);
 
-  const ln=lunarOf(`${y}-${pad(m+1)}-01`);
   const tds=`${t}`;
+  const tdLn=lunarOf(tds), tdSub=daySubLabel(tds);
   /* 本月节气与节日清单 */
   const events=[];
   for(let d=1;d<=daysInMonth;d++){
@@ -3074,7 +3073,7 @@ function renderCalendar(){
       </div>
       <div class="cal-today-strip">
         <div class="cts-solar">${td.getFullYear()} 年 ${td.getMonth()+1} 月 ${td.getDate()} 日 · 星期${WEEK_CN[td.getDay()]}</div>
-        <div class="cts-lunar">${esc(dayFullLabel(tds))}${daySubLabel(tds)&&daySubLabel(tds)!==lunarOf(tds).dayCn?' · '+esc(daySubLabel(tds)):''} · ${lunarOf(tds)?lunarOf(tds).ganzhi+'年（'+lunarOf(tds).zodiac+'年）':''}</div>
+        <div class="cts-lunar">${esc(dayFullLabel(tds))}${tdSub&&tdSub!==tdLn.dayCn?' · '+esc(tdSub):''} · ${tdLn?tdLn.ganzhi+'年（'+tdLn.zodiac+'年）':''}</div>
       </div>
       <div class="cal-grid cal-head">
         ${['日','一','二','三','四','五','六'].map(w=>`<div class="cal-w ${w==='日'||w==='六'?'weekend':''}">${w}</div>`).join('')}

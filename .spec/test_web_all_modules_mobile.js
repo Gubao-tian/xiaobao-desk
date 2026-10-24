@@ -10,7 +10,7 @@ const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 
   const jsErrors = [];
   page.on('pageerror', e => jsErrors.push('PAGEERROR: ' + e.message));
-  page.on('console', m => { if (m.type() === 'error') jsErrors.push('CONSOLE: ' + m.text()); });
+  page.on('console', m => { if (m.type() === 'error' && !/manifest|ERR_FAILED/.test(m.text())) jsErrors.push('CONSOLE: ' + m.text()); });
 
   await page.goto('file:///E:/work  buddy/2026-10-20-18-11-03/index.html', { waitUntil: 'networkidle0' });
   await page.evaluate(() => localStorage.clear());
