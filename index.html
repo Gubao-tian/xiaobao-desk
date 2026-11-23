@@ -513,6 +513,52 @@ input[type=date]{cursor:pointer;}
   .cts-solar{font-size:13px;}
 }
 
+/* 相册（本地上传照片/视频，IndexedDB 本地存储） */
+.gal-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.gal-chip{
+  padding:7px 14px;border-radius:999px;border:1.5px solid var(--line);
+  background:#fff;color:var(--text-2);font-size:12.5px;font-weight:700;cursor:pointer;
+  transition:all .18s;
+}
+.gal-chip.on{background:linear-gradient(140deg,var(--pink-soft),var(--pink));color:#fff;border-color:transparent;box-shadow:var(--shadow-sm);}
+.gal-stat{font-size:12px;color:var(--text-3);margin-left:auto;}
+.gal-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:14px;
+}
+.gal-item{
+  position:relative;margin:0;border-radius:16px;overflow:hidden;cursor:pointer;
+  background:#fff;border:1px solid var(--line);box-shadow:var(--shadow-sm);
+  transition:transform .18s,box-shadow .18s;
+}
+.gal-item:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+.gal-thumb{position:relative;width:100%;aspect-ratio:1/1;background:var(--card-soft);overflow:hidden;}
+.gal-thumb img,.gal-thumb video{width:100%;height:100%;object-fit:cover;display:block;}
+.gal-play{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.85);
+  display:grid;place-items:center;font-size:14px;color:var(--pink-deep);
+  box-shadow:0 2px 10px rgba(242,104,154,.35);pointer-events:none;
+}
+.gal-badge{
+  position:absolute;top:8px;left:8px;padding:3px 9px;border-radius:999px;
+  font-size:10.5px;font-weight:800;background:rgba(255,255,255,.9);color:var(--pink-deep);
+}
+.gal-item figcaption{padding:8px 10px 9px;display:flex;flex-direction:column;gap:2px;}
+.gal-name{font-size:12.5px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.gal-meta{font-size:10.5px;color:var(--text-3);font-variant-numeric:tabular-nums;}
+.gal-del{
+  position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;
+  border:none;background:rgba(242,104,154,.82);cursor:pointer;display:grid;place-items:center;
+  box-shadow:0 2px 8px rgba(242,104,154,.4);transition:background .15s,transform .15s;
+}
+.gal-item:hover .gal-del{background:rgba(242,104,154,1);transform:scale(1.06);}
+.gal-view{display:grid;place-items:center;background:#0f0f14;border-radius:14px;overflow:hidden;margin-bottom:10px;}
+.gal-view img,.gal-view video{max-width:100%;max-height:62vh;display:block;}
+@media (max-width:420px){
+  .gal-grid{grid-template-columns:repeat(2,1fr);gap:9px;}
+  .gal-stat{width:100%;margin-left:0;}
+}
+
 .water-streak{display:flex;gap:4px;flex-wrap:wrap;margin-top:10px;}
 .wk{width:calc((100% - 16px)/5);height:26px;border-radius:8px;background:var(--card-soft);display:grid;place-items:center;font-size:9.5px;color:var(--text-3);font-weight:700;}
 .wk.on{background:linear-gradient(140deg,#FFC2D8,#F2689A);color:#fff;}
@@ -765,7 +811,7 @@ input[type=range]::-moz-range-thumb{
       <button class="btn ghost sm block" id="installBtn" style="display:none">添加到桌面 / 主屏幕</button>
       <button class="btn ghost sm block" id="themeBtn">切换夜间模式</button>
       <button class="btn ghost sm block" id="exportBtn">导出备份数据</button>
-      <div class="tiny" style="text-align:center;opacity:.55;padding-top:4px">Web v<span id="webVer">1.7.0</span></div>
+      <div class="tiny" style="text-align:center;opacity:.55;padding-top:4px">Web v<span id="webVer">1.8.0</span></div>
     </div>
   </aside>
 
@@ -1105,6 +1151,7 @@ input[type=range]::-moz-range-thumb{
 
       <!-- 我的：个人名片 + 背景主题（JS 渲染） -->
       <section class="page" id="page-calendar"></section>
+      <section class="page" id="page-gallery"></section>
       <section class="page" id="page-timeline"></section>
       <section class="page" id="page-assistant"></section>
       <section class="page" id="page-templates"></section>
@@ -1309,6 +1356,7 @@ const IC={
   review:`<path d="M4.4 17.4V13M9.4 17.4V8.6M14.4 17.4v-6M19.4 17.4V5.8"/><path d="M3 19.6h18"/>`,
   timeline:`<rect x="3.4" y="4.8" width="17.2" height="14" rx="3"/><path d="M3.4 8.8h17.2M8 4.8v3.2M16 4.8v3.2M7.4 12.4h4.2M7.4 15.4h6.4"/>`,
   calendar:`<rect x="3.4" y="5" width="17.2" height="15" rx="3.4"/><path d="M3.4 9.4h17.2M8 3.6v3M16 3.6v3"/><path d="M7.6 13h2.2v2.2H7.6zM11.6 13h2.2v2.2h-2.2zM15.6 13h2.2v2.2h-2.2zM7.6 16.6h2.2v2.2H7.6z"/>`,
+  image:`<rect x="3.4" y="4.6" width="17.2" height="14.8" rx="3.2"/><circle cx="8.8" cy="9.6" r="1.6"/><path d="M4.6 17.4l4.4-4.2 2.8 2.6 3.4-3.2 4.2 4"/>`,
   assistant:`<circle cx="12" cy="12" r="8.4"/><path d="M8.4 10.6h.01M15.6 10.6h.01"/><path d="M8.8 14.6c.9 1.1 2 1.6 3.2 1.6s2.3-.5 3.2-1.6"/><path d="M12 3.6v2.4M12 18v2.4"/>`,
   tpl:`<rect x="3.6" y="3.6" width="7" height="7" rx="2"/><rect x="13.4" y="3.6" width="7" height="7" rx="2"/><rect x="3.6" y="13.4" width="7" height="7" rx="2"/><rect x="13.4" y="13.4" width="7" height="7" rx="2"/>`,
   heart:`<path d="M12 19.6s-7.2-4.4-7.2-9.2a4 4 0 0 1 7.2-2.5 4 4 0 0 1 7.2 2.5c0 4.8-7.2 9.2-7.2 9.2z"/>`,
@@ -1450,6 +1498,7 @@ const MODULES=[
   {id:'memo',   name:'备忘录',   icon:'memo',    sub:'长期保存 · 彩色便签，随时翻看'},
   {id:'review', name:'周复盘',   icon:'review',  sub:'每周归档 · 数据回顾与三条反思'},
   {id:'calendar',name:'日历',    icon:'calendar',sub:'阴阳历 · 节气节日 · 点某天看当天记录'},
+  {id:'gallery', name:'相册',    icon:'image',   sub:'本地照片 · 视频 · 存在你自己的浏览器里'},
   {id:'timeline',name:'日历时间轴',icon:'timeline',sub:'统一视图 · 一天里所有模块的记录'},
   {id:'assistant',name:'AI 小宝', icon:'assistant',sub:'贴心助理 · 基于你的数据给建议'},
   {id:'templates',name:'模板库',  icon:'tpl',     sub:'一键套用 · 计划/复盘/便签现成模板'},
@@ -1548,7 +1597,7 @@ function renderAll(){
 }
 /* 渲染兜底：任何一个模块渲染出错时给出明确提示（并显示错误信息方便定位），
    而不是静默空白 —— 旧标签页/旧缓存跑着半成品构建时也能看出该刷新了 */
-const WEB_VERSION='1.7.0';
+const WEB_VERSION='1.8.0';
 function safeRender(id,fn){
   return function(){
     try{ fn(); }
@@ -1571,7 +1620,7 @@ function safeRender(id,fn){
 function renderPage(id){
   ({home:safeRender('home',renderHome),plan:safeRender('plan',renderPlan),course:safeRender('course',renderCourse),workout:safeRender('workout',renderWorkout),
     exam:safeRender('exam',renderExam),finance:safeRender('finance',renderFinance),media:safeRender('media',renderMedia),read:safeRender('read',renderRead),
-    skill:safeRender('skill',renderSkill),memo:safeRender('memo',renderMemo),review:safeRender('review',renderReview),calendar:safeRender('calendar',renderCalendar),timeline:safeRender('timeline',renderTimeline),assistant:safeRender('assistant',renderAssistant),templates:safeRender('templates',renderTemplates),profile:safeRender('profile',renderProfile)}[id]||(()=>{}))();
+    skill:safeRender('skill',renderSkill),memo:safeRender('memo',renderMemo),review:safeRender('review',renderReview),calendar:safeRender('calendar',renderCalendar),gallery:safeRender('gallery',renderGallery),timeline:safeRender('timeline',renderTimeline),assistant:safeRender('assistant',renderAssistant),templates:safeRender('templates',renderTemplates),profile:safeRender('profile',renderProfile)}[id]||(()=>{}))();
   renderBadges();
 }
 function renderBadges(){
@@ -3123,6 +3172,134 @@ function renderCalendar(){
   $('#calNext').onclick=()=>{ if(m===11){calYear=y+1;calMonth=0;}else{calMonth=m+1;} renderCalendar(); };
   if($('#calToday')) $('#calToday').onclick=()=>{ calYear=td.getFullYear(); calMonth=td.getMonth(); renderCalendar(); };
   $$('#page-calendar .cal-cell[data-cal]').forEach(el=>el.onclick=()=>showDayDetail(el.dataset.cal));
+}
+
+/* =====================================================================
+   6.7 相册：本地照片/视频（IndexedDB 本地存储，不上传任何服务器）
+   ===================================================================== */
+let GAL_DB=null, galUrlCache={}, galItems=[], galFilter='all';
+const GAL_MAX=200*1048576; /* 单文件上限 200MB */
+function galOpenDB(){
+  if(GAL_DB) return Promise.resolve(GAL_DB);
+  return new Promise((res,rej)=>{
+    if(!window.indexedDB){ rej(new Error('当前浏览器不支持 IndexedDB')); return; }
+    const req=indexedDB.open('gubao_media_v1',1);
+    req.onupgradeneeded=()=>{ req.result.createObjectStore('media',{keyPath:'id'}); };
+    req.onsuccess=()=>{ GAL_DB=req.result; res(GAL_DB); };
+    req.onerror=()=>rej(req.error||new Error('打开本地媒体库失败'));
+  });
+}
+function galStore(mode){ return GAL_DB.transaction('media',mode).objectStore('media'); }
+function galAll(){ return new Promise((res,rej)=>{ const r=galStore('readonly').getAll(); r.onsuccess=()=>res(r.result||[]); r.onerror=()=>rej(r.error); }); }
+function galPut(rec){ return new Promise((res,rej)=>{ const r=galStore('readwrite').put(rec); r.onsuccess=()=>res(); r.onerror=()=>rej(r.error); }); }
+function galDel(id){ return new Promise((res,rej)=>{ const r=galStore('readwrite').delete(id); r.onsuccess=()=>res(); r.onerror=()=>rej(r.error); }); }
+function fmtSize(n){ return n>=1048576?(n/1048576).toFixed(1)+' MB':n>=1024?Math.round(n/1024)+' KB':n+' B'; }
+function fmtDT(ts){ const d=new Date(ts); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`; }
+function galUrl(it){
+  if(!galUrlCache[it.id]) galUrlCache[it.id]=URL.createObjectURL(it.blob);
+  return galUrlCache[it.id];
+}
+async function galleryAdd(files){
+  if(!files||!files.length) return;
+  let ok=0, skip=0;
+  for(const f of files){
+    const kind=(f.type||'').startsWith('video/')?'video':(f.type||'').startsWith('image/')?'photo':null;
+    if(!kind || f.size>GAL_MAX){ skip++; continue; }
+    const rec={
+      id:'m'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),
+      name:f.name||('未命名'+(kind==='photo'?'图片':'视频')),
+      kind, type:f.type||'', size:f.size, ts:Date.now(), blob:f
+    };
+    try{ await galPut(rec); ok++; }catch(err){ skip++; }
+  }
+  if(ok) toast(`已保存 ${ok} 个文件到本地相册${skip?`，跳过 ${skip} 个`:''}`,'📷');
+  else toast('没有可保存的照片或视频（仅支持图片/视频，单个 ≤200MB）','⚠️');
+  renderGallery();
+}
+function galOpenView(id){
+  const it=galItems.find(x=>x.id===id); if(!it) return;
+  const url=galUrl(it);
+  openModal(esc(it.name),`
+    <div class="gal-view">${it.kind==='photo'
+      ?`<img src="${url}" alt="">`
+      :`<video src="${url}" controls autoplay playsinline></video>`}</div>
+    <div class="tiny" style="text-align:center;opacity:.65">${esc(it.type||it.kind)} · ${fmtSize(it.size)} · 保存于 ${fmtDT(it.ts)}</div>`,
+    async ()=>{
+      if(!confirmDel(`删除「${it.name}」？此操作不可撤销。`)) return false;
+      try{ await galDel(id); }catch(err){}
+      if(galUrlCache[id]){ URL.revokeObjectURL(galUrlCache[id]); delete galUrlCache[id]; }
+      toast('已删除','🗑️'); renderGallery();
+    },'删除');
+}
+async function renderGallery(){
+  const host=$('#page-gallery');
+  if(!window.indexedDB){
+    host.innerHTML=`<div class="card"><div class="empty"><span class="emo">📷</span>当前浏览器不支持本地媒体库（IndexedDB），无法使用相册</div></div>`;
+    return;
+  }
+  try{ await galOpenDB(); }
+  catch(err){
+    host.innerHTML=`<div class="card"><div class="empty"><span class="emo">⚠️</span>本地媒体库打开失败：${esc(String(err&&err.message||err))}</div></div>`;
+    return;
+  }
+  let items=[];
+  try{ items=await galAll(); }catch(err){ items=[]; }
+  /* 回收已删除条目的 objectURL，避免泄漏 */
+  const alive=new Set(items.map(x=>x.id));
+  Object.keys(galUrlCache).forEach(k=>{ if(!alive.has(k)){ URL.revokeObjectURL(galUrlCache[k]); delete galUrlCache[k]; } });
+  items.sort((a,b)=>b.ts-a.ts);
+  galItems=items;
+  const shown=items.filter(x=>galFilter==='all'||x.kind===galFilter);
+  const nPhoto=items.filter(x=>x.kind==='photo').length, nVideo=items.filter(x=>x.kind==='video').length;
+  const total=items.reduce((s,x)=>s+(x.size||0),0);
+  let storage='';
+  try{
+    if(navigator.storage&&navigator.storage.estimate){
+      const est=await navigator.storage.estimate();
+      if(est&&est.usage!=null) storage=` · 已占用 ${fmtSize(est.usage)}`;
+    }
+  }catch(err){}
+  host.innerHTML=`
+    <div class="card">
+      <div class="gal-bar">
+        <button class="btn primary" id="galUpBtn">${svg('image',16,1.8,'#fff')}<span style="margin-left:6px">上传照片 / 视频</span></button>
+        <input type="file" id="galInput" accept="image/*,video/*" multiple style="display:none">
+        <button class="gal-chip${galFilter==='all'?' on':''}" data-gf="all">全部</button>
+        <button class="gal-chip${galFilter==='photo'?' on':''}" data-gf="photo">照片 ${nPhoto}</button>
+        <button class="gal-chip${galFilter==='video'?' on':''}" data-gf="video">视频 ${nVideo}</button>
+        <span class="gal-stat">共 ${items.length} 个文件 · ${fmtSize(total)}${storage}</span>
+      </div>
+      ${shown.length?`<div class="gal-grid">${shown.map(it=>`
+        <figure class="gal-item" data-gid="${it.id}">
+          <div class="gal-thumb">
+            ${it.kind==='photo'
+              ?`<img src="${galUrl(it)}" alt="${esc(it.name)}" loading="lazy">`
+              :`<video src="${galUrl(it)}" muted preload="metadata"></video><span class="gal-play">▶</span>`}
+            <span class="gal-badge">${it.kind==='photo'?'照片':'视频'}</span>
+          </div>
+          <figcaption>
+            <span class="gal-name">${esc(it.name)}</span>
+            <span class="gal-meta">${fmtSize(it.size)} · ${fmtDT(it.ts)}</span>
+          </figcaption>
+          <button class="gal-del" data-gdel="${it.id}" title="删除">${svg('trash',13,1.9,'#fff')}</button>
+        </figure>`).join('')}</div>`
+      :`<div class="empty" style="margin-top:18px"><span class="emo">📷</span>${items.length?'没有符合筛选的文件':'还没有照片或视频，点上方按钮从手机 / 电脑选择'}</div>`}
+    </div>`;
+  $('#galUpBtn').onclick=()=>$('#galInput').click();
+  $('#galInput').onchange=e=>{ const files=[...e.target.files]; e.target.value=''; galleryAdd(files); };
+  $$('#page-gallery .gal-chip[data-gf]').forEach(b=>b.onclick=()=>{ galFilter=b.dataset.gf; renderGallery(); });
+  $$('#page-gallery .gal-item[data-gid]').forEach(el=>el.onclick=e=>{
+    if(e.target.closest('.gal-del')) return;
+    galOpenView(el.dataset.gid);
+  });
+  $$('#page-gallery .gal-del[data-gdel]').forEach(b=>b.onclick=async e=>{
+    e.stopPropagation();
+    const it=galItems.find(x=>x.id===b.dataset.gdel);
+    if(!confirmDel(`删除「${it?it.name:'该文件'}」？此操作不可撤销。`)) return;
+    try{ await galDel(b.dataset.gdel); }catch(err){}
+    if(galUrlCache[b.dataset.gdel]){ URL.revokeObjectURL(galUrlCache[b.dataset.gdel]); delete galUrlCache[b.dataset.gdel]; }
+    toast('已删除','🗑️'); renderGallery();
+  });
 }
 
 function tlNodes(day){
