@@ -1,7 +1,7 @@
 /* 小宝工作台 Service Worker
    策略：预缓存核心资源；请求时 cache-first + 后台更新（stale-while-revalidate），
    离线时直接读取缓存，保证断网也能正常使用全部功能。 */
-const VERSION = 'xiaobao-desk-v1.8.0';
+const VERSION = 'xiaobao-desk-v1.9.0';
 const CORE = [
   './',
   './index.html',
@@ -23,6 +23,8 @@ self.addEventListener('activate', (e) => {
     caches.keys()
       .then((keys) => Promise.all(keys.filter((k) => k !== VERSION).map((k) => caches.delete(k))))
       .then(() => self.clients.claim())
+      .then(() => self.clients.matchAll({ type: 'window', includeUncontrolled: true }))
+      .then((cls) => cls.forEach((c) => c.postMessage({ type: 'SW_UPDATED', version: VERSION })))
   );
 });
 
@@ -48,9 +50,9 @@ self.addEventListener('fetch', (e) => {
   );
 });
 
-/* 用户点击「更新」消息时立即接管 */
+/* 用户点击「更新」消息时立即接管（兼容字符串与结构化两种消息） */
 self.addEventListener('message', (e) => {
-  if (e.data === 'skip-waiting') self.skipWaiting();
+  if (e.data === 'skip-waiting' || (e.data && e.data.type === 'SKIP_WAITING')) self.skipWaiting();
 });
 
 /* 服务端推送（如微信/自建后端定时推送）：收到后弹出系统通知 */
